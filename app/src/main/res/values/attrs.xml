@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="placeItemView">
+        <attr name="title" format="string"/>
+        <attr name="titleTextColor" format="color"/>
+        <attr name="titleSize" format="dimension"/>
+        <attr name="position">
+            <enum name="LEFT" value="0"/>
+            <enum name="RIGHT" value="1"/>
+            <enum name="CENTER" value="3"/>
+        </attr>
+    </declare-styleable>
+</resources>
