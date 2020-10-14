@@ -10,9 +10,18 @@ import com.glob.mytrips.R
 import com.glob.mytrips.domain.dtos.CountryDto
 
 class CountryAdapter(
-    private val countries: List<CountryDto>,
+    private var countries: List<CountryDto> = emptyList(),
     private val listener: PlaceListener
 ) : RecyclerView.Adapter<CountryAdapter.CountryViewHolder>() {
+
+    private var level: Int = 1
+    private var countryPos: Int = -1
+    private var statePos: Int = -1
+
+    fun updateMyCountries(items : List<CountryDto>) {
+        countries = items
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryViewHolder {
         return CountryViewHolder(
@@ -21,10 +30,22 @@ class CountryAdapter(
     }
 
     override fun onBindViewHolder(holder: CountryViewHolder, position: Int) {
-        if (itemCount == 1)
-            holder.goNextSection()
-        else {
-            holder.placeName.text = countries[position].name
+//        if (itemCount == 1)
+//            holder.goNextSection()
+//        else {
+        when(level){
+            1 -> {
+                holder.placeName.text = countries[position].name
+                countryPos = position
+            }
+            2 -> {
+                val state = countries[countryPos].states[position]
+                holder.placeName.text = state.name
+                statePos = position
+            }
+            3 -> {
+                holder.placeName.text = countries[countryPos].states[position].places[position].name
+            }
         }
     }
 
@@ -36,12 +57,22 @@ class CountryAdapter(
 
         init {
             cLayout.setOnClickListener {
-                listener.onItemClicked(countries[position].id)
+                when(level){
+                    2 -> {
+                        listener.onItemClicked(countries[countryPos].states[statePos])
+                        level = 3
+                    }
+                    3 -> listener.onItemClicked(countries[countryPos].states[statePos].places[position])
+                    else -> {
+                        listener.onItemClicked(countries[countryPos])
+                        level = 2
+                    }
+                }
             }
         }
 
         override fun goNextSection() {
-            listener.onItemClicked(countries.first().id)
+            listener.onItemClicked(countries.first())
         }
 
     }

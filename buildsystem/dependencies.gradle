@@ -46,6 +46,8 @@ ext {
 
     room_version = '2.2.5'
 
+    nav_drawe = '2.1.0'
+
     androidSupport = [
             appCompatV7     : 'androidx.appcompat:appcompat:1.0.0',
             cardviewV7      : 'androidx.cardview:cardview:1.0.0',
@@ -136,6 +138,13 @@ ext {
 
     roomKapt = [
             roomComp    : "android.arch.persistence.room:compiler:1.1.1"
+    ]
+
+    navDrawer = [
+            navFragment         : "androidx.navigation:navigation-fragment:$nav_drawe",
+            navUI               : "androidx.navigation:navigation-ui:$nav_drawe",
+            navFragmentKtx      : "androidx.navigation:navigation-fragment-ktx:$nav_drawe",
+            navUIKtx            : "androidx.navigation:navigation-ui-ktx:$nav_drawe"
     ]
 
 }

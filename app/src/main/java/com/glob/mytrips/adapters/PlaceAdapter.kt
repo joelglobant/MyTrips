@@ -8,11 +8,18 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.glob.mytrips.R
 import com.glob.mytrips.domain.dtos.PlaceDto
+import com.glob.mytrips.domain.dtos.StateDto
 
 class PlaceAdapter(
-    private val countries: List<PlaceDto>,
+    private var places: List<PlaceDto> = emptyList(),
     private val listener: PlaceListener
 ) : RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder>() {
+
+
+    fun updateMyPlaces(items : List<PlaceDto>) {
+        places = items
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
         return PlaceViewHolder(
@@ -24,11 +31,11 @@ class PlaceAdapter(
         if (itemCount == 1)
             holder.goNextSection()
         else {
-            holder.placeName.text = countries[position].name
+            holder.placeName.text = places[position].name
         }
     }
 
-    override fun getItemCount() = countries.size
+    override fun getItemCount() = places.size
 
     inner class PlaceViewHolder(item: View) : RecyclerView.ViewHolder(item), HolderActions {
         val cLayout = item.findViewById<ConstraintLayout>(R.id.itemPlace)
@@ -36,12 +43,12 @@ class PlaceAdapter(
 
         init {
             cLayout.setOnClickListener {
-                listener.onItemClicked(countries[position].id)
+                listener.onItemClicked(places[position])
             }
         }
 
         override fun goNextSection() {
-            listener.onItemClicked(countries.first().id)
+            listener.onItemClicked(places.first())
         }
 
     }

@@ -6,5 +6,5 @@ data class UserDto (
     val nickName: String,
     val surname: String,
     val bio: String,
-    val userInfo: List<CountryDto>
+    val generalPlaces: List<CountryDto>
 )

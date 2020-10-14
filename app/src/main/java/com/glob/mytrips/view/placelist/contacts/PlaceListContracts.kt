@@ -21,6 +21,6 @@ interface PlaceListContracts {
 
     interface Presenter {
         fun unwrapList(list: List<PlaceReference>)
-        fun setPlaces()
+        fun setPlaces(generalList: List<CountryDto>)
     }
 }

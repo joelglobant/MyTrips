@@ -11,7 +11,7 @@ class DataInfoUser {
                 }
             set(value) {
                 value?.let {
-                    countries = it.userInfo
+                    countries = it.generalPlaces
                 }
                 field = value
             }

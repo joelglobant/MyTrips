@@ -1,5 +1,7 @@
 package com.glob.mytrips.adapters
 
+import com.glob.mytrips.domain.dtos.base.PlaceReference
+
 interface PlaceListener {
-    fun onItemClicked(idPlace: Int)
+    fun onItemClicked(place: PlaceReference)
 }

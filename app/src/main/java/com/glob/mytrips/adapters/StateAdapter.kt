@@ -10,9 +10,15 @@ import com.glob.mytrips.R
 import com.glob.mytrips.domain.dtos.StateDto
 
 class StateAdapter(
-    private val states: List<StateDto>,
+    private var states: List<StateDto> = emptyList(),
     private val listener: PlaceListener
 ) : RecyclerView.Adapter<StateAdapter.StateViewHolder>() {
+
+
+    fun updateMyStates(items : List<StateDto>) {
+        states = items
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StateViewHolder {
         return StateViewHolder(
@@ -36,12 +42,12 @@ class StateAdapter(
 
         init {
             cLayout.setOnClickListener {
-                listener.onItemClicked(states[position].id)
+                listener.onItemClicked(states[position])
             }
         }
 
         override fun goNextSection() {
-            listener.onItemClicked(states.first().id)
+            listener.onItemClicked(states.first())
         }
     }
 

@@ -22,22 +22,14 @@ class MainMenuPresenter(
         disposable.add(
             userInfoProvider.getCountriesByUserUseCase().execute(params)
                 .subscribe({success ->
-                    view.onMainInfoLoaded(success)
                     hideLoader()
+                    view.onMainInfoLoaded(success)
                 }, { throwable ->
                     view.onMainInfoLoadedFail(throwable.message ?: "")
                     hideLoader()
                 })
         )
     }
-
-//    override fun getIdCountry(user: Int) {}
-//    override fun getIdState(county: Int) {
-//        //TODO("Not yet implemented")
-//    }
-//    override fun getIdPlace(state: Int) {
-//        //TODO("Not yet implemented")
-//    }
 
     private fun showLoader() {
         view.showLoader(true)

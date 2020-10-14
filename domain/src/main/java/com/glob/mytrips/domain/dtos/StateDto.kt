@@ -7,6 +7,6 @@ data class StateDto (
     val id: Int,
     val name: String,
     val places: List<PlaceDto>
-): Serializable, PlaceReference {
+): PlaceReference {
     override fun name() = name
 }

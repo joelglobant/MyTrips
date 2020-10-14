@@ -29,9 +29,6 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         setContentView(R.layout.activity_login)
         val loading = findViewById<ProgressBar>(R.id.loading)
 
-//        loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory())
-//            .get(LoginViewModel::class.java)
-
 
 //        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
 //            val loginState = it ?: return@Observer
@@ -119,6 +116,12 @@ class LoginActivity : BaseActivity(), LoginContract.View {
             if(presenter.login(username.text.toString(), password.text.toString())) {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
+            } else {
+                loading.visibility = View.GONE
+                if (!presenter.isUserNameValid(username.text.toString()))
+                    username.error = resources.getString(R.string.invalid_username)
+                if (!presenter.isPasswordValid(password.text.toString()))
+                    password.error = resources.getString(R.string.invalid_password)
             }
 
         }

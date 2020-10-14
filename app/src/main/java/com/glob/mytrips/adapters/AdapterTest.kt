@@ -18,19 +18,19 @@ class AdapterTest(private val context: Context,val lis: List<PlaceDto>): Recycle
 
     private inner class View1ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        var message: EditText = itemView.findViewById(R.id.etInput)
+        //var message: EditText = itemView.findViewById(R.id.etInput)
         fun bind(position: Int) {
             val recyclerViewModel = lis[position]
-            message.setText(recyclerViewModel.description)
+           // message.setText(recyclerViewModel.description)
         }
     }
 
     private inner class View2ViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        var message: TextView = itemView.findViewById(R.id.etInput)
+        //var message: TextView = itemView.findViewById(R.id.etInput)
         fun bind(position: Int) {
             val recyclerViewModel = lis[position]
-            message.text = recyclerViewModel.name
+            //message.text = recyclerViewModel.name
         }
     }
 

@@ -8,6 +8,6 @@ data class CountryDto(
     val name: String,
     val states: List<StateDto>
     //val location: LatLon
-): Serializable, PlaceReference {
+): PlaceReference {
     override fun name() = name
 }
