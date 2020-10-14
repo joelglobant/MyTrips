@@ -65,5 +65,6 @@ dependencies {
     implementation rx.values()
     //implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation tests.values()
+    implementation navDrawer.values()
 
 }
