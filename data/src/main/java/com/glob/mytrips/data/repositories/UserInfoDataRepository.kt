@@ -1,6 +1,5 @@
 package com.glob.mytrips.data.repositories
 
-import android.util.Log
 import com.glob.mytrips.data.mappers.CountryMapper
 import com.glob.mytrips.data.remote.services.UserInfoServices
 import com.glob.mytrips.domain.dtos.UserDto
@@ -10,7 +9,7 @@ import io.reactivex.Single
 
 class UserInfoDataRepository(private val userInfoServices: UserInfoServices) : UserInfoRepository {
 
-    override fun getCountriesByUser(idUser: Int): Single<UserDto> {
+    override fun getUserInfoById(idUser: Int): Single<UserDto> {
         return userInfoServices.getCountriesByUser()
             .flatMap { response ->
                 return@flatMap if (response.isSuccessful) {
@@ -25,7 +24,6 @@ class UserInfoDataRepository(private val userInfoServices: UserInfoServices) : U
                         }
                     }
                 } else {
-                    Log.e("UserInfoDataRepository", "getCountriesByUser: ")
                     Single.error(Throwable(response.errorBody().toString()))
                 }
             }

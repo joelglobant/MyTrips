@@ -29,7 +29,7 @@ class CountryDataRepositoryTest : TestCase() {
 
         Mockito.`when`(userInfoServices.getCountriesByUser(MockPlacesHierarchy.idUser))
             .thenReturn(Single.just(response))
-        countryDataRepository.getCountriesByUser(MockPlacesHierarchy.idUser)
+        countryDataRepository.getUserInfoById(MockPlacesHierarchy.idUser)
             .test()
             .assertComplete()
             .assertValue {
@@ -42,7 +42,7 @@ class CountryDataRepositoryTest : TestCase() {
         val message = "Something was wrong"
         Mockito.`when`(userInfoServices.getCountriesByUser(MockPlacesHierarchy.idUser))
             .thenReturn(Single.error(Throwable(message)))
-        countryDataRepository.getCountriesByUser(MockPlacesHierarchy.idUser)
+        countryDataRepository.getUserInfoById(MockPlacesHierarchy.idUser)
             .test()
             .assertNotComplete()
             .assertError {

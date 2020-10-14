@@ -15,7 +15,7 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner.StrictStubs::class)
-class GetCountriesByUserTest : TestCase() {
+class GetUserInfoUseCaseTest : TestCase() {
 
 
     @Mock
@@ -35,36 +35,33 @@ class GetCountriesByUserTest : TestCase() {
     }
 
     @Test
-    fun getCountriesSuccess() {
+    fun `validate info from user registered`() {
         val params = GetUserInfoUseCase.Params(1)
-        Mockito.`when`(userInfoRepository.getCountriesByUser(1)).thenReturn(Single.just(listOf(MyTripsMocks().countryMock)))
+        Mockito.`when`(userInfoRepository.getUserInfoById(1)).thenReturn(Single.just(MyTripsMocks().userMock))
         userInfoUseCase.execute(params)
-            .map {
-                it[0]
-            }
             .test()
             .assertComplete()
             .assertNoErrors()
             .assertValue {
-                it.id == MyTripsMocks().countryMock.id
+                it.id == MyTripsMocks().userMock.id
             }
             .assertValue {
-                it.name == MyTripsMocks().countryMock.name
+                it.name == MyTripsMocks().userMock.name
             }
             .assertValue {
-                it.states == MyTripsMocks().countryMock.states
+                it.bio == MyTripsMocks().userMock.bio
+            }
+            .assertValue {
+                it.generalPlaces.first().name == MyTripsMocks().userMock.generalPlaces.first().name
             }
     }
 
     @Test
-    fun getCountriesError() {
-        val params = GetUserInfoUseCase.Params(1)
+    fun `validate error when a user didn't exists`() {
+        val params = GetUserInfoUseCase.Params(10)
         val message = "Item not found"
-        Mockito.`when`(userInfoRepository.getCountriesByUser(1)).thenReturn(Single.error(Throwable(message)))
+        Mockito.`when`(userInfoRepository.getUserInfoById(10)).thenReturn(Single.error(Throwable(message)))
         userInfoUseCase.execute(params)
-            .map {
-                it[0]
-            }
             .test()
             .assertNotComplete()
             .assertError {
@@ -73,7 +70,7 @@ class GetCountriesByUserTest : TestCase() {
     }
 
     @Test
-    fun getCountriesFail() {
+    fun `validate message error when params are null`() {
         val message = "Invalid Arguments"
         userInfoUseCase.execute(null)
             .test()

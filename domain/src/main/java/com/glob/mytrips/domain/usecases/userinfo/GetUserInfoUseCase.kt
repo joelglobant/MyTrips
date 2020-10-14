@@ -20,7 +20,7 @@ class GetUserInfoUseCase(
 
     override fun buildSingleUseCase(params: Params?): Single<UserDto> {
         return params?.let {
-            userInfoRepository.getCountriesByUser(it.idUser)
+            userInfoRepository.getUserInfoById(it.idUser)
         } ?: Single.error(Throwable("Invalid Arguments"))
     }
 }
