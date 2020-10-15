@@ -1,6 +1,5 @@
 package com.glob.mytrips.data.repositories
 
-import com.glob.mytrips.data.mappers.CountryMapper
 import com.glob.mytrips.data.mocks.MockPlacesHierarchy
 import com.glob.mytrips.data.remote.services.UserInfoServices
 import io.reactivex.Single
@@ -25,22 +24,27 @@ class CountryDataRepositoryTest : TestCase() {
     @Test
     fun `validate countries assert`() {
 
-        val response = Response.success(listOf(MockPlacesHierarchy.country))
+        val response = Response.success(MockPlacesHierarchy.userResponse)
 
-        Mockito.`when`(userInfoServices.getCountriesByUser(MockPlacesHierarchy.idUser))
+        Mockito.`when`(userInfoServices.getCountriesByUser())
             .thenReturn(Single.just(response))
         countryDataRepository.getUserInfoById(MockPlacesHierarchy.idUser)
             .test()
             .assertComplete()
             .assertValue {
-                it == listOf(CountryMapper().invoke(MockPlacesHierarchy.country))
+                it.surname == MockPlacesHierarchy.userResponse.surname
+            }
+            .assertValue {
+                it.id ==  MockPlacesHierarchy.userResponse.id
+            }.assertValue {
+                it.bio == MockPlacesHierarchy.userResponse.bio
             }
     }
 
     @Test
     fun `validate countries error`() {
         val message = "Something was wrong"
-        Mockito.`when`(userInfoServices.getCountriesByUser(MockPlacesHierarchy.idUser))
+        Mockito.`when`(userInfoServices.getCountriesByUser())
             .thenReturn(Single.error(Throwable(message)))
         countryDataRepository.getUserInfoById(MockPlacesHierarchy.idUser)
             .test()

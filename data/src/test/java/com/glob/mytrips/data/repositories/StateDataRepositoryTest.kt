@@ -54,7 +54,7 @@ class StateDataRepositoryTest : TestCase() {
     }
 
     @Test
-    fun `validate get State By ID assert`() {
+    fun `validate get State By Id`() {
         val response = Response.success(MockPlacesHierarchy.state)
         Mockito.`when`(stateServices.getStateDetail(MockPlacesHierarchy.idState)).thenReturn(Single.just(response))
         stateDataRepository.getStateByID(MockPlacesHierarchy.idState)
@@ -70,7 +70,7 @@ class StateDataRepositoryTest : TestCase() {
     }
 
     @Test
-    fun `validate get State By ID error`() {
+    fun `validate message error when user did'n found`() {
         val message = "Something was wrong"
         Mockito.`when`(stateServices.getStateDetail(MockPlacesHierarchy.idState)).thenReturn(Single.error(Throwable(message)))
         stateDataRepository.getStateByID(MockPlacesHierarchy.idState)

@@ -34,29 +34,26 @@ class GetPlacesByUserUseCaseTest : TestCase() {
     }
 
     @Test
-    fun validatePlaceSuccess() {
+    fun `validate get Places by userId`() {
         val params = GetPlacesByUserUseCase.Params(1)
         Mockito.`when`(placesRepository.getPlacesByUser(1)).thenReturn(Single.just(listOf(MyTripsMocks().placeMock)))
         placeByUserUseCase.execute(params)
-            .map {
-                it[0]
-            }
             .test()
             .assertComplete()
             .assertNoErrors()
             .assertValue {
-                it.favorite == MyTripsMocks().placeMock.favorite
+                it.first().favorite == MyTripsMocks().placeMock.favorite
             }
             .assertValue {
-                it.id == MyTripsMocks().placeMock.id
+                it.first().id == MyTripsMocks().placeMock.id
             }
             .assertValue {
-                it.description == MyTripsMocks().placeMock.description
+                it.first().description == MyTripsMocks().placeMock.description
             }
     }
 
     @Test
-    fun validatePlaceError() {
+    fun `validate Place Not Found`() {
         val params = GetPlacesByUserUseCase.Params(2)
         val message = "Item not found"
         Mockito.`when`(placesRepository.getPlacesByUser(2))
@@ -70,7 +67,7 @@ class GetPlacesByUserUseCaseTest : TestCase() {
     }
 
     @Test
-    fun validatePlaceFail() {
+    fun `validate Error Message With null parameters`() {
         val message = "Invalid Arguments"
         placeByUserUseCase.execute(null)
             .test()

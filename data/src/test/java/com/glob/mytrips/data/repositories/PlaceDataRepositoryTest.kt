@@ -64,7 +64,7 @@ class PlaceDataRepositoryTest : TestCase() {
     }
 
     @Test
-    fun `validate get places by user assert`() {
+    fun `validate get all places by user`() {
         //3 mis parametros
         val response = Response.success(listOf(MockPlacesHierarchy.placeResponse))
         //2 que necesiro responder a mi operacion
@@ -86,10 +86,10 @@ class PlaceDataRepositoryTest : TestCase() {
     }
 
     @Test
-    fun `validate get places by user error`() {
+    fun `validate error message when user didn't found`() {
         //3 mis parametros
         val message = "something was wrong"
-        //2 que necesito responder a mi operacion
+        //2 que necesito responder mi operacion
         Mockito.`when`(placeServices.getPlacesByUser(MockPlacesHierarchy.idUser))
             .thenReturn(Single.error(Throwable(message)))
         //1 que operacion voy a realizar

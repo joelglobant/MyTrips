@@ -39,9 +39,8 @@ class GetStatesByUserUseCaseTest : TestCase() {
         Mockito.`when`(postExecutorThread.getScheduler()).thenReturn(Schedulers.trampoline())
     }
 
-
     @Test
-    fun validateStateSuccess() {
+    fun `validate get States By Usercase`() {
         val params = GetStatesByUserUseCase.Params(1)
         val placeMock = PlaceDto(1, "jerez", listOf(PhotoDto("www.photo.com")), "",3.5, true)
         val stateMock = StateDto(1, "Zacatecas", listOf(placeMock))
@@ -66,7 +65,7 @@ class GetStatesByUserUseCaseTest : TestCase() {
     }
 
     @Test
-    fun validateGetStateError() {
+    fun `validate error message when user didn't found`() {
         val params = GetStatesByUserUseCase.Params(1)
         val message = "Item not Found"
         Mockito.`when`(stateRepository.getStatesByUser(1))
@@ -80,7 +79,7 @@ class GetStatesByUserUseCaseTest : TestCase() {
     }
 
     @Test
-    fun validateGetStateFail() {
+    fun `validate error message with null parameters`() {
         val message = "Empty list of trips"
         statesUseCase.execute(null)
             .test()

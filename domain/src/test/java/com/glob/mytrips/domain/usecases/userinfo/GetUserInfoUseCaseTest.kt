@@ -17,7 +17,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner.StrictStubs::class)
 class GetUserInfoUseCaseTest : TestCase() {
 
-
     @Mock
     lateinit var userInfoRepository: UserInfoRepository
 

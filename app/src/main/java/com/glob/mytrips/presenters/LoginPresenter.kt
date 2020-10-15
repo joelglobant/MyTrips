@@ -5,8 +5,6 @@ import android.view.View
 import com.glob.mytrips.R
 import com.glob.mytrips.contracts.LoginContract
 import com.glob.mytrips.view.data.Result
-import com.glob.mytrips.view.ui.login.LoggedInUserView
-import com.glob.mytrips.view.ui.login.LoginResult
 
 class LoginPresenter(private val view: LoginContract.View): LoginContract.Presenter {
 
@@ -27,12 +25,7 @@ class LoginPresenter(private val view: LoginContract.View): LoginContract.Presen
         return if (!isUserNameValid(username)) {
             //view.validUser(LoginResult(success = LoggedInUserView(displayName = result.data)))
             false
-        } else if (!isPasswordValid(password)) {
-            //view.validUser(LoginResult(error = R.string.invalid_password))
-            false
-        } else {
-            true
-        }
+        } else isPasswordValid(password)
     }
 
     override fun isUserNameValid(username: String): Boolean {

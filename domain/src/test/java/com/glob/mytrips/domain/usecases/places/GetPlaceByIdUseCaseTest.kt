@@ -34,7 +34,7 @@ class GetPlaceByIdUseCaseTest : TestCase() {
     }
 
     @Test
-    fun validatePlaceSuccess() {
+    fun `validate get Place by ID`() {
         val params = GetPlaceByIdUseCase.Params(1)
         Mockito.`when`(placesRepository.getPlaceById(1)).thenReturn(Single.just(MyTripsMocks().placeMock))
         placeByIdUseCase.execute(params)
@@ -53,7 +53,7 @@ class GetPlaceByIdUseCaseTest : TestCase() {
     }
 
     @Test
-    fun validatePlaceError() {
+    fun `validate Place Not Found`() {
     val params = GetPlaceByIdUseCase.Params(3)
         val message = "Place not found"
         Mockito.`when`(placesRepository.getPlaceById(3))
@@ -67,7 +67,7 @@ class GetPlaceByIdUseCaseTest : TestCase() {
     }
 
     @Test
-    fun validatePlaceFail() {
+    fun `validate Error Message With null parameters`() {
         val message = "Place not found"
         placeByIdUseCase.execute(null)
             .test()

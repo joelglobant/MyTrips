@@ -13,13 +13,10 @@ import com.glob.mytrips.app.BaseActivity
 import com.glob.mytrips.app.afterTextChanged
 import com.glob.mytrips.contracts.LoginContract
 import com.glob.mytrips.registers.LoginRegistry
-import com.glob.mytrips.view.ui.login.LoggedInUserView
-import com.glob.mytrips.view.ui.login.LoginResult
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity(), LoginContract.View {
 
-    //private lateinit var loginViewModel: LoginViewModel
     private val presenter: LoginContract.Presenter by lazy {
         LoginRegistry().provide(this)
     }
@@ -127,26 +124,10 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         }
     }
 
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
-        Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
-        ).show()
-    }
 
-    override fun validUser(loginResult: LoginResult) {
-        loading.visibility = View.GONE
-        if (loginResult.error != null) {
-            showLoginFailed(loginResult.error)
-        }
-        if (loginResult.success != null) {
-            updateUiWithUser(loginResult.success)
-        }
+    override fun validUser() {
         //setResult(Activity.RESULT_OK)
+        loading.visibility = View.GONE
         if (presenter.login(username.text.toString(), password.text.toString())) {
             startActivity(Intent(this, MainActivity::class.java))
             //Complete and destroy login activity once successful

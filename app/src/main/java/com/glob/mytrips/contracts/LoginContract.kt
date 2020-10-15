@@ -1,11 +1,9 @@
 package com.glob.mytrips.contracts
 
-import com.glob.mytrips.view.ui.login.LoginResult
-
 interface LoginContract {
 
     interface View {
-        fun validUser(loginResult: LoginResult)
+        fun validUser()
     }
 
     interface Presenter {

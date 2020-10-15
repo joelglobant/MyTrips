@@ -23,7 +23,8 @@ class GetStateByIdUseCaseTest : TestCase() {
     lateinit var postExecutorThread: PostExecutorThread
 
     private val stateByIdUseCase: GetStateByIdUseCase by lazy {
-        GetStateByIdUseCase(stateRepository,
+        GetStateByIdUseCase(
+            stateRepository,
             ImmediateExecutorThread(), postExecutorThread
         )
     }
@@ -34,7 +35,8 @@ class GetStateByIdUseCaseTest : TestCase() {
     }
 
     @Test
-    fun validateStateSuccess() {
+    fun `validate get State By IdUsecase`() {
+
         val params = GetStateByIdUseCase.Params(1)
         Mockito.`when`(stateRepository.getStateByID(1))
             .thenReturn(Single.just(MyTripsMocks().stateMock))
@@ -54,10 +56,10 @@ class GetStateByIdUseCaseTest : TestCase() {
     }
 
     @Test
-    fun `validate message error when items `() {
-        val params = GetStateByIdUseCase.Params(30)
+    fun `validate Message Error when State Not Registred`() {
+        val params = GetStateByIdUseCase.Params(3)
         val message = "Item not Found"
-        Mockito.`when`(stateRepository.getStateByID(30))
+        Mockito.`when`(stateRepository.getStateByID(3))
             .thenReturn(Single.error(Throwable(message)))
         stateByIdUseCase.execute(params)
             .test()
@@ -68,7 +70,7 @@ class GetStateByIdUseCaseTest : TestCase() {
     }
 
     @Test
-    fun `validate message error when params are null`() {
+    fun `validate message Error With null parameters`() {
         val message = "Empty State list"
         stateByIdUseCase.execute(null)
             .test()
@@ -77,4 +79,5 @@ class GetStateByIdUseCaseTest : TestCase() {
                 it.message == message
             }
     }
+
 }
