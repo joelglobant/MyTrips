@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.glob.mytrips.R
 import com.glob.mytrips.domain.dtos.PlaceDto
-import com.glob.mytrips.domain.dtos.StateDto
 
 class PlaceAdapter(
     private var places: List<PlaceDto> = emptyList(),
@@ -43,14 +42,13 @@ class PlaceAdapter(
 
         init {
             cLayout.setOnClickListener {
-                listener.onItemClicked(places[position])
+                listener.onItemClicked(places[position], false)
             }
         }
 
         override fun goNextSection() {
-            listener.onItemClicked(places.first())
+            listener.onItemClicked(places.first(), false)
         }
-
     }
 
 }

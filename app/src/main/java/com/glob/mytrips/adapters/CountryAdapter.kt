@@ -1,5 +1,6 @@
 package com.glob.mytrips.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,9 +31,6 @@ class CountryAdapter(
     }
 
     override fun onBindViewHolder(holder: CountryViewHolder, position: Int) {
-//        if (itemCount == 1)
-//            holder.goNextSection()
-//        else {
         when(level){
             1 -> {
                 holder.placeName.text = countries[position].name
@@ -41,15 +39,24 @@ class CountryAdapter(
             2 -> {
                 val state = countries[countryPos].states[position]
                 holder.placeName.text = state.name
-                statePos = position
             }
             3 -> {
-                holder.placeName.text = countries[countryPos].states[position].places[position].name
+                holder.placeName.text = countries[countryPos].states[statePos].places[position].name
+                countries[countryPos].states[statePos].places.forEach {
+                    Log.i("TAG", "onBindViewHolder: ${it.name}, $position")
+                }
             }
         }
     }
 
-    override fun getItemCount() = countries.size
+    override fun getItemCount(): Int{
+        return when(level){
+            1 -> countries.size
+            2 -> countries[countryPos].states.size
+            3 -> countries[countryPos].states[statePos].places.size
+            else -> 1
+        }
+    }
 
     inner class CountryViewHolder(item: View) : RecyclerView.ViewHolder(item), HolderActions {
         val cLayout = item.findViewById<ConstraintLayout>(R.id.itemPlace)
@@ -59,12 +66,13 @@ class CountryAdapter(
             cLayout.setOnClickListener {
                 when(level){
                     2 -> {
-                        listener.onItemClicked(countries[countryPos].states[statePos])
+                        statePos = position
+                        listener.onItemClicked(countries[countryPos].states[statePos], false)
                         level = 3
                     }
-                    3 -> listener.onItemClicked(countries[countryPos].states[statePos].places[position])
+                    3 -> listener.onItemClicked(countries[countryPos].states[statePos].places[position], true)
                     else -> {
-                        listener.onItemClicked(countries[countryPos])
+                        listener.onItemClicked(countries[countryPos],false)
                         level = 2
                     }
                 }
@@ -72,9 +80,8 @@ class CountryAdapter(
         }
 
         override fun goNextSection() {
-            listener.onItemClicked(countries.first())
+            listener.onItemClicked(countries.first(), false)
         }
-
     }
 
 }

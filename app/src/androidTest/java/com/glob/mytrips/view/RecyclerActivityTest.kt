@@ -1,6 +1,5 @@
 package com.glob.mytrips.view
 
-import android.service.autofill.Validators.not
 import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -48,12 +47,8 @@ class RecyclerActivityTest {
 
     @Test
     fun validate_text_at_a_position() {
-        //onView(withId(R.id.recyclerView4Test)).perform(actionOnItemAtPosition<BasicAdapterPlace.FillItem>(3, matches()))
         onView(withId(R.id.recyclerView4Test))
-            .perform(actionOnItem<BasicAdapterPlace.FillItem>(hasDescendant(withText("Malpazo")), click()))
-
-        //onData(allOf(withId(R.id.recyclerView4Test))).inAdapterView()
-        //onData(allOf(is(instanceOf<>(BasicAdapterPlace.FillItem::class.java)))).inAdapterView()
+            .perform(actionOnItem<BasicAdapterPlace.FillItem>(hasDescendant(withText("Jerez")), click()))
     }
     //WorkManager
 

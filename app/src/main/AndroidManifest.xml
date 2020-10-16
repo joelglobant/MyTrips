@@ -16,8 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".view.LoginActivity">
+        <activity android:name=".view.DetailActivity"></activity>
+        <activity android:name=".view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,16 +26,13 @@
         </activity>
         <activity
             android:name=".servicesfortest.IntentServiceActivity"
-            android:windowSoftInputMode="stateVisible">
-        </activity>
-        <activity android:name=".servicesfortest.BindServActivity">
-        </activity>
+            android:windowSoftInputMode="stateVisible"></activity>
+        <activity android:name=".servicesfortest.BindServActivity"></activity>
         <activity android:name=".servicesfortest.ForegroundActivity" />
         <activity android:name=".view.RecyclerActivity" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <service android:name=".servicesfortest.ForegroundService" />
         <service

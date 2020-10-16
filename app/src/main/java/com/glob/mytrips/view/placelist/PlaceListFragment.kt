@@ -1,7 +1,9 @@
 package com.glob.mytrips.view.placelist
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +21,7 @@ import com.glob.mytrips.domain.dtos.PlaceDto
 import com.glob.mytrips.domain.dtos.StateDto
 import com.glob.mytrips.domain.dtos.UserDto
 import com.glob.mytrips.domain.dtos.base.PlaceReference
+import com.glob.mytrips.view.DetailActivity
 import com.glob.mytrips.view.placelist.contacts.PlaceListContracts
 import kotlinx.android.synthetic.main.fragment_place_list.*
 
@@ -101,8 +104,18 @@ class PlaceListFragment : Fragment(), PlaceListener,
         private const val TYPE_OF_PLACE = "TYPE_PLACE"
     }
 
-    override fun onItemClicked(place: PlaceReference) {
+    override fun onItemClicked(place: PlaceReference, openDetail: Boolean) {
         myAdapter.notifyDataSetChanged()
-        Toast.makeText(activity, "Click on ${place.name()}", Toast.LENGTH_SHORT).show()
+        if (openDetail) {
+            val placeDto = place as PlaceDto
+            Log.i("TAG", "onItemClicked: hello: ${place as PlaceDto}")
+//            val intent = Intent(activity, DetailActivity::class.java).apply {
+//                putExtra("PLACE", placeDto)
+//            }
+            //startActivity(intent)
+            DetailActivity.launchActivity(activity!!, placeDto)
+        } else {
+            Toast.makeText(activity, "Click on ${place.name()}", Toast.LENGTH_SHORT).show()
+        }
     }
 }

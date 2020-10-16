@@ -11,6 +11,6 @@ data class PlaceDto(
     val description: String,
     val rank: Double?,
     val favorite: Boolean
-): PlaceReference {
+): Serializable, PlaceReference {
     override fun name() = name
 }

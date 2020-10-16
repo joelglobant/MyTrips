@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity(), MainMenuContract.View {
     }
 
     override fun onMainInfoLoadedFail(message: String) {
-        Log.e(TAG, "onMainInfoLoadedFail: message")
+        Log.e(TAG, "onMainInfoLoadedFail: $message")
     }
 
     override fun loadCounties(idUser: Int) {

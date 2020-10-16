@@ -14,7 +14,6 @@ class StateAdapter(
     private val listener: PlaceListener
 ) : RecyclerView.Adapter<StateAdapter.StateViewHolder>() {
 
-
     fun updateMyStates(items : List<StateDto>) {
         states = items
         notifyDataSetChanged()
@@ -42,12 +41,12 @@ class StateAdapter(
 
         init {
             cLayout.setOnClickListener {
-                listener.onItemClicked(states[position])
+                listener.onItemClicked(states[position], false)
             }
         }
 
         override fun goNextSection() {
-            listener.onItemClicked(states.first())
+            listener.onItemClicked(states.first(), false)
         }
     }
 
