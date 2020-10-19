@@ -5,23 +5,32 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.AppBarConfiguration
+import com.glob.mytrips.app.BaseActivity
 import com.glob.mytrips.contracts.MainMenuContract
 import com.glob.mytrips.domain.dtos.UserDto
+import com.glob.mytrips.view.DetailActivity
+import com.glob.mytrips.view.placelist.CountryListFragment
 import com.glob.mytrips.view.placelist.PlaceListFragment
+import com.glob.mytrips.view.placelist.StateListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header.*
 
-class MainActivity : AppCompatActivity(), MainMenuContract.View {
+class MainActivity : BaseActivity(), MainMenuContract.View,
+    PlaceListFragment.OnItemListChanged, CountryListFragment.OnCountryListChanged,
+    StateListFragment.OnStateListChanged {
 
     private val TAG = MainActivity::class.java.simpleName
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var myPlacesFragment: PlaceListFragment
+    private lateinit var myPlacesFragment: CountryListFragment
     private lateinit var myDrawerToggle: ActionBarDrawerToggle
+
+    private lateinit var userInfoTemporal: UserDto
+    private var countryPosTemp: Int = 0
+    private var statePosTemp: Int = 0
+    private var placePosTemp: Int = 0
 
     private val presenter: MainMenuContract.Presenter by lazy {
         UserInfoRegistry().provide(this)
@@ -42,9 +51,10 @@ class MainActivity : AppCompatActivity(), MainMenuContract.View {
         appBarConfiguration = AppBarConfiguration(
             setOf(R.id.nav_home, R.id.nav_gallery), drawerLayout
         )
-        myDrawerToggle = object : ActionBarDrawerToggle(this,
-            drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-
+        myDrawerToggle = object : ActionBarDrawerToggle(
+            this,
+            drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        ) {
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
                 invalidateOptionsMenu()
@@ -54,7 +64,6 @@ class MainActivity : AppCompatActivity(), MainMenuContract.View {
                 super.onDrawerClosed(drawerView)
                 invalidateOptionsMenu()
             }
-
         }
         drawerLayout.addDrawerListener(myDrawerToggle)
         myDrawerToggle.isDrawerIndicatorEnabled = true
@@ -64,19 +73,12 @@ class MainActivity : AppCompatActivity(), MainMenuContract.View {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (myDrawerToggle.onOptionsItemSelected(item))
             return true
-
         return super.onOptionsItemSelected(item)
     }
 
     private fun openFragment() {
-        val firstTime = 1
-        myPlacesFragment = PlaceListFragment.newInstance(firstTime)
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.apply {
-            add(R.id.fragmentContainer, myPlacesFragment, myPlacesFragment::class.java.simpleName)
-            addToBackStack(myPlacesFragment.tag)
-        }
-        transaction.commit()
+        myPlacesFragment = CountryListFragment.newInstance()
+        addFragmentView(myPlacesFragment)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -104,12 +106,13 @@ class MainActivity : AppCompatActivity(), MainMenuContract.View {
         with(userInfo) {
             tvProfileName.text = String.format("$name $surname")
             tvProfileBio.text = bio
-            //nickName
+            tvProfileNickname.text = nickName
         }
+        userInfoTemporal = userInfo
 
         val myFragment = supportFragmentManager.findFragmentByTag(myPlacesFragment.tag)
         myFragment?.let {
-            (it as PlaceListFragment).setupInfo(userInfo)
+            (it as CountryListFragment).setupInfo(userInfo)
         }
     }
 
@@ -121,14 +124,48 @@ class MainActivity : AppCompatActivity(), MainMenuContract.View {
         //TODO("Not yet implemented")
     }
 
-    private fun sendMessage(msg: String) {
-//        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//            .setAction("Action", null).show()
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-    }
-
     enum class ShapeType {
         OVAL_FILL, OVAL_NOFILL, LINE
+    }
+
+    override fun onListChanged(moveTo: Int, onItem: Int) {
+        when (moveTo) {
+            CountryListFragment.MOVE_TO_STATE -> {
+                countryPosTemp = onItem
+                addFragmentView(StateListFragment.newInstance())
+            }
+            StateListFragment.MOVE_TO_PLACES -> {
+                statePosTemp = onItem
+                addFragmentView(PlaceListFragment.newInstance())
+            }
+            PlaceListFragment.MOVE_TO_DETAILS -> {
+                val placeDto =
+                    userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].places[onItem]
+                val comeFrom =
+                    "${userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].name}," +
+                            " ${userInfoTemporal.generalPlaces[countryPosTemp].name}"
+                DetailActivity.launchActivity(this, placeDto, comeFrom)
+            }
+            else -> CountryListFragment.newInstance()
+        }
+        addNewList(moveTo)
+    }
+
+    private fun addNewList(toList: Int) {
+        val myFragment = supportFragmentManager.fragments
+        myFragment.let {
+            when (toList) {
+                2 -> (it[1] as StateListFragment).setupInfo(
+                    userInfoTemporal.generalPlaces[countryPosTemp].states
+                )
+                3 -> (it[2] as PlaceListFragment).setupInfo(
+                    userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].places
+                )
+                else -> {
+                    (it[0] as CountryListFragment).setupInfo(userInfoTemporal)
+                }
+            }
+        }
     }
 
 }

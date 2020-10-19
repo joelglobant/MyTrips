@@ -5,66 +5,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.DetailActivity">
-
-    <TextView
-        android:id="@+id/namePlaceDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Display3"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Title" />
-
-    <TextView
-        android:id="@+id/descPlaceDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/namePlaceDetail"
-        tools:text="Hola hola" />
+    tools:context=".view.DetailActivity"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPhotos"
         android:layout_width="0dp"
-        android:layout_height="270dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="280dp"
+        android:background="@drawable/side_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/photo_item" />
+
+    <TextView
+        android:id="@+id/comeFromDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_margin="@dimen/nav_header_vertical_spacing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvPhotos"
+        tools:text="Come from" />
+
+    <TextView
+        android:id="@+id/descPlaceDetail"
+        style="@style/TextAppearance.AppCompat.Display1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:layout_margin="@dimen/nav_header_vertical_spacing"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/comeFromDetail"
+        tools:text="Hola hola" />
+
+    <TextView
+        android:id="@+id/namePlaceDetail"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:elevation="2pt"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        app:layout_constraintBottom_toBottomOf="@id/rvPhotos"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Title" />
 
     <TextView
         android:id="@+id/likeIt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Do you like this place?"
-        app:layout_constraintBottom_toTopOf="@id/rvPhotos"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/isFavouriteDetail"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descPlaceDetail" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/likeIt"
         app:layout_constraintTop_toBottomOf="@id/descPlaceDetail" />
 
     <TextView
         android:id="@+id/isFavouriteDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/rvPhotos"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/forMap"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/likeIt"
         app:layout_constraintTop_toBottomOf="@id/descPlaceDetail"
-        tools:text="Yes"/>
+        tools:text="Yes" />
 
     <RatingBar
         android:id="@+id/ratePlaceDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/rvPhotos"
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        app:layout_constraintBottom_toBottomOf="@id/rvPhotos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/rvPhotos"
+        app:layout_constraintVertical_bias="0.97"
+        tools:rating="2.5" />
+
+    <TextView
+        android:id="@+id/forMap"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="FOR MAP"
+        android:textSize="32sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:background="@drawable/side_nav_bar"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/isFavouriteDetail"
-        tools:rating="2.5" />
+        app:layout_constraintTop_toBottomOf="@id/likeIt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

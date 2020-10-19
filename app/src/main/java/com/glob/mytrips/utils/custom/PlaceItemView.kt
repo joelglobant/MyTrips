@@ -1,4 +1,4 @@
-package com.glob.mytrips.utils
+package com.glob.mytrips.utils.custom
 
 import android.content.Context
 import android.graphics.Color

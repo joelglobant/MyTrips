@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
+    android:layout_height="@dimen/nav_header_height_2"
     xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="bottom"
+    android:gravity="center_vertical"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -18,28 +18,48 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_alignParentStart="true"
         app:srcCompat="@mipmap/ic_launcher"/>
 
     <TextView
         android:id="@+id/tvProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        tools:text="This is a tool View"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:layout_marginBottom="@dimen/nav_header_vertical_spacing"
+        android:layout_above="@id/tvProfileBio"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="This is a tool View" />
 
     <TextView
         android:id="@+id/tvProfileBio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_alignParentBottom="true"
         tools:text="This is a example of an aplication"
-        />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
-<!--    <ImageView-->
-<!--        android:id="@+id/ivProfileSettings"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="right"-->
-<!--        android:src="@drawable/ic_settings"/>-->
+    <TextView
+        android:id="@+id/tvProfileNickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@id/ivProfile"
+        android:layout_alignParentRight="true"
+        tools:text="My nick Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/ivProfileSettings"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_settings"/>
+
+</RelativeLayout>

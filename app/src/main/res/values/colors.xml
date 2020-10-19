@@ -6,4 +6,5 @@
 
     <color name="black">#000</color>
     <color name="vanishWhite">#B2FAFAFA</color>
+    <color name="white">#FFFFFF</color>
 </resources>

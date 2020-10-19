@@ -15,18 +15,15 @@ import com.glob.mytrips.domain.dtos.CountryDto
 import com.glob.mytrips.domain.dtos.PlaceDto
 import com.glob.mytrips.domain.dtos.StateDto
 import com.glob.mytrips.domain.dtos.base.PlaceReference
-import com.glob.mytrips.view.placelist.contacts.PlaceListContracts
 import kotlinx.android.synthetic.main.fragment_place_list.*
 
-class PlaceListFragment : Fragment(), PlaceListener,
-    PlaceListContracts.ViewCountries {
 
-    private lateinit var parentListener: OnItemListChanged
-    private var fragmentType: Int = 0
-    private lateinit var myAdapter: PlaceAdapter
-    private val presenter: PlaceListContracts.Presenter by lazy {
-        PlaceListPresenter(this)
-    }
+class StateListFragment : Fragment(), PlaceListener {
+
+
+    // TODO: Rename and change types of parameters
+    private lateinit var parentListener: OnStateListChanged
+    private lateinit var myAdapter: StateAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +33,12 @@ class PlaceListFragment : Fragment(), PlaceListener,
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_place_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        myAdapter = PlaceAdapter(listener = this)
+        myAdapter = StateAdapter(listener = this)
         rvMyPlaces.apply {
             adapter = myAdapter
             setHasFixedSize(false)
@@ -56,16 +54,13 @@ class PlaceListFragment : Fragment(), PlaceListener,
         }
     }
 
-    fun setupInfo(places: List<PlaceDto>) {
-        myAdapter.updateMyPlaces(places)
-    }
-
-    override fun setCountries(item: List<CountryDto>) {
+    fun setupInfo(states: List<StateDto>) {
+        myAdapter.updateMyStates(states)
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnItemListChanged) {
+        if (context is OnStateListChanged) {
             parentListener = context
         } else {
             throw ClassCastException(
@@ -76,17 +71,15 @@ class PlaceListFragment : Fragment(), PlaceListener,
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            PlaceListFragment()
-
-        const val MOVE_TO_DETAILS = 4
+        fun newInstance() = StateListFragment()
+        const val MOVE_TO_PLACES = 3
     }
 
-    interface OnItemListChanged {
+    interface OnStateListChanged {
         fun onListChanged(moveTo: Int, onItem: Int)
     }
 
     override fun onItemClicked(openDetail: Boolean, onItem: Int) {
-        parentListener.onListChanged(MOVE_TO_DETAILS, onItem)
+        parentListener.onListChanged(MOVE_TO_PLACES, onItem)
     }
 }

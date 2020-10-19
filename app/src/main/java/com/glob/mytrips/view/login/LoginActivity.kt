@@ -1,4 +1,4 @@
-package com.glob.mytrips.view
+package com.glob.mytrips.view.login
 
 import android.content.Intent
 import android.os.Bundle

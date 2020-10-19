@@ -14,7 +14,6 @@ class PlaceAdapter(
     private val listener: PlaceListener
 ) : RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder>() {
 
-
     fun updateMyPlaces(items : List<PlaceDto>) {
         places = items
         notifyDataSetChanged()
@@ -27,11 +26,7 @@ class PlaceAdapter(
     }
 
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
-        if (itemCount == 1)
-            holder.goNextSection()
-        else {
             holder.placeName.text = places[position].name
-        }
     }
 
     override fun getItemCount() = places.size
@@ -42,12 +37,12 @@ class PlaceAdapter(
 
         init {
             cLayout.setOnClickListener {
-                listener.onItemClicked(places[position], false)
+                listener.onItemClicked(  false, adapterPosition)
             }
         }
 
         override fun goNextSection() {
-            listener.onItemClicked(places.first(), false)
+            //listener.onItemClicked(places.first(), openDetail = false)
         }
     }
 

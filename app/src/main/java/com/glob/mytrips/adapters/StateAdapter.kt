@@ -26,11 +26,7 @@ class StateAdapter(
     }
 
     override fun onBindViewHolder(holder: StateViewHolder, position: Int) {
-        if (itemCount == 1)
-            holder.goNextSection()
-        else {
             holder.placeName.text = states[position].name
-        }
     }
 
     override fun getItemCount() = states.size
@@ -41,12 +37,12 @@ class StateAdapter(
 
         init {
             cLayout.setOnClickListener {
-                listener.onItemClicked(states[position], false)
+                listener.onItemClicked(false, adapterPosition)
             }
         }
 
         override fun goNextSection() {
-            listener.onItemClicked(states.first(), false)
+            //listener.onItemClicked(states.first(), openDetail = false)
         }
     }
 
