@@ -7,6 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.glob.mytrips.R
+import com.glob.mytrips.view.login.LoginActivity
 import org.hamcrest.core.IsNot.not
 import org.junit.Rule
 import org.junit.Test
