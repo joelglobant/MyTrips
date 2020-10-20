@@ -1,5 +1,5 @@
 package com.glob.mytrips.domain.dtos.base
 
-interface PlaceReference{
+interface PlaceReferenceX{
     fun name(): String
 }
