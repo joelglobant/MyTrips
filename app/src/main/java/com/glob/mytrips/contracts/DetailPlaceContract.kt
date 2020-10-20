@@ -1,11 +1,11 @@
 package com.glob.mytrips.contracts
 
-import com.glob.mytrips.domain.dtos.PlaceDto
+import com.glob.mytrips.models.PlaceModel
 
 interface DetailPlaceContract {
 
     interface View {
-        fun setPlaceDetail(place: PlaceDto)
+        fun setPlaceDetail(place: PlaceModel)
 
     }
 

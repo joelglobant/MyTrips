@@ -1,7 +1,6 @@
 package com.glob.mytrips.contracts
 
-import com.glob.mytrips.domain.dtos.CountryDto
-import com.glob.mytrips.domain.dtos.UserDto
+import com.glob.mytrips.models.UserModel
 
 interface MainMenuContract {
 
@@ -9,7 +8,7 @@ interface MainMenuContract {
         fun showLoader(action: Boolean)
         fun openSettings()
 
-        fun onMainInfoLoaded(userInfo: UserDto)
+        fun onMainInfoLoaded(userInfo: UserModel)
         fun onMainInfoLoadedFail(message: String)
 
 

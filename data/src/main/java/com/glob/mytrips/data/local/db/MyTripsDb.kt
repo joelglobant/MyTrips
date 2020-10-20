@@ -1,4 +1,4 @@
-package com.glob.mytrips.data.cache.db
+package com.glob.mytrips.data.local.db
 
 import android.content.Context
 import androidx.room.Database

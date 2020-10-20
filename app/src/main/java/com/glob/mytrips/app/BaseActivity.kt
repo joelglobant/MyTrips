@@ -5,15 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.glob.mytrips.R
-import com.glob.mytrips.view.placelist.StateListFragment
 
 abstract class BaseActivity: AppCompatActivity() {
 
     override fun onBackPressed() {
         val manager: FragmentManager = supportFragmentManager
-        val fragments= supportFragmentManager.fragments
-        val frag = manager.findFragmentByTag(StateListFragment::class.java.simpleName)
-        if (fragments.isNotEmpty()) {
+        val fragments= manager.fragments
+        if (fragments.isNotEmpty() && fragments.size > 1 ) {
             //manager.beginTransaction().show(frag).commit()
             manager.beginTransaction().remove(manager.fragments.last()).commit()
             manager.popBackStack()

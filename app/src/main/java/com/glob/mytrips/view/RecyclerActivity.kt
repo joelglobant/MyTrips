@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.glob.mytrips.R
 import com.glob.mytrips.adapters.BasicAdapterPlace
-import com.glob.mytrips.data.mocks.MockPlaces
 import kotlinx.android.synthetic.main.activity_recycler.*
 
 class RecyclerActivity : AppCompatActivity() {
@@ -24,7 +23,7 @@ class RecyclerActivity : AppCompatActivity() {
 
     fun setupRecyclerView() {
 
-        adapterState = BasicAdapterPlace(MockPlaces.places())
+        adapterState = BasicAdapterPlace(emptyList()/*MockPlaces.places()*/)
         recyclerView4Test.apply {
             setHasFixedSize(true)
             adapter = adapterState

@@ -7,16 +7,16 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.glob.mytrips.R
-import com.glob.mytrips.domain.dtos.CountryDto
+import com.glob.mytrips.models.CountryModel
 
 class CountryAdapter(
-    private var countries: List<CountryDto> = emptyList(),
+    private var countries: List<CountryModel> = emptyList(),
     private val listener: PlaceListener
 ) : RecyclerView.Adapter<CountryAdapter.CountryViewHolder>() {
 
     private var countryPos: Int = -1
 
-    fun updateMyCountries(items: List<CountryDto>) {
+    fun updateMyCountries(items: List<CountryModel>) {
         countries = items
         notifyDataSetChanged()
     }

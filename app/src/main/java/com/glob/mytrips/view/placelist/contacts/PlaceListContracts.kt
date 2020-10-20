@@ -1,26 +1,26 @@
 package com.glob.mytrips.view.placelist.contacts
 
-import com.glob.mytrips.domain.dtos.CountryDto
-import com.glob.mytrips.domain.dtos.PlaceDto
-import com.glob.mytrips.domain.dtos.StateDto
-import com.glob.mytrips.domain.dtos.base.PlaceReference
+//import com.glob.mytrips.domain.dtos.base.PlaceReference
+import com.glob.mytrips.models.CountryModel
+import com.glob.mytrips.models.PlaceModel
+import com.glob.mytrips.models.StateModel
 
 interface PlaceListContracts {
 
     interface ViewCountries {
-        fun setCountries(item: List<CountryDto>)
+        fun setCountries(item: List<CountryModel>)
     }
 
     interface ViewStates {
-        fun setStates(item: List<StateDto>)
+        fun setStates(item: List<StateModel>)
     }
 
     interface ViewPlaces {
-        fun setPlaces(item: List<PlaceDto>)
+        fun setPlaces(item: List<PlaceModel>)
     }
 
     interface Presenter {
-        fun unwrapList(list: List<PlaceReference>)
-        fun setPlaces(generalList: List<CountryDto>)
+        //fun unwrapList(list: List<PlaceReference>)
+        fun setPlaces(generalList: List<CountryModel>)
     }
 }

@@ -10,11 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.glob.mytrips.R
 import com.glob.mytrips.adapters.PlaceAdapter
 import com.glob.mytrips.adapters.PlaceListener
-import com.glob.mytrips.adapters.StateAdapter
-import com.glob.mytrips.domain.dtos.CountryDto
-import com.glob.mytrips.domain.dtos.PlaceDto
-import com.glob.mytrips.domain.dtos.StateDto
-import com.glob.mytrips.domain.dtos.base.PlaceReference
+import com.glob.mytrips.models.CountryModel
+import com.glob.mytrips.models.PlaceModel
 import com.glob.mytrips.view.placelist.contacts.PlaceListContracts
 import kotlinx.android.synthetic.main.fragment_place_list.*
 
@@ -22,7 +19,6 @@ class PlaceListFragment : Fragment(), PlaceListener,
     PlaceListContracts.ViewCountries {
 
     private lateinit var parentListener: OnItemListChanged
-    private var fragmentType: Int = 0
     private lateinit var myAdapter: PlaceAdapter
     private val presenter: PlaceListContracts.Presenter by lazy {
         PlaceListPresenter(this)
@@ -48,19 +44,11 @@ class PlaceListFragment : Fragment(), PlaceListener,
         }
     }
 
-    private fun changeAdapter(place: PlaceReference) {
-        rvMyPlaces.adapter = when (place) {
-            is CountryDto -> StateAdapter(listOf(place as StateDto), this)
-            is StateDto -> PlaceAdapter(listOf(place as PlaceDto), this)
-            else -> null
-        }
-    }
-
-    fun setupInfo(places: List<PlaceDto>) {
+    fun setupInfo(places: List<PlaceModel>) {
         myAdapter.updateMyPlaces(places)
     }
 
-    override fun setCountries(item: List<CountryDto>) {
+    override fun setCountries(item: List<CountryModel>) {
     }
 
     override fun onAttach(context: Context) {
@@ -78,7 +66,6 @@ class PlaceListFragment : Fragment(), PlaceListener,
         @JvmStatic
         fun newInstance() =
             PlaceListFragment()
-
         const val MOVE_TO_DETAILS = 4
     }
 

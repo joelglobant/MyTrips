@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.glob.mytrips.R
 import com.glob.mytrips.adapters.CountryAdapter
 import com.glob.mytrips.adapters.PlaceListener
-import com.glob.mytrips.domain.dtos.UserDto
+import com.glob.mytrips.models.UserModel
 import kotlinx.android.synthetic.main.fragment_place_list.*
 
 
@@ -39,7 +39,7 @@ class CountryListFragment : Fragment(), PlaceListener {
         }
     }
 
-    fun setupInfo(user: UserDto) {
+    fun setupInfo(user: UserModel) {
         myAdapter.updateMyCountries(user.generalPlaces)
     }
 

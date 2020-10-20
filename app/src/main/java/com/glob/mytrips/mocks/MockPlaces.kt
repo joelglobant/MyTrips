@@ -1,51 +1,50 @@
-package com.glob.mytrips.data.mocks
+package com.glob.mytrips.mocks
 
-import com.glob.mytrips.data.remote.response.CountryResponse
-import com.glob.mytrips.data.remote.response.PlaceResponse
-import com.glob.mytrips.data.remote.response.StateResponse
-import com.glob.mytrips.data.remote.response.UserResponse
-import com.glob.mytrips.domain.dtos.PlaceDto
+import com.glob.mytrips.models.CountryModel
+import com.glob.mytrips.models.PlaceModel
+import com.glob.mytrips.models.StateModel
+import com.glob.mytrips.models.UserModel
 
 class MockPlaces {
     companion object {
         val idPlace: Int
             get() = 1
 
-        private val placeResponse: PlaceResponse
-            get() = PlaceResponse(idPlace, "Jerez", emptyList(), "amazing place", null, false)
+        private val placeResponse: PlaceModel
+            get() = PlaceModel(idPlace, "Jerez", emptyList(), "amazing place", null, false)
 
-        fun places(): List<PlaceDto> {
+        fun places(): List<PlaceModel> {
             return listOf(
-                PlaceDto(1, "Jerez", emptyList(), "Amazing place little town", null, false),
-                PlaceDto(2, "Fresnillo", emptyList(), "Cool place", null, false),
-                PlaceDto(3, "Zacatecas Capital", emptyList(), "Incredible place", null, false),
-                PlaceDto(4, "Florida", emptyList(), "Incredible tortas ", null, false),
-                PlaceDto(5, "Susticacan", emptyList(), "Beautiful place to stay here", null, false),
-                PlaceDto(6, "Florencia de Benito Juarez", emptyList(), "Relaxed place to visit", null, false),
-                PlaceDto(7, "Teúl", emptyList(), "Relaxed place to visit", null, false),
-                PlaceDto(8, "Monte Escobedo", emptyList(), "Relaxed place to visit", null, false),
-                PlaceDto(9, "Nochistlan", emptyList(), "Relaxed place to visit", null, false),
-                PlaceDto(10, "Loreto", emptyList(), "Relaxed place to visit", null, false)
+                PlaceModel(1, "Jerez", emptyList(), "Amazing place little town", null, false),
+                PlaceModel(2, "Fresnillo", emptyList(), "Cool place", null, false),
+                PlaceModel(3, "Zacatecas Capital", emptyList(), "Incredible place", null, false),
+                PlaceModel(4, "Florida", emptyList(), "Incredible tortas ", null, false),
+                PlaceModel(5, "Susticacan", emptyList(), "Beautiful place to stay here", null, false),
+                PlaceModel(6, "Florencia de Benito Juarez", emptyList(), "Relaxed place to visit", null, false),
+                PlaceModel(7, "Teúl", emptyList(), "Relaxed place to visit", null, false),
+                PlaceModel(8, "Monte Escobedo", emptyList(), "Relaxed place to visit", null, false),
+                PlaceModel(9, "Nochistlan", emptyList(), "Relaxed place to visit", null, false),
+                PlaceModel(10, "Loreto", emptyList(), "Relaxed place to visit", null, false)
             )
         }
 
         val idState: Int
             get() = 1
 
-        val state: StateResponse
-            get() = StateResponse(idState, "Zacatecas", listOf(placeResponse))
+        val state: StateModel
+            get() = StateModel(idState, "Zacatecas", listOf(placeResponse))
 
         val idCountry: Int
             get() = 1
 
-        val country: CountryResponse
-            get() = CountryResponse(idCountry, "Mexico", listOf(state))
+        val country: CountryModel
+            get() = CountryModel(idCountry, "Mexico", listOf(state))
 
         val idUser: Int
             get() = 1
 
-        val userResponse: UserResponse
-            get() = UserResponse(
+        val userModel: UserModel
+            get() = UserModel(
                 idUser,
                 "joel",
                 "Leoboyean",

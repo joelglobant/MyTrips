@@ -8,14 +8,16 @@ import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.navigation.ui.AppBarConfiguration
 import com.glob.mytrips.app.BaseActivity
+import com.glob.mytrips.app.DataInfoUser
 import com.glob.mytrips.contracts.MainMenuContract
-import com.glob.mytrips.domain.dtos.UserDto
+import com.glob.mytrips.models.UserModel
 import com.glob.mytrips.view.DetailActivity
 import com.glob.mytrips.view.placelist.CountryListFragment
 import com.glob.mytrips.view.placelist.PlaceListFragment
 import com.glob.mytrips.view.placelist.StateListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header.*
 
 class MainActivity : BaseActivity(), MainMenuContract.View,
@@ -27,10 +29,9 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
     private lateinit var myPlacesFragment: CountryListFragment
     private lateinit var myDrawerToggle: ActionBarDrawerToggle
 
-    private lateinit var userInfoTemporal: UserDto
+    private lateinit var userInfoTemporal: UserModel
     private var countryPosTemp: Int = 0
     private var statePosTemp: Int = 0
-    private var placePosTemp: Int = 0
 
     private val presenter: MainMenuContract.Presenter by lazy {
         UserInfoRegistry().provide(this)
@@ -92,21 +93,24 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
     }
 
     override fun showLoader(action: Boolean) {
-        if (action)
+        if (action) {
+            loaderView.visibility = View.VISIBLE
             sendMessage("start loader")
-        else
+        } else {
+            loaderView.visibility = View.GONE
             sendMessage("Finish loader")
+        }
     }
 
     override fun openSettings() {
         sendMessage("Not available yet!")
     }
 
-    override fun onMainInfoLoaded(userInfo: UserDto) {
+    override fun onMainInfoLoaded(userInfo: UserModel) {
         with(userInfo) {
             tvProfileName.text = String.format("$name $surname")
             tvProfileBio.text = bio
-            tvProfileNickname.text = nickName
+            tvProfileNickname.text = nickname
         }
         userInfoTemporal = userInfo
 
@@ -132,19 +136,22 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
         when (moveTo) {
             CountryListFragment.MOVE_TO_STATE -> {
                 countryPosTemp = onItem
+                DataInfoUser.getInstance().countryPosAt = onItem
                 addFragmentView(StateListFragment.newInstance())
             }
             StateListFragment.MOVE_TO_PLACES -> {
                 statePosTemp = onItem
+                DataInfoUser.getInstance().statePosAt = onItem
                 addFragmentView(PlaceListFragment.newInstance())
             }
             PlaceListFragment.MOVE_TO_DETAILS -> {
-                val placeDto =
+                DataInfoUser.getInstance().placePosAt = onItem
+                val placeModel =
                     userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].places[onItem]
                 val comeFrom =
                     "${userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].name}," +
                             " ${userInfoTemporal.generalPlaces[countryPosTemp].name}"
-                DetailActivity.launchActivity(this, placeDto, comeFrom)
+                DetailActivity.launchActivity(this, onItem, comeFrom)
             }
             else -> CountryListFragment.newInstance()
         }

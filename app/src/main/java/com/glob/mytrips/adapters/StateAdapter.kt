@@ -7,14 +7,14 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.glob.mytrips.R
-import com.glob.mytrips.domain.dtos.StateDto
+import com.glob.mytrips.models.StateModel
 
 class StateAdapter(
-    private var states: List<StateDto> = emptyList(),
+    private var states: List<StateModel> = emptyList(),
     private val listener: PlaceListener
 ) : RecyclerView.Adapter<StateAdapter.StateViewHolder>() {
 
-    fun updateMyStates(items : List<StateDto>) {
+    fun updateMyStates(items : List<StateModel>) {
         states = items
         notifyDataSetChanged()
     }

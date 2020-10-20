@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.glob.mytrips.R
-import com.glob.mytrips.domain.dtos.PlaceDto
+import com.glob.mytrips.models.PlaceModel
 
-class BasicAdapterPlace(private val list: List<PlaceDto>) : RecyclerView.Adapter<BasicAdapterPlace.FillItem>() {
+class BasicAdapterPlace(private val list: List<PlaceModel>) : RecyclerView.Adapter<BasicAdapterPlace.FillItem>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): BasicAdapterPlace.FillItem {
         return FillItem(LayoutInflater.from(parent.context).inflate(R.layout.item_4_rv, parent, false))

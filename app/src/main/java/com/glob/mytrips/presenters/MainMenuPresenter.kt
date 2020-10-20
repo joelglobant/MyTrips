@@ -1,8 +1,10 @@
 package com.glob.mytrips.presenters
 
+import com.glob.mytrips.app.DataInfoUser
 import com.glob.mytrips.contracts.MainMenuContract
 import com.glob.mytrips.domain.providers.UserInfoProvider
 import com.glob.mytrips.domain.usecases.userinfo.GetUserInfoUseCase
+import com.glob.mytrips.models.mappers.UserMapperModel
 import io.reactivex.disposables.CompositeDisposable
 
 class MainMenuPresenter(
@@ -22,8 +24,10 @@ class MainMenuPresenter(
         disposable.add(
             userInfoProvider.getCountriesByUserUseCase().execute(params)
                 .subscribe({success ->
+                    val user = UserMapperModel().transform(success)
                     hideLoader()
-                    view.onMainInfoLoaded(success)
+                    DataInfoUser.getInstance().userInfo = user
+                    view.onMainInfoLoaded(user)
                 }, { throwable ->
                     view.onMainInfoLoadedFail(throwable.message ?: "")
                     hideLoader()

@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.glob.mytrips.R
-import com.glob.mytrips.domain.dtos.PhotoDto
+import com.glob.mytrips.models.PhotoModel
 import com.squareup.picasso.Picasso
 
-class PhotoAdapter(private val photos: List<PhotoDto>, private val mContext: Context): RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
+class PhotoAdapter(private val photos: List<PhotoModel>, private val mContext: Context): RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
     private val mPicasso: Picasso = Picasso.Builder(mContext).build()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {

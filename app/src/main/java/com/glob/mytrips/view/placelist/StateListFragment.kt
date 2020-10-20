@@ -8,26 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.glob.mytrips.R
-import com.glob.mytrips.adapters.PlaceAdapter
 import com.glob.mytrips.adapters.PlaceListener
 import com.glob.mytrips.adapters.StateAdapter
-import com.glob.mytrips.domain.dtos.CountryDto
-import com.glob.mytrips.domain.dtos.PlaceDto
-import com.glob.mytrips.domain.dtos.StateDto
-import com.glob.mytrips.domain.dtos.base.PlaceReference
+import com.glob.mytrips.models.StateModel
 import kotlinx.android.synthetic.main.fragment_place_list.*
 
-
 class StateListFragment : Fragment(), PlaceListener {
-
 
     // TODO: Rename and change types of parameters
     private lateinit var parentListener: OnStateListChanged
     private lateinit var myAdapter: StateAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,15 +36,7 @@ class StateListFragment : Fragment(), PlaceListener {
         }
     }
 
-    private fun changeAdapter(place: PlaceReference) {
-        rvMyPlaces.adapter = when (place) {
-            is CountryDto -> StateAdapter(listOf(place as StateDto), this)
-            is StateDto -> PlaceAdapter(listOf(place as PlaceDto), this)
-            else -> null
-        }
-    }
-
-    fun setupInfo(states: List<StateDto>) {
+    fun setupInfo(states: List<StateModel>) {
         myAdapter.updateMyStates(states)
     }
 

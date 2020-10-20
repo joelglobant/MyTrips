@@ -7,14 +7,14 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.glob.mytrips.R
-import com.glob.mytrips.domain.dtos.PlaceDto
+import com.glob.mytrips.models.PlaceModel
 
 class PlaceAdapter(
-    private var places: List<PlaceDto> = emptyList(),
+    private var places: List<PlaceModel> = emptyList(),
     private val listener: PlaceListener
 ) : RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder>() {
 
-    fun updateMyPlaces(items : List<PlaceDto>) {
+    fun updateMyPlaces(items : List<PlaceModel>) {
         places = items
         notifyDataSetChanged()
     }
