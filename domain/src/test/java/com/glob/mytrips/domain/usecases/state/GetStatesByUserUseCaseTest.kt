@@ -52,9 +52,8 @@ class GetStatesByUserUseCaseTest : TestCase() {
             .test()
             .assertComplete()
             .assertNoErrors()
-            // TODO: 05/09/2020 this case need to validate every value?
             .assertValue {
-                it.id == stateMock.id
+                it.id == stateMock.id // TODO: 20/10/2020 add &&
             }
             .assertValue {
                 it.name == stateMock.name

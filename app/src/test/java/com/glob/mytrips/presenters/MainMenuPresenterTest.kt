@@ -8,6 +8,7 @@ import com.glob.mytrips.domain.executors.PostExecutorThread
 import com.glob.mytrips.domain.providers.UserInfoProvider
 import com.glob.mytrips.domain.repositories.UserInfoRepository
 import com.glob.mytrips.domain.usecases.userinfo.GetUserInfoUseCase
+import com.glob.mytrips.models.mappers.CountryMapperModel
 import com.glob.mytrips.threadexecutor.ImmediateThreadExecutor
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -49,16 +50,17 @@ class MainMenuPresenterTest {
         val userInfoResp = MockPlaces.userResponse
         val countryList = arrayListOf<CountryDto>()
         val userInfo = with(userInfoResp){
-            countries.forEach {
-                countryList.add(com.glob.mytrips.data.mappers.CountryMapper().invoke(it))
+            generalPlaces.forEach {
+                countryList.add(CountryMapperModel().reverseTransform(it))
             }
             UserDto(id, name, nickname, surname, bio, countryList)
         }
 
         Mockito.`when`(repository.getUserInfoById(1)).thenReturn(Single.just(userInfo))
+
         Mockito.`when`(provider.getCountriesByUserUseCase())
             .thenReturn(GetUserInfoUseCase(repository, ImmediateThreadExecutor(), postExecutorThread))
         presenter.getUserAccount(1)
-        Mockito.verify(view).onMainInfoLoaded(userInfo)
+        Mockito.verify(view).onMainInfoLoaded(userInfoResp)
     }
 }

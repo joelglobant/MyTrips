@@ -42,7 +42,7 @@ class GetUserInfoUseCaseTest : TestCase() {
             .assertComplete()
             .assertNoErrors()
             .assertValue {
-                it.id == MyTripsMocks().userMock.id
+                it.id == MyTripsMocks().userMock.id // TODO: 20/10/2020 made an agrupation
             }
             .assertValue {
                 it.name == MyTripsMocks().userMock.name
