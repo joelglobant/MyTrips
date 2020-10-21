@@ -10,7 +10,7 @@
         android:id="@+id/bindService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bind"
+        android:text="@string/service_bind"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +21,7 @@
         android:id="@+id/stopService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Unbind"
+        android:text="@string/service_unbind"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bindService" />
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textSize="26sp"
+        android:textSize="@dimen/text_size_26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,8 +41,8 @@
         android:id="@+id/printTimestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Print Timestamp"
-        android:layout_marginTop="12dp"
+        android:text="@string/service_print_timestamp"
+        android:layout_marginTop="@dimen/margin_size_12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timestampText" />
@@ -51,7 +51,7 @@
         android:id="@+id/launchService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="create IService"
+        android:text="@string/service_create_iservice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/stopService" />
 
@@ -59,19 +59,8 @@
         android:id="@+id/removeService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Remove IService"
+        android:text="@string/service_remove_iservice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/launchService" />
-
-<!--    <fragment-->
-<!--        android:id="@+id/container"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginTop="30dp"-->
-<!--        android:visibility="gone"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/printTimestamp" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

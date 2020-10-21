@@ -43,9 +43,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     implementation project(':data')
-    //entities
-    implementation project(':domain') // no depende de nadie, y no hace nada
-    //abtracccion (interfaces) -> DTO / use case / dto
+    implementation project(':domain') // no depende de nadie. abtracccion (interfaces) -> DTO / use case / dto
 
     implementation appDependencies.values()
     implementation androidSupport.values()
@@ -55,15 +53,11 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    //implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
-    //implementation testsAndroid.values()
-    //testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     androidTestImplementation testsAndroid.values()
 
     implementation retrofit.values()
     implementation okhttp.values()
     implementation rx.values()
-    //implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation tests.values()
     implementation navDrawer.values()
 

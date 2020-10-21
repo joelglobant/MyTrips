@@ -6,4 +6,29 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="nav_header_height_2">187dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="text_size_16sp">16sp</dimen>
+    <dimen name="text_size_18sp">18sp</dimen>
+    <dimen name="text_size_22sp">22sp</dimen>
+    <dimen name="text_size_24sp">24sp</dimen>
+    <dimen name="text_size_26sp">26sp</dimen>
+    <dimen name="text_size_32sp">32sp</dimen>
+
+    <dimen name="margin_size_12dp">12dp</dimen>
+    <dimen name="header_detail_view">280dp</dimen>
+
+    <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="margin_16dp">16dp</dimen>
+    <dimen name="margin_20dp">20dp</dimen>
+    <dimen name="margin_24dp">24dp</dimen>
+    <dimen name="margin_30dp">30dp</dimen>
+    <dimen name="margin_32dp">32dp</dimen>
+    <dimen name="margin_64dp">64dp</dimen>
+    <dimen name="margin_96dp">96dp</dimen>
+    <dimen name="margin_48dp">48dp</dimen>
+
+    <dimen name="object_size_80dp">80dp</dimen>
+    <dimen name="object_size_40dp">40dp</dimen>
+    <dimen name="object_size_10dp">10dp</dimen>
 </resources>

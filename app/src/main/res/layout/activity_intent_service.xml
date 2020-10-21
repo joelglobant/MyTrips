@@ -11,9 +11,9 @@
         android:id="@+id/tvIntentService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mensaje recivido del Servicio:\n"
-        android:textSize="16sp"
-        android:layout_marginTop="10dp"
+        android:text="@string/service_mensaje_recivedo"
+        android:textSize="@dimen/text_size_16sp"
+        android:layout_marginTop="@dimen/margin_10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,25 +22,25 @@
         android:id="@+id/etInputIntService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:hint="Inserta tu mensaje"
+        android:layout_margin="@dimen/nav_header_vertical_spacing"
+        android:hint="@string/service_insert_a_mensaage"
         android:imeOptions="actionDone"
         android:inputType="text"
         android:maxLines="1"
-        android:padding="30dp"
+        android:padding="@dimen/margin_30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvIntentService" />
+        app:layout_constraintTop_toBottomOf="@id/tvIntentService" />
 
     <Button
         android:id="@+id/btnIntentService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enviar mensaje"
+        android:text="@string/service_send_menssage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etInputIntService" />
+        app:layout_constraintTop_toBottomOf="@id/etInputIntService" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,7 +25,7 @@
         android:id="@+id/tvProfileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_size_22sp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:layout_marginBottom="@dimen/nav_header_vertical_spacing"
         android:layout_above="@id/tvProfileBio"
@@ -36,28 +36,28 @@
         android:id="@+id/tvProfileBio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_size_16sp"
         android:layout_alignParentBottom="true"
-        tools:text="This is a example of an aplication"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="This is a example of an aplication" />
 
     <TextView
         android:id="@+id/tvProfileNickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="26sp"
+        android:textSize="@dimen/text_size_26sp"
         android:textStyle="bold"
         android:layout_marginTop="@dimen/nav_header_vertical_spacing"
         android:layout_alignParentTop="true"
         android:layout_alignEnd="@id/ivProfile"
         android:layout_alignParentRight="true"
-        tools:text="My nick Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="My nick Name" />
 
     <ImageView
         android:id="@+id/ivProfileSettings"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/object_size_40dp"
+        android:layout_height="@dimen/object_size_40dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_settings"/>

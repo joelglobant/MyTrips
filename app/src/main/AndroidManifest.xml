@@ -16,14 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.DetailActivity"></activity>
+        <activity android:name=".view.DetailActivity"/>
         <activity android:name=".view.login.LoginActivity">
 
         </activity>
         <activity
             android:name=".servicesfortest.IntentServiceActivity"
             android:windowSoftInputMode="stateVisible"></activity>
-        <activity android:name=".servicesfortest.BindServActivity"></activity>
+        <activity android:name=".servicesfortest.BindServActivity"/>
         <activity android:name=".servicesfortest.ForegroundActivity" />
         <activity android:name=".view.RecyclerActivity" />
         <activity
@@ -45,5 +45,4 @@
             android:name=".servicesfortest.MyIntentService"
             android:exported="false" />
     </application>
-
 </manifest>

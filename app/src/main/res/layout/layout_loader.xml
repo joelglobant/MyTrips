@@ -6,8 +6,8 @@
 
     <ProgressBar
         android:id="@+id/progressLoader"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/object_size_80dp"
+        android:layout_height="@dimen/object_size_80dp"
         app:layout_constraintBottom_toTopOf="@id/tvLoaderMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,7 +18,7 @@
         android:id="@+id/tvLoaderMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="loading..."
+        android:text="@string/loading"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
