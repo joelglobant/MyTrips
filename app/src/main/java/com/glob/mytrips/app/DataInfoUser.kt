@@ -3,7 +3,6 @@ package com.glob.mytrips.app
 import com.glob.mytrips.models.PlaceModel
 import com.glob.mytrips.models.UserModel
 
-
 class DataInfoUser private constructor() {
     companion object {
         @Volatile
@@ -27,7 +26,6 @@ class DataInfoUser private constructor() {
     var countryPosAt: Int = -1
     var statePosAt: Int = -1
     var placePosAt: Int = -1
-
 
     val comeFrom: String
         get() {

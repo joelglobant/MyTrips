@@ -36,7 +36,6 @@ class GetStateByIdUseCaseTest : TestCase() {
 
     @Test
     fun `validate get State By IdUsecase`() {
-
         val params = GetStateByIdUseCase.Params(1)
         Mockito.`when`(stateRepository.getStateByID(1))
             .thenReturn(Single.just(MyTripsMocks().stateMock))

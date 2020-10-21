@@ -17,5 +17,4 @@ class ContentTypeInterceptor : Interceptor {
                 .build()
         )
     }
-
 }

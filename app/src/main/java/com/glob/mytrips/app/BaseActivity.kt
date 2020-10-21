@@ -12,7 +12,6 @@ abstract class BaseActivity: AppCompatActivity() {
         val manager: FragmentManager = supportFragmentManager
         val fragments= manager.fragments
         if (fragments.isNotEmpty() && fragments.size > 1 ) {
-            //manager.beginTransaction().show(frag).commit()
             manager.beginTransaction().remove(manager.fragments.last()).commit()
             manager.popBackStack()
         } else {

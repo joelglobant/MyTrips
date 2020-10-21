@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.annotation.StringRes
 import com.glob.mytrips.MainActivity
 import com.glob.mytrips.R
 import com.glob.mytrips.app.BaseActivity
@@ -26,58 +24,18 @@ class LoginActivity : BaseActivity(), LoginContract.View {
         setContentView(R.layout.activity_login)
         val loading = findViewById<ProgressBar>(R.id.loading)
 
-
-//        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
-//            val loginState = it ?: return@Observer
-//
-//            // disable login button unless both username / password is valid
-//            login.isEnabled = loginState.isDataValid
-//
-//            if (loginState.usernameError != null) {
-//                username.error = getString(loginState.usernameError)
-//            }
-//            if (loginState.passwordError != null) {
-//                password.error = getString(loginState.passwordError)
-//            }
-//        })
-
-//        loginViewModel.loginResult.observe(this@LoginActivity, Observer {
-//            val loginResult = it ?: return@Observer
-//
-//            loading.visibility = View.GONE
-//            if (loginResult.error != null) {
-//                showLoginFailed(loginResult.error)
-//            }
-//            if (loginResult.success != null) {
-//                updateUiWithUser(loginResult.success)
-//            }
-//            setResult(Activity.RESULT_OK)
-//            startActivity(Intent(this, MainActivity::class.java))
-//
-//            //Complete and destroy login activity once successful
-//            finish()
-//        })
-
-
         username.apply {
             afterTextChanged {
                 presenter.isUserNameValid(it)
                 login.isEnabled = it.isNotEmpty() && password.text.toString().isNotEmpty()
-//            loginViewModel.loginDataChanged(
-//                username.text.toString(),
-//                password.text.toString()
-//            )
             }
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_NEXT ->
                         presenter.isUserNameValid(username.text.toString())
                     EditorInfo.IME_ACTION_DONE ->
-                        login.isEnabled = presenter.login(username.text.toString(), password.text.toString())
-//                        loginViewModel.login(
-//                            username.text.toString(),
-//                            password.text.toString()
-//                        )
+                        login.isEnabled =
+                            presenter.login(username.text.toString(), password.text.toString())
                 }
                 false
             }
@@ -87,21 +45,14 @@ class LoginActivity : BaseActivity(), LoginContract.View {
             afterTextChanged {
                 login.isEnabled = it.isNotEmpty() && username.text.isNotEmpty()
                 presenter.isPasswordValid(it)
-//                loginViewModel.loginDataChanged(
-//                    username.text.toString(),
-//                    password.text.toString()
-//                )
             }
             setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_NEXT ->
                         presenter.isPasswordValid(password.text.toString())
                     EditorInfo.IME_ACTION_DONE ->
-                        login.isEnabled = presenter.login(username.text.toString(), password.text.toString())
-//                        loginViewModel.login(
-//                            username.text.toString(),
-//                            password.text.toString()
-//                        )
+                        login.isEnabled =
+                            presenter.login(username.text.toString(), password.text.toString())
                 }
                 false
             }
@@ -110,7 +61,7 @@ class LoginActivity : BaseActivity(), LoginContract.View {
 
         login.setOnClickListener {
             loading.visibility = View.VISIBLE
-            if(presenter.login(username.text.toString(), password.text.toString())) {
+            if (presenter.login(username.text.toString(), password.text.toString())) {
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
@@ -120,22 +71,15 @@ class LoginActivity : BaseActivity(), LoginContract.View {
                 if (!presenter.isPasswordValid(password.text.toString()))
                     password.error = resources.getString(R.string.invalid_password)
             }
-
         }
     }
 
-
     override fun validUser() {
-        //setResult(Activity.RESULT_OK)
         loading.visibility = View.GONE
         if (presenter.login(username.text.toString(), password.text.toString())) {
             startActivity(Intent(this, MainActivity::class.java))
             //Complete and destroy login activity once successful
             finish()
         }
-    }
-
-    private fun showLoginFailed(@StringRes errorString: Int) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 }

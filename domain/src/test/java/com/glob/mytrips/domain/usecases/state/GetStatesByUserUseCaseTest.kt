@@ -19,10 +19,6 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner.StrictStubs::class)
 class GetStatesByUserUseCaseTest : TestCase() {
 
-    public override fun setUp() {
-        super.setUp()
-    }
-
     @Mock
     lateinit var stateRepository: StateRepository
 
@@ -53,7 +49,7 @@ class GetStatesByUserUseCaseTest : TestCase() {
             .assertComplete()
             .assertNoErrors()
             .assertValue {
-                it.id == stateMock.id // TODO: 20/10/2020 add &&
+                it.id == stateMock.id
             }
             .assertValue {
                 it.name == stateMock.name

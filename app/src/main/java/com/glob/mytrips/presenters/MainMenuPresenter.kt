@@ -14,10 +14,6 @@ class MainMenuPresenter(
 
     private val disposable = CompositeDisposable()
 
-    override fun getIdUser() {
-        //TODO("Not yet implemented")
-    }
-
     override fun getUserAccount(userId: Int) {
         val params = GetUserInfoUseCase.Params(userId)
         showLoader()
@@ -26,7 +22,7 @@ class MainMenuPresenter(
                 .subscribe({success ->
                     val user = UserMapperModel().transform(success)
                     hideLoader()
-                    DataInfoUser.getInstance().userInfo = user
+                    DataInfoUser.getInstance().userInfo = user // TODO: 21/10/2020 get from a provider layer
                     view.onMainInfoLoaded(user)
                 }, { throwable ->
                     view.onMainInfoLoadedFail(throwable.message ?: "")

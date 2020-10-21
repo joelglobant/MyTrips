@@ -12,10 +12,6 @@ class App: Application() {
     companion object {
         private val TAG = "${App::class.java.simpleName}"
         const val CHANNEL_ID = "ExampleServiceChannel"
-//        companion object {
-//            lateinit var instance: App
-//                private set
-//        }
     }
 
     override fun onCreate() {

@@ -29,15 +29,12 @@ class ForegroundService : Service() {
             this, 0,
             notificationIntent, 0)
 
-        //BuidNotification
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Foreground Service")
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentIntent(pendingIntent)
             .build()
-        //
         startForeground(1, notification)
-
         return START_NOT_STICKY
     }
 

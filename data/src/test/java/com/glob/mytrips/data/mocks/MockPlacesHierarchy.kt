@@ -37,6 +37,5 @@ class MockPlacesHierarchy {
                 "traveler",
                 listOf(country)
             )
-
     }
 }

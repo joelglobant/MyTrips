@@ -8,7 +8,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import com.glob.mytrips.services.ContentTypeInterceptor
 
 class RetrofitFactory {
 
@@ -22,7 +21,7 @@ class RetrofitFactory {
                 .create()
             return Retrofit.Builder()
                 .client(getClient())
-                .baseUrl("https://run.mocky.io/") //TODO create a baseURL to debug and other to realise
+                .baseUrl("https://run.mocky.io/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
@@ -36,11 +35,9 @@ class RetrofitFactory {
                 )
 
             return OkHttpClient().newBuilder()
-                //.addInterceptor(AuthInterceptor()) //to set a header
                 .addInterceptor(ContentTypeInterceptor())
                 .addInterceptor(httpLoggingInterceptor)
                 .build()
         }
-
     }
 }

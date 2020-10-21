@@ -32,7 +32,7 @@ class CountryDataRepositoryTest : TestCase() {
             .test()
             .assertComplete()
             .assertValue {
-                it.surname == MockPlacesHierarchy.userResponse.surname // agregar &&
+                it.surname == MockPlacesHierarchy.userResponse.surname
             }
             .assertValue {
                 it.id ==  MockPlacesHierarchy.userResponse.id

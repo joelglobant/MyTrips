@@ -11,9 +11,7 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import com.glob.mytrips.R
 import com.glob.mytrips.adapters.BasicAdapterPlace
 import org.hamcrest.CoreMatchers.*
-import org.junit.Before
 import org.junit.Test
-
 import org.junit.Rule
 import org.junit.runner.RunWith
 
@@ -24,25 +22,9 @@ class RecyclerActivityTest {
     @get: Rule
     val activityRule = ActivityScenarioRule(RecyclerActivity::class.java)
 
-
-    @Before
-    fun setUp() {
-//        adapterState = BasicAdapterPlace(MockPlaces.places())
-//        recyclerView4Test.apply {
-//            setHasFixedSize(true)
-//            adapter = adapterState
-//            layoutManager = LinearLayoutManager(this@RecyclerActivity)
-//        }
-    }
-
     @Test
     fun testIsRecyclerVisible() {
         onView(withId(R.id.recyclerView4Test)).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun recyclerView_have_elements() {
-        //onView(withId(R.id.recyclerView4Test)).check(matches())
     }
 
     @Test
@@ -50,14 +32,8 @@ class RecyclerActivityTest {
         onView(withId(R.id.recyclerView4Test))
             .perform(actionOnItem<BasicAdapterPlace.FillItem>(hasDescendant(withText("Jerez")), click()))
     }
-    //WorkManager
-
     @Test
     fun validateOnData() {
         onData(withId(R.id.recyclerView4Test)).inAdapterView(`is`(instanceOf(BasicAdapterPlace::class.java)))
-            //.check(matches(withId(R.id.item4rv)))
-//        onData(`is`(instanceOf<BasicAdapterPlace.FillItem>(BasicAdapterPlace.FillItem::class.java)),
-//        containsString(`is`("Jerez")))
-        //onData(withId(R.id.recyclerView4Test)).check(matches(hasDescendant(withId(R.id.item4rv))))
     }
 }

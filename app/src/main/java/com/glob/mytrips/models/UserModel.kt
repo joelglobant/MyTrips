@@ -1,6 +1,5 @@
 package com.glob.mytrips.models
 
-//@Parcelize
 data class UserModel(
     val id: Int,
     val name: String,
@@ -8,4 +7,4 @@ data class UserModel(
     val surname: String,
     val bio: String,
     val generalPlaces: List<CountryModel>
-)// : Parcelable
+)

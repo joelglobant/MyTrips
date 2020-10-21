@@ -31,7 +31,7 @@ class StateAdapter(
 
     override fun getItemCount() = states.size
 
-    inner class StateViewHolder(item: View) : RecyclerView.ViewHolder(item), HolderActions {
+    inner class StateViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val cLayout = item.findViewById<ConstraintLayout>(R.id.itemPlace)
         val placeName = item.findViewById<TextView>(R.id.placeId)
 
@@ -39,10 +39,6 @@ class StateAdapter(
             cLayout.setOnClickListener {
                 listener.onItemClicked(false, adapterPosition)
             }
-        }
-
-        override fun goNextSection() {
-            //listener.onItemClicked(states.first(), openDetail = false)
         }
     }
 

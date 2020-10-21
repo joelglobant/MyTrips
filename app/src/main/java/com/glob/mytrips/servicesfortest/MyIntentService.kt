@@ -23,7 +23,6 @@ class MyIntentService : IntentService("MyIntentService") {
             IntentServiceActivity.FILTER_ACTION_KEY
 
         SystemClock.sleep(5000)
-
         val resultMessage = "La cadena resultante despues de 6 segundos de proceso.. $message"
         intent?.let {
             LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(it.putExtra("broadcastMessage", resultMessage))

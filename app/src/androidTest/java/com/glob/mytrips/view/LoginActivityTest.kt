@@ -5,6 +5,7 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
 import com.glob.mytrips.R
 import com.glob.mytrips.view.login.LoginActivity
@@ -12,7 +13,6 @@ import org.hamcrest.core.IsNot.not
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 
 @RunWith(AndroidJUnit4::class)
 class LoginActivityTest {
@@ -32,7 +32,6 @@ class LoginActivityTest {
         onView(withId(R.id.username)).perform(typeText("admin"))
         onView(withId(R.id.password)).perform(typeText("Ad"), closeSoftKeyboard())
         onView(withId(R.id.login)).perform(click())
-        //val expectedNoStatisticsText: String = InstrumentationRegistry.getInstrumentation().context.resources.getString(R.string.invalid_password)
         onView(withId(R.id.password)).check(matches(hasErrorText("Password must be >5 characters")))
     }
 
@@ -41,7 +40,8 @@ class LoginActivityTest {
         onView(withId(R.id.username)).perform(typeText("admin@"))
         onView(withId(R.id.password)).perform(typeText("adm"), closeSoftKeyboard())
         onView(withId(R.id.login)).perform(click())
-        onView(withId(R.id.username)).check(matches(hasErrorText("Not a valid username")))
+        val invalidUser = InstrumentationRegistry.getInstrumentation().targetContext.getString(R.string.invalid_username)
+        onView(withId(R.id.username)).check(matches(hasErrorText(invalidUser)))
         onView(withId(R.id.password)).check(matches(hasErrorText("Password must be >5 characters")))
     }
 

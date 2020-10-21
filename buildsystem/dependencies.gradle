@@ -44,9 +44,8 @@ ext {
     dexopenerVersion = '2.0.5'
     rx2IdlerVersion = '0.9.0'
 
-    room_version = '2.2.5'
-
-    nav_drawe = '2.1.0'
+    roomVersion = '2.2.5'
+    navDraweVersion = '2.1.0'
 
     androidSupport = [
             appCompatV7     : 'androidx.appcompat:appcompat:1.0.0',
@@ -128,12 +127,12 @@ ext {
     ]
 
     room = [
-            roomRuntime     : "androidx.room:room-runtime:$room_version",
-            roomKtx         : "androidx.room:room-ktx:$room_version"
+            roomRuntime     : "androidx.room:room-runtime:$roomVersion",
+            roomKtx         : "androidx.room:room-ktx:$roomVersion"
     ]
 
     roomCompiler = [
-            roomComp    : "androidx.room:room-compiler:$room_version"
+            roomComp    : "androidx.room:room-compiler:$roomVersion"
     ]
 
     roomKapt = [
@@ -141,10 +140,10 @@ ext {
     ]
 
     navDrawer = [
-            navFragment         : "androidx.navigation:navigation-fragment:$nav_drawe",
-            navUI               : "androidx.navigation:navigation-ui:$nav_drawe",
-            navFragmentKtx      : "androidx.navigation:navigation-fragment-ktx:$nav_drawe",
-            navUIKtx            : "androidx.navigation:navigation-ui-ktx:$nav_drawe"
+            navFragment         : "androidx.navigation:navigation-fragment:$navDraweVersion",
+            navUI               : "androidx.navigation:navigation-ui:$navDraweVersion",
+            navFragmentKtx      : "androidx.navigation:navigation-fragment-ktx:$navDraweVersion",
+            navUIKtx            : "androidx.navigation:navigation-ui-ktx:$navDraweVersion"
     ]
 
 }

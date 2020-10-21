@@ -1,7 +1,7 @@
 package com.glob.mytrips.presenters
 
 import com.glob.mytrips.contracts.MainMenuContract
-import com.glob.mytrips.data.mocks.MockPlaces
+import com.glob.mytrips.data.mocks.MockPlacesHierarchy
 import com.glob.mytrips.domain.dtos.CountryDto
 import com.glob.mytrips.domain.dtos.UserDto
 import com.glob.mytrips.domain.executors.PostExecutorThread
@@ -12,8 +12,6 @@ import com.glob.mytrips.models.mappers.CountryMapperModel
 import com.glob.mytrips.threadexecutor.ImmediateThreadExecutor
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import okhttp3.Response
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -47,9 +45,9 @@ class MainMenuPresenterTest {
 
     @Test
     fun `validate get user information by id`() {
-        val userInfoResp = MockPlaces.userResponse
+        val userInfoResp = MockPlacesHierarchy.userModel
         val countryList = arrayListOf<CountryDto>()
-        val userInfo = with(userInfoResp){
+        val userInfo = with(userInfoResp) {
             generalPlaces.forEach {
                 countryList.add(CountryMapperModel().reverseTransform(it))
             }
@@ -57,9 +55,14 @@ class MainMenuPresenterTest {
         }
 
         Mockito.`when`(repository.getUserInfoById(1)).thenReturn(Single.just(userInfo))
-
         Mockito.`when`(provider.getCountriesByUserUseCase())
-            .thenReturn(GetUserInfoUseCase(repository, ImmediateThreadExecutor(), postExecutorThread))
+            .thenReturn(
+                GetUserInfoUseCase(
+                    repository,
+                    ImmediateThreadExecutor(),
+                    postExecutorThread
+                )
+            )
         presenter.getUserAccount(1)
         Mockito.verify(view).onMainInfoLoaded(userInfoResp)
     }

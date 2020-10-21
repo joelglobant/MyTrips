@@ -80,5 +80,4 @@ class StateDataRepositoryTest : TestCase() {
                 it.message == message
             }
     }
-
 }

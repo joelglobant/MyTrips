@@ -23,7 +23,7 @@ class RecyclerActivity : AppCompatActivity() {
 
     fun setupRecyclerView() {
 
-        adapterState = BasicAdapterPlace(emptyList()/*MockPlaces.places()*/)
+        adapterState = BasicAdapterPlace(emptyList())
         recyclerView4Test.apply {
             setHasFixedSize(true)
             adapter = adapterState

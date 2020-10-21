@@ -43,7 +43,6 @@ class IntentServiceActivity : AppCompatActivity() {
         myReceiver = MyReceiver()
         val intentFilter = IntentFilter()
         intentFilter.addAction(FILTER_ACTION_KEY)
-        // TODO: 07/10/2020 investigate what does do an intentFilter!
         LocalBroadcastManager.getInstance(this).registerReceiver(myReceiver, intentFilter)
     }
 

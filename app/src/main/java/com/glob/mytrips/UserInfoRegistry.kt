@@ -38,5 +38,4 @@ class UserInfoRegistry {
     fun provide(view: MainMenuContract.View): MainMenuContract.Presenter {
         return MainMenuPresenter(provider, view)
     }
-
 }

@@ -10,20 +10,10 @@ interface MainMenuContract {
 
         fun onMainInfoLoaded(userInfo: UserModel)
         fun onMainInfoLoadedFail(message: String)
-
-
-        fun loadCounties(idUser: Int)
-//        fun loadStates(idCounty: Int)
-//        fun loadPlaces(idState: Int)
-//        fun openPlace(idPlace: Int)
     }
 
     interface Presenter {
-        fun getIdUser()
         fun getUserAccount(userId: Int)
-//        fun getIdCountry(user: Int)
-//        fun getIdState(county: Int)
-//        fun getIdPlace(state: Int)
         fun onDestroy()
     }
 }

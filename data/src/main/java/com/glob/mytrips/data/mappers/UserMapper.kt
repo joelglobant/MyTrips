@@ -2,7 +2,6 @@ package com.glob.mytrips.data.mappers
 
 import com.glob.mytrips.data.remote.response.UserResponse
 import com.glob.mytrips.domain.dtos.CountryDto
-import com.glob.mytrips.domain.dtos.PlaceDto
 import com.glob.mytrips.domain.dtos.UserDto
 
 class UserMapper {

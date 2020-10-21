@@ -122,14 +122,7 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
 
     override fun onMainInfoLoadedFail(message: String) {
         Log.e(TAG, "onMainInfoLoadedFail: $message")
-    }
-
-    override fun loadCounties(idUser: Int) {
-        //TODO("Not yet implemented")
-    }
-
-    enum class ShapeType {
-        OVAL_FILL, OVAL_NOFILL, LINE
+        errorView.visibility = View.VISIBLE
     }
 
     override fun onListChanged(moveTo: Int, onItem: Int) {
@@ -174,5 +167,4 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
             }
         }
     }
-
 }

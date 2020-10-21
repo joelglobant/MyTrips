@@ -22,10 +22,8 @@ class PlaceDataRepositoryTest : TestCase() {
         PlaceDataRepository(placeServices)
     }
 
-
     @Test
     fun `validate get Place By Id success`() {
-        // necesito el repositorio y el ID place
         val idPlace = 1
         val placeResponse = PlaceResponse(1, "Jerez", emptyList(), "es magic", null, false)
         val response = Response.success(placeResponse)
@@ -65,12 +63,12 @@ class PlaceDataRepositoryTest : TestCase() {
 
     @Test
     fun `validate get all places by user`() {
-        //3 mis parametros
+        //3, mis parametros
         val response = Response.success(listOf(MockPlacesHierarchy.placeResponse))
-        //2 que necesiro responder a mi operacion
+        //2, que necesiro responder a mi operacion
         Mockito.`when`(placeServices.getPlacesByUser(MockPlacesHierarchy.idUser))
             .thenReturn(Single.just(response))
-        //1 que operation voy a realizar
+        //1, que operation voy a realizar
         getPlacesCase.getPlacesByUser(MockPlacesHierarchy.idUser)
             .test()
             .assertComplete()
@@ -87,12 +85,12 @@ class PlaceDataRepositoryTest : TestCase() {
 
     @Test
     fun `validate error message when user didn't found`() {
-        //3 mis parametros
+        //3. mis parametros
         val message = "something was wrong"
-        //2 que necesito responder mi operacion
+        //2. que necesito responder a mi operacion
         Mockito.`when`(placeServices.getPlacesByUser(MockPlacesHierarchy.idUser))
             .thenReturn(Single.error(Throwable(message)))
-        //1 que operacion voy a realizar
+        //1. que operacion voy a realizar
         getPlacesCase.getPlacesByUser(MockPlacesHierarchy.idUser)
             .test()
             .assertNotComplete()

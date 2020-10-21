@@ -13,10 +13,6 @@ import kotlinx.android.synthetic.main.activity_bind_serv.*
 
 class BindServActivity : AppCompatActivity() {
 
-    private final val sr = "yolo"
-
-
-
     private val TAG = BindServActivity::class.java.simpleName
     lateinit var mBoundService: BoundService
     var mServiceBound = false
@@ -33,9 +29,7 @@ class BindServActivity : AppCompatActivity() {
         }
         bindService.setOnClickListener {
             Log.i(TAG, "onCreate: hello")
-            //val intent = Intent(applicationContext, BoundService::class.java)
             val intent = Intent(this, BoundService::class.java)
-            //startService(intent)
             bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE)
         }
         stopService.setOnClickListener {
@@ -43,8 +37,6 @@ class BindServActivity : AppCompatActivity() {
                 unbindService(mServiceConnection)
                 mServiceBound = false
             }
-            //val intent = Intent(this@BindServActivity, BoundService::class.java)
-            //stopService(intent)
         }
 
         launchService.setOnClickListener {
@@ -55,10 +47,6 @@ class BindServActivity : AppCompatActivity() {
             val intent = Intent(this@BindServActivity, BoundService::class.java)
             stopService(intent)
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
     }
 
     override fun onStop() {
@@ -80,6 +68,5 @@ class BindServActivity : AppCompatActivity() {
             mBoundService = myBinder.service
             mServiceBound = true
         }
-
     }
 }

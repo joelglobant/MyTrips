@@ -7,7 +7,6 @@ import retrofit2.http.GET
 
 interface UserInfoServices {
 
-    //@GET("v3/525f3580-fc43-430e-9420-34453b8108be")//single
-    @GET("v3/9c358fa2-9fcb-4e6b-83ec-db56ca201d5c")//multiple
+    @GET("v3/9c358fa2-9fcb-4e6b-83ec-db56ca201d5c")
     fun getCountriesByUser(): Single<Response<UserResponse>>
 }

@@ -52,6 +52,5 @@ class MockPlaces {
                 "traveler",
                 listOf(country)
             )
-
     }
 }

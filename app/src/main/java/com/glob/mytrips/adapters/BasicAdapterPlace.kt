@@ -28,5 +28,4 @@ class BasicAdapterPlace(private val list: List<PlaceModel>) : RecyclerView.Adapt
         val place = item.findViewById<TextView>(R.id.rvTextState)
         val desc = item.findViewById<TextView>(R.id.rvTextPlace)
     }
-
 }

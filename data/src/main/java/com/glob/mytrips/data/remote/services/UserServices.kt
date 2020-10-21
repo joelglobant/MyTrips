@@ -14,9 +14,6 @@ interface UserServices {
     @GET("www.google.com/{token}")
     fun getUser(@Path("token") token: Long): Single<Response<UserResponse>>
 
-//    @GET("www.google.com/{token}")
-//    fun getFriends(@Path("token") token: Long): Single<Response<UserServices>>
-
     @PUT("www.google.com{id}")
     fun saveUserByUser(@Path("id") idUser: Int, @Body userDto: UserDto): Single<Response<Boolean>>
 }

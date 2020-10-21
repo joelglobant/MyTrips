@@ -24,23 +24,18 @@ class DetailActivityTest {
     private val PLACE_POS = 0
 
     private val place = MockPlacesHierarchy.userModel.generalPlaces[COUNTRY_POS].states[STATE_POS].places[PLACE_POS]
-    private val intent = Intent().apply {
-        putExtra("PLACE_POSITION", PLACE_POS)
-        putExtra("FROM", "comeFrom")
-    }
+
     val comeFrom= "${MockPlacesHierarchy.userModel.generalPlaces[COUNTRY_POS].states[STATE_POS].name}," +
             " ${MockPlacesHierarchy.userModel.generalPlaces[COUNTRY_POS].name}"
 
     @get:Rule
     private var placeDetail: ActivityTestRule<DetailActivity> =
-        //ActivityTestRule(DetailActivity::class.java, true, false) {}
         object : ActivityTestRule<DetailActivity>(DetailActivity::class.java) {
             override fun getActivityIntent(): Intent {
                 val targetContext = InstrumentationRegistry.getInstrumentation().targetContext
                 return Intent(targetContext, DetailActivity::class.java).apply {
-                    // aqui le agregas los extras
-                    putExtra("PLACE_POSITION", PLACE_POS)
-                    putExtra("FROM", comeFrom)
+                    putExtra(DetailActivity.POSITON, PLACE_POS)
+                    putExtra(DetailActivity.COME_FROM, comeFrom)
                 }
             }
         }
@@ -63,5 +58,4 @@ class DetailActivityTest {
     fun validate_name_place_detail() {
         onView(withId(R.id.namePlaceDetail)).check(matches(withText(place.name)))
     }
-
 }

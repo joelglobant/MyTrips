@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.fragment_place_list.*
 
 class StateListFragment : Fragment(), PlaceListener {
 
-    // TODO: Rename and change types of parameters
     private lateinit var parentListener: OnStateListChanged
     private lateinit var myAdapter: StateAdapter
 
@@ -23,7 +22,6 @@ class StateListFragment : Fragment(), PlaceListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_place_list, container, false)
     }
 
