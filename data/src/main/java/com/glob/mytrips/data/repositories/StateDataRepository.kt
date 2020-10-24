@@ -6,16 +6,19 @@ import com.glob.mytrips.domain.dtos.StateDto
 import com.glob.mytrips.domain.repositories.StateRepository
 import io.reactivex.Single
 
-class StateDataRepository(private val stateServices: StateServices): StateRepository {
+class StateDataRepository(
+    private val stateServices: StateServices,
+    private val stateMapper: StateMapper
+) : StateRepository {
 
     override fun getStatesByUser(idUser: Int): Single<List<StateDto>> {
         return stateServices.getStatesByUser(idUser)
-            .flatMap {response ->
+            .flatMap { response ->
                 return@flatMap if (response.isSuccessful) {
                     val stateList = arrayListOf<StateDto>()
-                    response.body()?.let {list ->
+                    response.body()?.let { list ->
                         list.forEach {
-                            stateList.add(StateMapper().invoke(it))
+                            stateList.add(stateMapper.transform(it))
                         }
                     }
                     Single.just(stateList)
@@ -30,7 +33,7 @@ class StateDataRepository(private val stateServices: StateServices): StateReposi
             .flatMap { response ->
                 return@flatMap if (response.isSuccessful) {
                     response.body()?.let {
-                        Single.just(StateMapper().invoke(it))
+                        Single.just(stateMapper.transform(it))
                     }
                 } else {
                     Single.error(Throwable(response.errorBody().toString()))

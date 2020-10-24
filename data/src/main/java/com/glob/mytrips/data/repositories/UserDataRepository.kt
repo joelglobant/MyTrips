@@ -7,13 +7,14 @@ import com.glob.mytrips.domain.repositories.UserRepository
 import io.reactivex.Completable
 import io.reactivex.Single
 
-class UserDataRepository(private val userServices: UserServices) : UserRepository {
+class UserDataRepository(private val userServices: UserServices,
+private val userMapper: UserMapper) : UserRepository {
     override fun getUserInfo(idUser: Int): Single<UserDto> {
         return userServices.getUser(idUser.toLong())
             .flatMap { response ->
                 return@flatMap if (response.isSuccessful) {
                     response.body()?.let {
-                        Single.just(UserMapper().invoke(it))
+                        Single.just(userMapper.transform(it))
                     }
                 } else {
                     Single.error(Throwable(response.errorBody().toString()))

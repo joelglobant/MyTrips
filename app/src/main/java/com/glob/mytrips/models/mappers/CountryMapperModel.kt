@@ -3,18 +3,13 @@ package com.glob.mytrips.models.mappers
 import com.glob.mytrips.domain.dtos.CountryDto
 import com.glob.mytrips.domain.dtos.StateDto
 import com.glob.mytrips.models.CountryModel
-import com.glob.mytrips.models.StateModel
 
-class CountryMapperModel : Transform<CountryDto, CountryModel>() {
+class CountryMapperModel(private val stateMapperModel: StateMapperModel) : Transform<CountryDto, CountryModel>() {
     override fun transform(country: CountryDto): CountryModel {
         return with(country) {
-            val stateList = arrayListOf<StateModel>()
-            states.forEach { state ->
-                stateList.add(
-                    StateMapperModel().transform(state)
-                )
-            }
-            CountryModel(id, name, stateList)
+            CountryModel(id, name, states.map {
+                stateMapperModel.transform(it)
+            })
         }
     }
 
@@ -23,7 +18,7 @@ class CountryMapperModel : Transform<CountryDto, CountryModel>() {
             val stateList = kotlin.collections.arrayListOf<StateDto>()
             states.forEach { state ->
                 stateList.add(
-                    StateMapperModel().reverseTransform(state)
+                    stateMapperModel.reverseTransform(state)
                 )
             }
             CountryDto(id, name, stateList)

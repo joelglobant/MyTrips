@@ -11,6 +11,7 @@ import com.glob.mytrips.app.BaseActivity
 import com.glob.mytrips.app.DataInfoUser
 import com.glob.mytrips.contracts.MainMenuContract
 import com.glob.mytrips.models.UserModel
+import com.glob.mytrips.registers.UserInfoRegistry
 import com.glob.mytrips.view.DetailActivity
 import com.glob.mytrips.view.placelist.CountryListFragment
 import com.glob.mytrips.view.placelist.PlaceListFragment

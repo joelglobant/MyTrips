@@ -36,7 +36,7 @@ class DataInfoUser private constructor() {
         }
 
     fun getPlace(at: Int): PlaceModel? {
-        return if (countryPosAt >= 0 && statePosAt >= 0)
+        return if (userInfo != null && countryPosAt >= 0 && statePosAt >= 0)
             userInfo.generalPlaces[countryPosAt].states[statePosAt].places[at]
         else
             null

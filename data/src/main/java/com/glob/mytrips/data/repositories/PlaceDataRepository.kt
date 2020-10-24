@@ -6,7 +6,8 @@ import com.glob.mytrips.domain.dtos.PlaceDto
 import com.glob.mytrips.domain.repositories.PlacesRepository
 import io.reactivex.Single
 
-class PlaceDataRepository(private val placeServices: PlaceServices) : PlacesRepository {
+class PlaceDataRepository(private val placeServices: PlaceServices,
+private val placeMapper: PlaceMapper) : PlacesRepository {
 
     override fun getPlaceById(idPlace: Int): Single<PlaceDto> {
         return placeServices.getPlaceDetail(idPlace)
@@ -14,7 +15,7 @@ class PlaceDataRepository(private val placeServices: PlaceServices) : PlacesRepo
                 return@flatMap if (response.isSuccessful) {
                     response.body()?.let {
                         Single.just(
-                            PlaceMapper().invoke(it)
+                            placeMapper.transform(it)
                         )
                     }
                 } else {
@@ -31,7 +32,7 @@ class PlaceDataRepository(private val placeServices: PlaceServices) : PlacesRepo
                         val listPlaces = arrayListOf<PlaceDto>()
                         places.forEach {
                             listPlaces.add(
-                                PlaceMapper().invoke(it)
+                                placeMapper.transform(it)
                             )
                         }
                         Single.just(listPlaces)

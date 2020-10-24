@@ -1,31 +1,33 @@
 package com.glob.mytrips.models.mappers
 
-import com.glob.mytrips.domain.dtos.PhotoDto
 import com.glob.mytrips.domain.dtos.PlaceDto
 import com.glob.mytrips.models.PlaceModel
 
-class PlaceMapperModel: Transform<PlaceDto, PlaceModel>() {
+class PlaceMapperModel(private val photoMapperModel: PhotoMapperModel) :
+    Transform<PlaceDto, PlaceModel>() {
     override fun transform(value: PlaceDto): PlaceModel {
         return with(value) {
             PlaceModel(
                 id,
                 name,
-                photos.map { com.glob.mytrips.models.PhotoModel(it.url) },
+                photos.map { photoMapperModel.transform(it) },
                 description,
                 rank,
-                favorite)
+                favorite
+            )
         }
     }
 
     override fun reverseTransform(value: PlaceModel): PlaceDto {
-        return  with(value) {
+        return with(value) {
             PlaceDto(
                 id,
                 name,
-                photos.map {PhotoDto(it.url) },
+                photos.map { photoMapperModel.reverseTransform(it) },
                 description,
                 rank,
-                favorite)
+                favorite
+            )
         }
     }
 }
