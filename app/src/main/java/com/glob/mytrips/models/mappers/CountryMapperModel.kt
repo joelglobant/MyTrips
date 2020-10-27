@@ -7,7 +7,7 @@ import com.glob.mytrips.models.CountryModel
 class CountryMapperModel(private val stateMapperModel: StateMapperModel) : Transform<CountryDto, CountryModel>() {
     override fun transform(country: CountryDto): CountryModel {
         return with(country) {
-            CountryModel(id, name, states.map {
+            CountryModel(id, idUser, name, states.map {
                 stateMapperModel.transform(it)
             })
         }
@@ -21,7 +21,7 @@ class CountryMapperModel(private val stateMapperModel: StateMapperModel) : Trans
                     stateMapperModel.reverseTransform(state)
                 )
             }
-            CountryDto(id, name, stateList)
+            CountryDto(id, idUser, name, stateList)
         }
     }
 }

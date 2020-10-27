@@ -12,7 +12,7 @@ class PlaceMapper(private val photoMapper: PhotoMapper) : Mapper<PlaceResponse, 
     override fun transform(value: PlaceResponse): PlaceDto {
         return with(value) {
             PlaceDto(
-                id, name, photos.map { photoMapper.transform(it) },
+                id, idState, name, photos.map { photoMapper.transform(it) },
                 description, rank, favorite
             )
         }

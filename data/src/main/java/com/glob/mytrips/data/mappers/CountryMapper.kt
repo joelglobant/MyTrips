@@ -11,7 +11,7 @@ import com.glob.mytrips.domain.dtos.CountryDto
 class CountryMapper(private val mapperState: StateMapper) : Mapper<CountryResponse, CountryDto> {
     override fun transform(value: CountryResponse): CountryDto {
         return with(value) {
-            CountryDto(id, name, states.map { mapperState.transform(it) })
+            CountryDto(id, idUser, name, states.map { mapperState.transform(it) })
         }
     }
 }

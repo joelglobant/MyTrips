@@ -6,7 +6,7 @@ import com.glob.mytrips.domain.dtos.PhotoDto
 class PhotoMapper: Mapper<PhotoResponse, PhotoDto> {
     override fun transform(value: PhotoResponse): PhotoDto {
         return with(value) {
-            PhotoDto(url)
+            PhotoDto(id, idPlace, url)
         }
     }
 }

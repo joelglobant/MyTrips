@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class PlaceResponse(
     @SerializedName("idPlace")
     val id: Int,
+    @SerializedName("idState")
+    val idState: Int,
     @SerializedName("namePlace")
     val name: String,
     @SerializedName("photosPlaces")

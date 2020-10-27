@@ -7,7 +7,7 @@ import com.glob.mytrips.models.StateModel
 class StateMapperModel(private val placeMapperModel: PlaceMapperModel): Transform<StateDto, StateModel>() {
     override fun transform(value: StateDto): StateModel {
         return with(value) {
-            StateModel(id, name, places.map { placeMapperModel.transform(it) })
+            StateModel(id, idCountry, name, places.map { placeMapperModel.transform(it) })
         }
     }
 
@@ -17,7 +17,7 @@ class StateMapperModel(private val placeMapperModel: PlaceMapperModel): Transfor
             places.forEach { place ->
                 placesDto.add(placeMapperModel.reverseTransform(place))
             }
-            StateDto(id, name, placesDto)
+            StateDto(id, idCountry, name, placesDto)
         }
     }
 }

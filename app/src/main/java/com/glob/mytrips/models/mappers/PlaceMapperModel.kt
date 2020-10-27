@@ -9,6 +9,7 @@ class PlaceMapperModel(private val photoMapperModel: PhotoMapperModel) :
         return with(value) {
             PlaceModel(
                 id,
+                idState,
                 name,
                 photos.map { photoMapperModel.transform(it) },
                 description,
@@ -22,6 +23,7 @@ class PlaceMapperModel(private val photoMapperModel: PhotoMapperModel) :
         return with(value) {
             PlaceDto(
                 id,
+                idState,
                 name,
                 photos.map { photoMapperModel.reverseTransform(it) },
                 description,
