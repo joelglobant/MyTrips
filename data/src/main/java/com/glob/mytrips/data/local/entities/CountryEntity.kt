@@ -1,7 +1,14 @@
 package com.glob.mytrips.data.local.entities
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.glob.mytrips.data.local.db.UserInfoConstants
+
+@Entity(tableName = UserInfoConstants.TABLE_COUNTRY)
 data class CountryEntity (
+    @PrimaryKey
     val id: Int,
-    val name: String,
-    val states: List<StateEntity>
+    val idUser: Int,
+    val name: String
+    //val states: List<StateEntity>
 )
