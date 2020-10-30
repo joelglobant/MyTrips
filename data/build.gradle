@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion 29
@@ -38,6 +39,9 @@ dependencies {
     implementation retrofit.values()
     implementation okhttp.values()
     implementation room.values()
+    annotationProcessor roomCompiler.values()
+    implementation roomRX.values()
+    kapt roomCompiler.values()
     testImplementation tests.values()
 
 }
