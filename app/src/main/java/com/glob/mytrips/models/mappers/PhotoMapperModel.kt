@@ -6,7 +6,7 @@ import com.glob.mytrips.models.PhotoModel
 class PhotoMapperModel : Transform<PhotoDto, PhotoModel>() {
     override fun transform(value: PhotoDto): PhotoModel {
         return with(value) {
-            PhotoModel(id, idPlace, path)
+            PhotoModel(id, path)
         }
     }
 }

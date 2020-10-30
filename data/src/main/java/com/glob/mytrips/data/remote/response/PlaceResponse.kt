@@ -9,12 +9,12 @@ data class PlaceResponse(
     val idState: Int,
     @SerializedName("namePlace")
     val name: String,
-    @SerializedName("photosPlaces")
-    val photos: List<PhotoResponse>,
     @SerializedName("descPlace")
     val description: String,
     @SerializedName("ranckPlace")
     val rank: Double?,
     @SerializedName("favoritePlace")
-    val favorite: Boolean
+    val favorite: Boolean,
+    @SerializedName("photosPlaces")
+    val photos: List<PhotoResponse>
 )
