@@ -10,10 +10,6 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface UserServices {
-
-    @GET("www.google.com/{token}")
-    fun getUser(@Path("token") token: Long): Single<Response<UserResponse>>
-
-    @PUT("www.google.com{id}")
-    fun saveUserByUser(@Path("id") idUser: Int, @Body userDto: UserDto): Single<Response<Boolean>>
+    @GET("v3/9c358fa2-9fcb-4e6b-83ec-db56ca201d5c")
+    fun getCountriesByUser(): Single<Response<UserResponse>>
 }

@@ -14,7 +14,7 @@ class UserInfoDataProvider(
     private val postExecutorThread: PostExecutorThread
 ) : UserInfoProvider {
 
-    override fun getCountriesByUserUseCase(): SingleUseCase<GetUserInfoUseCase.Params, UserDto> {
+    override fun getUserUseCase(): SingleUseCase<GetUserInfoUseCase.Params, UserDto> {
         return GetUserInfoUseCase(userInfoRepository, threadExecutor, postExecutorThread)
     }
 
