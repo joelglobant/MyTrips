@@ -8,7 +8,6 @@ import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.navigation.ui.AppBarConfiguration
 import com.glob.mytrips.app.BaseActivity
-import com.glob.mytrips.app.DataInfoUser
 import com.glob.mytrips.contracts.MainMenuContract
 import com.glob.mytrips.models.UserModel
 import com.glob.mytrips.registers.UserInfoRegistry
@@ -136,16 +135,16 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
         when (moveTo) {
             CountryListFragment.MOVE_TO_STATE -> {
                 countryPosTemp = onItem
-                DataInfoUser.getInstance().countryPosAt = onItem
-                addFragmentView(StateListFragment.newInstance())
+//                DataInfoUser.getInstance().countryPosAt = onItem
+//                addFragmentView(StateListFragment.newInstance())
             }
             StateListFragment.MOVE_TO_PLACES -> {
                 statePosTemp = onItem
-                DataInfoUser.getInstance().statePosAt = onItem
-                addFragmentView(PlaceListFragment.newInstance())
+//                DataInfoUser.getInstance().statePosAt = onItem
+//                addFragmentView(PlaceListFragment.newInstance())
             }
             PlaceListFragment.MOVE_TO_DETAILS -> {
-                DataInfoUser.getInstance().placePosAt = onItem
+                //DataInfoUser.getInstance().placePosAt = onItem
 //                val placeModel =
 //                    userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].places[onItem]
 //                val comeFrom =
