@@ -5,5 +5,5 @@ import com.glob.mytrips.domain.usecases.SingleUseCase
 import com.glob.mytrips.domain.usecases.userinfo.GetUserInfoUseCase
 
 interface UserInfoProvider {
-    fun getCountriesByUserUseCase(): SingleUseCase<GetUserInfoUseCase.Params, UserDto>
+    fun getUserUseCase(): SingleUseCase<GetUserInfoUseCase.Params, UserDto>
 }

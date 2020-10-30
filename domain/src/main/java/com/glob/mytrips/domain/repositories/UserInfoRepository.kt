@@ -4,5 +4,5 @@ import com.glob.mytrips.domain.dtos.UserDto
 import io.reactivex.Single
 
 interface UserInfoRepository {
-    fun getUserInfoById(idUser: Int): Single<UserDto>
+   fun getUserInformation(): Single<UserDto>
 }

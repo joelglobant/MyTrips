@@ -20,7 +20,8 @@ class GetUserInfoUseCase(
 
     override fun buildSingleUseCase(params: Params?): Single<UserDto> {
         return params?.let {
-            userInfoRepository.getUserInfoById(it.idUser)
+            // TODO: 27/10/2020 add a class selector to get an different id, aPI not completed!
+            userInfoRepository.getUserInformation(/*it.idUser*/)
         } ?: Single.error(Throwable("Invalid Arguments"))
     }
 }
