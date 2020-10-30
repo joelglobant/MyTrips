@@ -4,10 +4,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.glob.mytrips.data.local.db.UserInfoConstants
 
-@Entity(tableName = UserInfoConstants.TABLE_PHOTO)
-data class PhotoEntity(
+@Entity(tableName = UserInfoConstants.TABLE_USER)
+data class UserEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val idPlace: Int,
-    val url: String
+    val name: String?,
+    val nickname: String?,
+    val surname: String?,
+    val bio: String?
 )

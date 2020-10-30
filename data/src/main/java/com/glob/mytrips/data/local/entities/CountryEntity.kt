@@ -6,9 +6,8 @@ import com.glob.mytrips.data.local.db.UserInfoConstants
 
 @Entity(tableName = UserInfoConstants.TABLE_COUNTRY)
 data class CountryEntity (
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     val idUser: Int,
     val name: String
-    //val states: List<StateEntity>
 )

@@ -2,7 +2,5 @@ package com.glob.mytrips.models
 
 data class CountryModel(
     val id: Int,
-    val idUser: Int,
-    val name: String,
-    val states: List<StateModel>
+    val name: String
 )
