@@ -1,11 +1,13 @@
-package com.glob.mytrips.app
+package com.glob.mytrips.utils
 
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.squareup.picasso.Picasso
 
 fun AppCompatActivity.launchActivity(toActivity: Class<out AppCompatActivity>, requestCode: Int? = null, extras: Bundle = Bundle()) {
     val intent = Intent(this, toActivity)
@@ -17,10 +19,9 @@ fun AppCompatActivity.launchActivity(toActivity: Class<out AppCompatActivity>, r
         startActivityForResult(intent, requestCode)
 }
 
-fun launchLoginCodiActivity() {
-//    val intentLoginCodi = Intent(this, LoginCodiActivity::class.java)
-//    startActivityForResult(intentLoginCodi, LoginCodiActivity.LOGIN_CODI_REQUEST)
-//    overridePendingTransition(R.anim.slide_in_up, R.anim.fade_out)
+fun ImageView.loadUrl(url: String) {
+    //.build().load(photos[position].url).into(holder.photo)
+    Picasso.Builder(context).build().load(url)
 }
 
 

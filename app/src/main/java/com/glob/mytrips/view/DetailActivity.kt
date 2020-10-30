@@ -62,7 +62,7 @@ class DetailActivity : BaseActivity(), DetailPlaceContract.View {
         // TODO: 15/10/2020 create binary option
         isFavouriteDetail.text = place.favorite.toString()
         rvPhotos.apply {
-            adapter = PhotoAdapter(place.photos, this.context)
+            adapter = PhotoAdapter(emptyList(), this.context)
             layoutManager = GridLayoutManager(
                 this@DetailActivity, 1,
                 LinearLayoutManager.HORIZONTAL, false

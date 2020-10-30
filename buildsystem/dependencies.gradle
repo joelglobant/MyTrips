@@ -131,6 +131,10 @@ ext {
             roomKtx         : "androidx.room:room-ktx:$roomVersion"
     ]
 
+    roomRX = [
+            roomRX          : "androidx.room:room-rxjava2:$roomVersion"
+    ]
+
     roomCompiler = [
             roomComp    : "androidx.room:room-compiler:$roomVersion"
     ]

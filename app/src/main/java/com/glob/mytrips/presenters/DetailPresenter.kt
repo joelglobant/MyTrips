@@ -7,13 +7,12 @@ class DetailPresenter(private val view: DetailPlaceContract.View):
     DetailPlaceContract.Presenter {
 
     override fun getPlace(position: Int) {
-        //todo add model layer
         view.showLoader(true)
-        val modelRes = DataInfoUser.getInstance().getPlace(position)
-        if (modelRes != null)
-            view.setPlaceDetail(modelRes)
-        else
-            view.showError()
+//        val modelRes = DataInfoUser.getInstance().getPlace(position)
+//        if (modelRes != null)
+//            view.setPlaceDetail(modelRes)
+//        else
+//            view.showError()
         view.showLoader(false)
     }
 }

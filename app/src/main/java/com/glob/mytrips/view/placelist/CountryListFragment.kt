@@ -18,6 +18,14 @@ class CountryListFragment : Fragment(), PlaceListener {
 
     private lateinit var myAdapter: CountryAdapter
     private lateinit var parentListener: OnCountryListChanged
+    private var myIdUser : Int = -1
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            myIdUser = it.getInt(USER)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +43,9 @@ class CountryListFragment : Fragment(), PlaceListener {
         }
     }
 
-    fun setupInfo(user: UserModel) {
-        myAdapter.updateMyCountries(user.generalPlaces)
-    }
+//    fun setupInfo(user: UserModel) {
+//        myAdapter.updateMyCountries(user.generalPlaces)
+//    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -52,8 +60,14 @@ class CountryListFragment : Fragment(), PlaceListener {
 
     companion object {
         @JvmStatic
-        fun newInstance() = CountryListFragment()
+        fun newInstance(user: Int) = CountryListFragment().apply {
+            arguments = Bundle().apply {
+                putInt(USER, user)
+            }
+        }
+
         const val MOVE_TO_STATE = 2
+        private const val USER = "my_user"
     }
 
     interface OnCountryListChanged {

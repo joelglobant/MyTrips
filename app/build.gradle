@@ -60,5 +60,9 @@ dependencies {
     implementation rx.values()
     testImplementation tests.values()
     implementation navDrawer.values()
+    implementation room.values()
+    implementation roomRX.values()
+    annotationProcessor roomCompiler.values()
+    kapt roomCompiler.values()
 
 }

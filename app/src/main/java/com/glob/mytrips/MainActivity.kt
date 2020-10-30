@@ -12,7 +12,6 @@ import com.glob.mytrips.app.DataInfoUser
 import com.glob.mytrips.contracts.MainMenuContract
 import com.glob.mytrips.models.UserModel
 import com.glob.mytrips.registers.UserInfoRegistry
-import com.glob.mytrips.view.DetailActivity
 import com.glob.mytrips.view.placelist.CountryListFragment
 import com.glob.mytrips.view.placelist.PlaceListFragment
 import com.glob.mytrips.view.placelist.StateListFragment
@@ -31,11 +30,12 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
     private lateinit var myDrawerToggle: ActionBarDrawerToggle
 
     private lateinit var userInfoTemporal: UserModel
+    private var userId: Int = -1
     private var countryPosTemp: Int = 0
     private var statePosTemp: Int = 0
 
     private val presenter: MainMenuContract.Presenter by lazy {
-        UserInfoRegistry().provide(this)
+        UserInfoRegistry(this).provide(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,8 +79,9 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
     }
 
     private fun openFragment() {
-        myPlacesFragment = CountryListFragment.newInstance()
-        addFragmentView(myPlacesFragment)
+        // fixme: 29/10/2020 remove it !!!!
+        //myPlacesFragment = CountryListFragment.newInstance()
+        //addFragmentView(myPlacesFragment)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -89,7 +90,7 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
     }
 
     private fun openConnection() {
-        val userIdFake = 2
+        val userIdFake = 1
         presenter.getUserAccount(userIdFake)
     }
 
@@ -112,13 +113,18 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
             tvProfileName.text = String.format("$name $surname")
             tvProfileBio.text = bio
             tvProfileNickname.text = nickname
+            userId = id
         }
-        userInfoTemporal = userInfo
 
-        val myFragment = supportFragmentManager.findFragmentByTag(myPlacesFragment.tag)
-        myFragment?.let {
-            (it as CountryListFragment).setupInfo(userInfo)
-        }
+        //userInfoTemporal = userInfo
+
+        myPlacesFragment = CountryListFragment.newInstance(userId)
+        addFragmentView(myPlacesFragment)
+
+//        val myFragment = supportFragmentManager.findFragmentByTag(myPlacesFragment.tag)
+//        myFragment?.let {
+//            (it as CountryListFragment).setupInfo(userInfo)
+//        }
     }
 
     override fun onMainInfoLoadedFail(message: String) {
@@ -140,14 +146,14 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
             }
             PlaceListFragment.MOVE_TO_DETAILS -> {
                 DataInfoUser.getInstance().placePosAt = onItem
-                val placeModel =
-                    userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].places[onItem]
-                val comeFrom =
-                    "${userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].name}," +
-                            " ${userInfoTemporal.generalPlaces[countryPosTemp].name}"
-                DetailActivity.launchActivity(this, onItem, comeFrom)
+//                val placeModel =
+//                    userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].places[onItem]
+//                val comeFrom =
+//                    "${userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].name}," +
+//                            " ${userInfoTemporal.generalPlaces[countryPosTemp].name}"
+                //DetailActivity.launchActivity(this, onItem, comeFrom)
             }
-            else -> CountryListFragment.newInstance()
+            else -> CountryListFragment.newInstance(userId)
         }
         addNewList(moveTo)
     }
@@ -155,17 +161,17 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
     private fun addNewList(toList: Int) {
         val myFragment = supportFragmentManager.fragments
         myFragment.let {
-            when (toList) {
-                2 -> (it[1] as StateListFragment).setupInfo(
-                    userInfoTemporal.generalPlaces[countryPosTemp].states
-                )
-                3 -> (it[2] as PlaceListFragment).setupInfo(
-                    userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].places
-                )
-                else -> {
-                    (it[0] as CountryListFragment).setupInfo(userInfoTemporal)
-                }
-            }
+//            when (toList) {
+//                2 -> (it[1] as StateListFragment).setupInfo(
+//                    userInfoTemporal.generalPlaces[countryPosTemp].states
+//                )
+//                3 -> (it[2] as PlaceListFragment).setupInfo(
+//                    userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].places
+//                )
+//                else -> {
+//                    (it[0] as CountryListFragment).setupInfo(userInfoTemporal)
+//                }
+//            }
         }
     }
 }

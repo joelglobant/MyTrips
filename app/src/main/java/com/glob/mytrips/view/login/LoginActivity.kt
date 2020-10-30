@@ -8,7 +8,7 @@ import android.widget.ProgressBar
 import com.glob.mytrips.MainActivity
 import com.glob.mytrips.R
 import com.glob.mytrips.app.BaseActivity
-import com.glob.mytrips.app.afterTextChanged
+import com.glob.mytrips.utils.afterTextChanged
 import com.glob.mytrips.contracts.LoginContract
 import com.glob.mytrips.registers.LoginRegistry
 import kotlinx.android.synthetic.main.activity_login.*

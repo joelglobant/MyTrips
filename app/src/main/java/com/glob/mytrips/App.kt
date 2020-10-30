@@ -4,8 +4,6 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
-import android.util.Log
-import com.glob.mytrips.app.DataInfoUser
 
 class App: Application() {
 
@@ -17,8 +15,6 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         createNotificationChannel()
-        val userInfoSingleton = DataInfoUser.getInstance()
-        Log.d(TAG, "onCreate: creating my Singleton: $userInfoSingleton")
     }
 
     private fun createNotificationChannel() {
