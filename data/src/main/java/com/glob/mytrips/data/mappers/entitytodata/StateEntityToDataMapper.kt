@@ -10,4 +10,10 @@ class StateEntityToDataMapper: Mapper<StateEntity, StateData> {
             StateData(id, idCountry, name, null)
         }
     }
+
+    override fun reverseTransform(value: StateData): StateEntity {
+        return with(value) {
+            StateEntity(id, idCountry, name)
+        }
+    }
 }

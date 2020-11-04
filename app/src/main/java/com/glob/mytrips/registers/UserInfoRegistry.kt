@@ -2,34 +2,24 @@ package com.glob.mytrips.registers
 
 import android.content.Context
 import com.glob.mytrips.contracts.MainMenuContract
-import com.glob.mytrips.data.data.CountryDataStoreFactory
-import com.glob.mytrips.data.data.CountryDataStoreFactoryImpl
-import com.glob.mytrips.data.data.UserInfoDataStoreFactoryImpl
-import com.glob.mytrips.data.data.UserInfoDataStoryFactory
+import com.glob.mytrips.data.data.*
 import com.glob.mytrips.data.executors.JobExecutor
 import com.glob.mytrips.data.executors.UIThread
 import com.glob.mytrips.data.local.*
 import com.glob.mytrips.data.local.db.MyTripsDb
-import com.glob.mytrips.data.local.entities.CountryEntity
-import com.glob.mytrips.data.mappers.datatodto.CountryDataToDtoMapper
-import com.glob.mytrips.data.mappers.datatodto.UserDataToDtoMapper
-import com.glob.mytrips.data.mappers.entitytodata.CountryEntityToDataMapper
-import com.glob.mytrips.data.mappers.entitytodata.UserEntityToDataMapper
+import com.glob.mytrips.data.mappers.datatodto.*
+import com.glob.mytrips.data.mappers.entitytodata.*
 import com.glob.mytrips.data.mappers.responsetodata.*
 import com.glob.mytrips.data.providers.UserInfoDataProvider
 import com.glob.mytrips.data.remote.*
 import com.glob.mytrips.data.remote.services.*
-import com.glob.mytrips.data.repositories.CountryDataRepository
-import com.glob.mytrips.data.repositories.UserInfoDataRepository
-import com.glob.mytrips.data.repositories.datastore.cache.CountryCache
-import com.glob.mytrips.data.repositories.datastore.cache.UserCache
+import com.glob.mytrips.data.repositories.*
+import com.glob.mytrips.data.repositories.datastore.cache.*
 import com.glob.mytrips.data.repositories.datastore.remote.*
-import com.glob.mytrips.domain.dtos.CountryDto
 import com.glob.mytrips.domain.executors.PostExecutorThread
 import com.glob.mytrips.domain.executors.ThreadExecutor
 import com.glob.mytrips.domain.providers.UserInfoProvider
-import com.glob.mytrips.domain.repositories.CountryRepository
-import com.glob.mytrips.domain.repositories.UserInfoRepository
+import com.glob.mytrips.domain.repositories.*
 import com.glob.mytrips.models.mappers.UserMapperModel
 import com.glob.mytrips.presenters.MainMenuPresenter
 import com.glob.mytrips.services.RetrofitFactory
@@ -70,19 +60,25 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
     private val photoRespToDataMap = PhotoResponseToDataMapper()
     private val placeRespToDataMap = PlaceResponseToDataMapper(photoRespToDataMap)
     private val stateRespToDataMap = StateResponseToDataMapper(placeRespToDataMap)
-
     private val countryRespToDataMap = CountryResponseToDataMapper(stateRespToDataMap)
-
     private val userRespToEntity = UserResponseToDataMapper(countryRespToDataMap)
+
     private val userEntityToDto = UserEntityToDataMapper()
     private val userPreferences = PreferencesHelper(context)
+
     private val mapperModel = UserMapperModel()
 
     private val countryEntityToDataMap = CountryEntityToDataMapper()
     private val userEntityToDataMap = UserEntityToDataMapper()
+    private val stateEntityToData = StateEntityToDataMapper()
+    private val placeEntityToDto = PlaceEntityToDataMapper()
+    private val photoEntityToData = PhotoEntityToDataMapper()
 
     private val countryDataToDto = CountryDataToDtoMapper()
     private val userDataToDto = UserDataToDtoMapper()
+    private val stateDataToDto = StateDataToDtoMapper()
+    private val placeDataToDto = PlaceDataToDtoMapper()
+    private val photoDataToDto = PhotoDataToDtoMapper()
 
 
     /**-------  Remote implementations ---------**/
@@ -107,8 +103,18 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
     private val userCache: UserCache by lazy {
         UserLocalImpl(dataBase, userPreferences)
     }
+    // TODO: 03/11/2020 add preferences!!!
     private val countryCache: CountryCache by lazy {
         CountryCacheImpl(dataBase)
+    }
+    private val stateCache: StateCache by lazy {
+        StateCacheImp(dataBase)
+    }
+    private val placeCache: PlaceCache by lazy {
+        PlaceCacheImp(dataBase)
+    }
+    private val photoCache: PhotoCache by lazy {
+        PhotoCacheImp(dataBase)
     }
 
     /**----- DataStore ----*/
@@ -116,25 +122,56 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
     private val localUserCache: LocalDataStore = LocalDataStore(userCache, userEntityToDto)
 
     private val countryRemoteDataStore: CountryRemoteDataStore =
-        CountryRemoteDataStore(countryRemote, countryDataToDto, countryRespToDataMap)
-
+        CountryRemoteDataStore(countryRemote, countryRespToDataMap)
     private val countryCacheDataStore: CountryCacheDataStore =
         CountryCacheDataStore(countryCache, countryDataToDto, countryEntityToDataMap)
 
+    private val stateRemoteDataStore: StateRemoteDataStore =
+        StateRemoteDataStore(stateRemote, stateRespToDataMap)
+    private val stateCacheDataStore: StateCacheDataStore =
+        StateCacheDataStore(stateCache, stateEntityToData, stateDataToDto)
+
+    private val placeRemoteDataStore: PlaceRemoteDataStore =
+        PlaceRemoteDataStore(placeRemote, placeRespToDataMap)
+    private val placeCacheDataStore: PlaceCacheDataStore =
+        PlaceCacheDataStore(placeCache, placeDataToDto, placeEntityToDto)
+
+    private val photoRemoteDataStore: PhotoRemoteDataStore =
+        PhotoRemoteDataStore(photoRemote,photoRespToDataMap)
+    private val photoCacheDataStore: PhotoCacheDataStore =
+        PhotoCacheDataStore(photoCache, photoEntityToData, photoDataToDto)
+
+
+    /** ------ Factories ------*/
+    private val stateFactory: StateDataStoreFactory by lazy {
+        StateDataStoreFactoryImp(stateCache, stateRemoteDataStore, stateCacheDataStore)
+    }
     private val userFactory: UserInfoDataStoryFactory by lazy {
         UserInfoDataStoreFactoryImpl(userCache, remoteDataStore, localUserCache)
     }
     private val countryFactory: CountryDataStoreFactory by lazy {
         CountryDataStoreFactoryImpl(countryCache, countryRemoteDataStore, countryCacheDataStore)
     }
+    private val placeFactory: PlaceDataStoreFactory by lazy {
+        PlaceDataStoreFactoryImp(placeCache, placeRemoteDataStore, placeCacheDataStore)
+    }
+    private val photoFactory: PhotoDataStoreFactory by lazy {
+        PhotoDataStoreFactoryImp(photoCache, photoRemoteDataStore, photoCacheDataStore)
+    }
 
     /**-------  Repositories  ---------- */
+    private val photoRepository: PhotoRepository by lazy {
+        PhotoDataRepository(photoFactory, photoDataToDto)
+    }
+    private val placeRepository: PlaceRepository by lazy {
+        PlaceDataRepository(placeFactory, photoRepository, placeDataToDto, photoDataToDto)
+    }
+    private val stateRepository: StateRepository by lazy {
+        StateDataRepository(stateFactory, placeRepository, stateDataToDto, placeDataToDto)
+    }
+
     private val countryRepository: CountryRepository by lazy {
-        CountryDataRepository(
-            countryFactory
-            //, countryEntityToDataMap,
-            //countryDataToDto
-        )
+        CountryDataRepository(countryFactory, stateRepository, countryDataToDto, stateDataToDto)
     }
 
     private val userRepository: UserInfoRepository by lazy {
@@ -142,8 +179,8 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
             userFactory,
             countryRepository,
             userDataToDto,
-            userEntityToDataMap,
-            countryEntityToDataMap
+            countryDataToDto,
+            userEntityToDataMap
         )
     }
 

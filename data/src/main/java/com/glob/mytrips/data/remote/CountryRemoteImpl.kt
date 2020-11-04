@@ -8,7 +8,6 @@ import io.reactivex.Single
 class CountryRemoteImpl(
     private val countryServices: CountryServices
 ) : CountryRemote {
-
     override fun getCountries(idUser: Int): Single<List<CountryResponse>> {
         return countryServices.getCountriesByUser(idUser)
             .flatMap { response ->
@@ -21,6 +20,5 @@ class CountryRemoteImpl(
                 }
             }
     }
-
     // TODO: 28/10/2020 create a multi selector for fake selectors
 }

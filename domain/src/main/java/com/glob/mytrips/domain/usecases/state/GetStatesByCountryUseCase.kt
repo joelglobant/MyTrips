@@ -7,11 +7,11 @@ import com.glob.mytrips.domain.repositories.StateRepository
 import com.glob.mytrips.domain.usecases.SingleUseCase
 import io.reactivex.Single
 
-class GetStatesByUserUseCase(
+class GetStatesByCountryUseCase(
     private val stateRepository: StateRepository,
     threadExecutor: ThreadExecutor,
     postExecutorThread: PostExecutorThread
-) : SingleUseCase<GetStatesByUserUseCase.Params, List<StateDto>>(
+) : SingleUseCase<GetStatesByCountryUseCase.Params, List<StateDto>>(
     threadExecutor,
     postExecutorThread
 ) {

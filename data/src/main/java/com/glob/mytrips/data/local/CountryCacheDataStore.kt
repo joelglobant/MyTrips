@@ -2,6 +2,7 @@ package com.glob.mytrips.data.local
 
 import com.glob.mytrips.data.mappers.datatodto.CountryDataToDtoMapper
 import com.glob.mytrips.data.mappers.entitytodata.CountryEntityToDataMapper
+import com.glob.mytrips.data.model.CountryData
 import com.glob.mytrips.data.repositories.datastore.CountryDataStore
 import com.glob.mytrips.data.repositories.datastore.cache.CountryCache
 import com.glob.mytrips.domain.dtos.CountryDto
@@ -11,17 +12,13 @@ import io.reactivex.Single
 class CountryCacheDataStore(
     private val countryCache: CountryCache,
     private val countryDataToDto: CountryDataToDtoMapper,
-    private val countryMapper: CountryEntityToDataMapper
+    private val countryEntToData: CountryEntityToDataMapper
 ) : CountryDataStore {
-    override fun getCountries(idUser: Int): Single<List<CountryDto>> {
+    override fun getCountries(idUser: Int): Single<List<CountryData>> {
         return countryCache.getCountres(idUser)
             .map { countries ->
                 countries.map {
-                    countryMapper.transform(it)
-                }
-            }.map { countriesData ->
-                countriesData.map {
-                    countryDataToDto.transform(it)
+                    countryEntToData.transform(it)
                 }
             }
     }
@@ -29,7 +26,7 @@ class CountryCacheDataStore(
     override fun saveCountry(country: CountryDto): Completable {
         // TODO: 29/10/2020 verify the timeStamp
         val countryData = countryDataToDto.reverseTransform(country)
-        return countryCache.saveCountry(countryMapper.reverseTransform(countryData))
+        return countryCache.saveCountry(countryEntToData.reverseTransform(countryData))
             .doOnComplete {
                 println("Country saved!!! ")
             }
@@ -39,7 +36,7 @@ class CountryCacheDataStore(
         val countriesData =
             countries.map { countryDataToDto.reverseTransform(it) }
         return countryCache.saveCountries(
-            countriesData.map { countryMapper.reverseTransform(it) }
+            countriesData.map { countryEntToData.reverseTransform(it) }
         ).doOnComplete {
             println("Countries saved!!!!! ")
         }

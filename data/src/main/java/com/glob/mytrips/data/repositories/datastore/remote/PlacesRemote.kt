@@ -5,4 +5,5 @@ import io.reactivex.Single
 
 interface PlacesRemote {
     fun getPlaces(idState: Int): Single<List<PlaceResponse>>
+    fun getPlace(idPlace: Int): Single<PlaceResponse>
 }

@@ -5,7 +5,9 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 interface PlaceCache {
-    fun getPlace(idState: Int) : Single<PlaceEntity>
-    fun savePlace(place: PlaceEntity): Completable
-    fun isCached(): Single<Boolean>
+    fun getPlaces(idState: Int) : Single<List<PlaceEntity>>
+    fun getPlace(idPlace: Int) : Single<PlaceEntity>
+    fun savePlaces(place: List<PlaceEntity>): Completable
+    fun isCached(idState: Int): Single<Boolean>
+    fun isExpired(): Boolean
 }

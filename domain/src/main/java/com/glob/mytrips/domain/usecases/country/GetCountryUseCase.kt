@@ -15,11 +15,11 @@ class GetCountryUseCase(
     threadExecutor,
     postExecutorThread
 ) {
-    data class Params(val idPlace: Int)
+    data class Params(val idUser: Int)
 
     override fun buildSingleUseCase(params: Params?): Single<List<CountryDto>> {
         return params?.let {
-            countryRepository.getCountry(1)
+            countryRepository.getCountries(it.idUser)
         } ?: Single.error(Throwable("Photos not found"))
     }
 }

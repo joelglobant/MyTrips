@@ -1,6 +1,5 @@
 package com.glob.mytrips.presenters
 
-import com.glob.mytrips.app.DataInfoUser
 import com.glob.mytrips.contracts.DetailPlaceContract
 
 class DetailPresenter(private val view: DetailPlaceContract.View):

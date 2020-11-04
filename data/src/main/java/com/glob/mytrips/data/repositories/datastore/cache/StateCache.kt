@@ -5,7 +5,9 @@ import io.reactivex.Completable
 import io.reactivex.Single
 
 interface StateCache {
-    fun getState(idCountry: Int) : Single<StateEntity>
+    fun getState(idCountry: Int) : Single<List<StateEntity>>
     fun saveState(state: StateEntity): Completable
-    fun isCached(): Single<Boolean>
+    fun saveStates(states: List<StateEntity>): Completable
+    fun isCached(idCountry: Int): Single<Boolean>
+    fun isExpired(): Boolean
 }

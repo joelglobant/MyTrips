@@ -10,4 +10,10 @@ class PlaceEntityToDataMapper : Mapper<PlaceEntity, PlaceData> {
             PlaceData(id, idState, name, description, rate, favorite, null)
         }
     }
+
+    override fun reverseTransform(value: PlaceData): PlaceEntity {
+        return with(value) {
+            PlaceEntity(id, idState, name, description, rank, favorite)
+        }
+    }
 }

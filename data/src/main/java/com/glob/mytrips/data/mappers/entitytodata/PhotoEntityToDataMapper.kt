@@ -10,4 +10,10 @@ class PhotoEntityToDataMapper : Mapper<PhotoEntity, PhotoData> {
             PhotoData(id, idPlace, url)
         }
     }
+
+    override fun reverseTransform(value: PhotoData): PhotoEntity {
+        return with(value) {
+            PhotoEntity(id, idPlace, url)
+        }
+    }
 }

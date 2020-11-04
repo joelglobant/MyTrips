@@ -7,10 +7,23 @@ import io.reactivex.Single
 
 class PlaceRemoteImpl(
     private val placeServices: PlaceServices
-): PlacesRemote {
+) : PlacesRemote {
 
     override fun getPlaces(idState: Int): Single<List<PlaceResponse>> {
         return placeServices.getPlaceByState(idState)
+            .flatMap { response ->
+                return@flatMap if (response.isSuccessful) {
+                    response.body()?.let { placeResponse ->
+                        Single.just(placeResponse)
+                    }
+                } else {
+                    Single.error(Throwable(response.errorBody().toString()))
+                }
+            }
+    }
+
+    override fun getPlace(idPlace: Int): Single<PlaceResponse> {
+        return placeServices.getPlaceById(idPlace)
             .flatMap { response ->
                 return@flatMap if (response.isSuccessful) {
                     response.body()?.let { placeResponse ->

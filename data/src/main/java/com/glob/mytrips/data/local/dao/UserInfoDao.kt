@@ -10,7 +10,7 @@ import io.reactivex.Completable
 
 @Dao
 interface UserInfoDao {
-    @Query("SELECT * FROM ${UserInfoConstants.TABLE_COUNTRY}")
+    @Query("SELECT * FROM ${UserInfoConstants.TABLE_USER}")
     fun getCurrentUser(): UserEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
