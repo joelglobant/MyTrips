@@ -7,6 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface CountryServices {
-    @GET("www.google.com{id}")
-    fun getCountriesByUser(@Path("id") idUser: Int): Single<Response<List<CountryResponse>>>
+    @GET("v3/473a5514-cf5b-4534-8b2a-583d6c8ed4bd")
+    fun getCountriesByUser(): Single<Response<List<CountryResponse>>>
 }

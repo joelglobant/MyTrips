@@ -11,7 +11,7 @@ class PhotoRemoteImpl(
 
     override fun getPhotos(idPlace: Int): Single<List<PhotoResponse>> {
         // TODO: 28/10/2020 made a random selection
-        return photoServices.getPhotosByPlace(idPlace)
+        return photoServices.getPhotosByPlace()
             .flatMap { response ->
                 return@flatMap if (response.isSuccessful) {
                     response.body()?.let { photoResponse ->

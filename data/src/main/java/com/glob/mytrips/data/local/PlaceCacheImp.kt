@@ -17,13 +17,13 @@ class PlaceCacheImp(
         return Single.just(db.cachedPlacesDao().getPlaceById(idPlace))
     }
 
-    override fun savePlaces(places: List<PlaceEntity>): Completable {
-        return db.cachedPlacesDao().saveNewPlaces(places)
+    override fun savePlaces(placeList: List<PlaceEntity>): Completable {
+        return db.cachedPlacesDao().saveNewPlaces(placeList)
     }
 
     override fun isCached(idState: Int): Single<Boolean> {
         return Single.defer {
-            Single.just(db.cachedPlacesDao().getPlacesFromState(idState).isNotEmpty())
+            Single.just(db.cachedPlacesDao().getPlaceById(idState) != null)
         }
     }
 

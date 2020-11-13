@@ -9,7 +9,7 @@ class StateRemoteImpl(
     private val statesServices: StateServices
 ): StateRemote {
     override fun getStates(idCountry: Int): Single<List<StateResponse>> {
-        return statesServices.getStatesByCountry(idCountry)
+        return statesServices.getStatesByCountry()
             .flatMap { response ->
                 return@flatMap if (response.isSuccessful) {
                     response.body()?.let { stateResponse ->

@@ -8,6 +8,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface StateServices {
-    @GET("www.google.com{id}")
-    fun getStatesByCountry(@Path("id") idCountry: Int): Single<Response<List<StateResponse>>>
+    @GET("v3/d0b6e75b-1241-4a8c-9efd-2676746e18ba")
+    fun getStatesByCountry(): Single<Response<List<StateResponse>>>
 }

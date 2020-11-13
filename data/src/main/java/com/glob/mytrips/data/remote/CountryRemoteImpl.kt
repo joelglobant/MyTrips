@@ -9,7 +9,7 @@ class CountryRemoteImpl(
     private val countryServices: CountryServices
 ) : CountryRemote {
     override fun getCountries(idUser: Int): Single<List<CountryResponse>> {
-        return countryServices.getCountriesByUser(idUser)
+        return countryServices.getCountriesByUser()
             .flatMap { response ->
                 return@flatMap if (response.isSuccessful) {
                     response.body()?.let { countryResponse ->

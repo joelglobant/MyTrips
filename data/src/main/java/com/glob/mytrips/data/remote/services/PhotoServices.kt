@@ -6,6 +6,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface PhotoServices {
-    @GET("v3/a3afa21c-ebc6-42da-a8df-b4558340f09d")
-    fun getPhotosByPlace(idPlace: Int): Single<Response<List<PhotoResponse>>>
+    @GET("v3/13492dda-432a-461c-b807-5b01e155ee73")
+    fun getPhotosByPlace(): Single<Response<List<PhotoResponse>>>
 }

@@ -10,7 +10,7 @@ class PlaceRemoteImpl(
 ) : PlacesRemote {
 
     override fun getPlaces(idState: Int): Single<List<PlaceResponse>> {
-        return placeServices.getPlaceByState(idState)
+        return placeServices.getPlaceByState()
             .flatMap { response ->
                 return@flatMap if (response.isSuccessful) {
                     response.body()?.let { placeResponse ->
@@ -23,7 +23,7 @@ class PlaceRemoteImpl(
     }
 
     override fun getPlace(idPlace: Int): Single<PlaceResponse> {
-        return placeServices.getPlaceById(idPlace)
+        return placeServices.getPlaceById()
             .flatMap { response ->
                 return@flatMap if (response.isSuccessful) {
                     response.body()?.let { placeResponse ->
