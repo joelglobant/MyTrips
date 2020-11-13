@@ -10,13 +10,13 @@ import com.glob.mytrips.R
 import com.glob.mytrips.app.BaseActivity
 import com.glob.mytrips.utils.afterTextChanged
 import com.glob.mytrips.contracts.LoginContract
-import com.glob.mytrips.registers.LoginRegistry
+import com.glob.mytrips.registers.UserInfoRegistry
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity(), LoginContract.View {
 
     private val presenter: LoginContract.Presenter by lazy {
-        LoginRegistry().provide(this)
+        UserInfoRegistry(this).provideLogin(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -22,7 +22,8 @@
         </activity>
         <activity
             android:name=".servicesfortest.IntentServiceActivity"
-            android:windowSoftInputMode="stateVisible"></activity>
+            android:windowSoftInputMode="stateVisible">
+        </activity>
         <activity android:name=".servicesfortest.BindServActivity"/>
         <activity android:name=".servicesfortest.ForegroundActivity" />
         <activity android:name=".view.RecyclerActivity" />

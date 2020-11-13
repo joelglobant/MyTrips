@@ -1,7 +1,6 @@
-package com.glob.mytrips.registers
+package com.glob.mytrips.di
 
 import android.content.Context
-import com.glob.mytrips.contracts.*
 import com.glob.mytrips.data.data.*
 import com.glob.mytrips.data.executors.JobExecutor
 import com.glob.mytrips.data.executors.UIThread
@@ -10,7 +9,8 @@ import com.glob.mytrips.data.local.db.MyTripsDb
 import com.glob.mytrips.data.mappers.datatodto.*
 import com.glob.mytrips.data.mappers.entitytodata.*
 import com.glob.mytrips.data.mappers.responsetodata.*
-import com.glob.mytrips.data.providers.*
+import com.glob.mytrips.data.providers.CountryDataProvider
+import com.glob.mytrips.data.providers.UserInfoDataProvider
 import com.glob.mytrips.data.remote.*
 import com.glob.mytrips.data.remote.services.*
 import com.glob.mytrips.data.repositories.*
@@ -19,11 +19,27 @@ import com.glob.mytrips.data.repositories.datastore.remote.*
 import com.glob.mytrips.domain.executors.PostExecutorThread
 import com.glob.mytrips.domain.executors.ThreadExecutor
 import com.glob.mytrips.domain.repositories.*
-import com.glob.mytrips.models.mappers.*
-import com.glob.mytrips.presenters.*
+import com.glob.mytrips.models.mappers.UserMapperModel
+import com.glob.mytrips.providers.UserInfoProvider
 import com.glob.mytrips.services.RetrofitFactory
 
-class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context her??
+object RepositoryProvider {
+
+
+    /**----- Data Base -------- */
+    private var dataBase : MyTripsDb? = null
+    private var userPreferences : PreferencesHelper? = null
+
+    fun startLocalData(context: Context) {
+        synchronized(this) {
+           dataBase = MyTripsDb.getInstance(context).also {
+                dataBase = it
+            }
+        }
+        synchronized(this) {
+            userPreferences = PreferencesHelper(context)
+        }
+    }
 
     private val threadExecutor: ThreadExecutor by lazy {
         JobExecutor()
@@ -51,9 +67,6 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
         RetrofitFactory.instance().create(PhotoServices::class.java)
     }
 
-    /**----- Data Base -------- */
-    private val dataBase = MyTripsDb.getInstance(context)
-
 
     /** ------ Mappers --------- */
     private val photoRespToDataMap = PhotoResponseToDataMapper()
@@ -63,14 +76,8 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
     private val userRespToEntity = UserResponseToDataMapper(countryRespToDataMap)
 
     private val userEntityToDto = UserEntityToDataMapper()
-    private val userPreferences = PreferencesHelper(context)
 
-    private val mapperModel = UserMapperModel()
-    private val countryModelMap = CountryMapperModel()
-    private val stateModelMap = StateMapperModel()
-    private val placeModelMap = PlaceMapperModel()
-    private val photoModelMap = PhotoMapperModel()
-
+    private val userMapModel = UserMapperModel()
 
     private val countryEntityToDataMap = CountryEntityToDataMapper()
     private val userEntityToDataMap = UserEntityToDataMapper()
@@ -105,20 +112,21 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
 
     //----- Local ----
     private val userCache: UserCache by lazy {
-        UserLocalImpl(dataBase, userPreferences)
+        UserLocalImpl(dataBase!!, userPreferences!!)
     }
+
     // TODO: 03/11/2020 add preferences!!!
     private val countryCache: CountryCache by lazy {
-        CountryCacheImpl(dataBase)
+        CountryCacheImpl(dataBase!!)
     }
     private val stateCache: StateCache by lazy {
-        StateCacheImp(dataBase)
+        StateCacheImp(dataBase!!)
     }
     private val placeCache: PlaceCache by lazy {
-        PlaceCacheImp(dataBase)
+        PlaceCacheImp(dataBase!!)
     }
     private val photoCache: PhotoCache by lazy {
-        PhotoCacheImp(dataBase)
+        PhotoCacheImp(dataBase!!)
     }
 
     /**----- DataStore ----*/
@@ -141,7 +149,7 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
         PlaceCacheDataStore(placeCache, placeDataToDto, placeEntityToDto)
 
     private val photoRemoteDataStore: PhotoRemoteDataStore =
-        PhotoRemoteDataStore(photoRemote,photoRespToDataMap)
+        PhotoRemoteDataStore(photoRemote, photoRespToDataMap)
     private val photoCacheDataStore: PhotoCacheDataStore =
         PhotoCacheDataStore(photoCache, photoEntityToData, photoDataToDto)
 
@@ -179,82 +187,21 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
     }
 
     private val userRepository: UserInfoRepository by lazy {
-        UserInfoDataRepository(
-            userFactory,
-            countryRepository,
-            userDataToDto,
-            countryDataToDto,
-            userEntityToDataMap
+        UserInfoDataRepository(userFactory, countryRepository, userDataToDto, countryDataToDto, userEntityToDataMap
         )
     }
 
-    private val usProvider =
+
+
+    //val providerCountryRepository: CountryRepository =
+        //CountryDataProvider(userRepository, threadExecutor, postExecutorThread)
+
+    fun userProvider(): UserInfoDataProvider =
         UserInfoDataProvider(userRepository, threadExecutor, postExecutorThread)
-    private val cProvider =
-        CountryDataProvider(countryRepository, threadExecutor, postExecutorThread)
-    private val stateProvider =
-        StateDataProvider(stateRepository, threadExecutor, postExecutorThread)
-    private val placeProvider =
-        PlaceDataProvider(placeRepository, threadExecutor, postExecutorThread)
-    private val photoProvider =
-        PhotoDataProvider(photoRepository, threadExecutor, postExecutorThread)
 
-
-    fun provideLogin(view: LoginContract.View): LoginContract.Presenter {
-        return LoginPresenter(view)
-    }
-
-    fun provideUser(view: MainMenuContract.View): MainMenuContract.Presenter {
-        return MainMenuPresenter(usProvider, view, mapperModel)
-    }
-
-    fun provideDetail(view: DetailPlaceContract.View): DetailPlaceContract.Presenter {
-        return DetailPresenter(placeProvider, photoProvider, view, placeModelMap, photoModelMap)
-    }
-
-    fun provideCountryList(view: CountryListContract.View): CountryListContract.Presenter {
-        return CountryListPresenter(view, cProvider, countryModelMap)
-    }
-
-    fun provideStateList(view: StateListContract.View): StateListContract.Presenter {
-        return StateListPresenter( stateProvider, view, stateModelMap)
-    }
-
-    fun providePlaceList(view: PlaceContract.View): PlaceContract.Presenter {
-        return PlaceListPresenter(placeProvider, view, placeModelMap)
-    }
-
-//    fun providePhotoList(view: CountryListContract.View): CountryListContract.Presenter {
-//        return ListPresenter(view, cProvider, countryModelMap)
+//    val m: UserInfoRepository by Lazy {
+//        UserInfoDataProvider(userRepository, threadExecutor, postExecutorThread)
 //    }
+
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-//class UserInfoRegistry(private val context: Context) {
-//
-//    /** ------ Mappers --------- */
-//    private val photoRespToDataMap = PhotoResponseToDataMapper()
-//    private val placeRespToDataMap = PlaceResponseToDataMapper(photoRespToDataMap)
-//    private val stateRespToDataMap = StateResponseToDataMapper(placeRespToDataMap)
-//    private val countryRespToDataMap = CountryResponseToDataMapper(stateRespToDataMap)
-//    private val userRespToEntity = UserResponseToDataMapper(countryRespToDataMap)
-//
-//    private val userMapModel = UserMapperModel()
-//
-//    fun provideMainPresenter(view: MainMenuContract.View): MainMenuContract.Presenter {
-//        RepositoryProvider.startLocalData(context)
-//        val userProvider = RepositoryProvider.userProvider()
-//        return MainMenuPresenter(userProvider, view, userMapModel)
-//    }
-//}

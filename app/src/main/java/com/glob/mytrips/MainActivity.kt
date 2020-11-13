@@ -1,22 +1,26 @@
 package com.glob.mytrips
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.glob.mytrips.app.BaseActivity
 import com.glob.mytrips.contracts.MainMenuContract
 import com.glob.mytrips.models.UserModel
 import com.glob.mytrips.registers.UserInfoRegistry
+import com.glob.mytrips.view.DetailActivity
 import com.glob.mytrips.view.placelist.CountryListFragment
 import com.glob.mytrips.view.placelist.PlaceListFragment
 import com.glob.mytrips.view.placelist.StateListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.layout_error.view.*
 import kotlinx.android.synthetic.main.nav_header.*
 
 class MainActivity : BaseActivity(), MainMenuContract.View,
@@ -27,14 +31,12 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var myPlacesFragment: CountryListFragment
     private lateinit var myDrawerToggle: ActionBarDrawerToggle
-
-    private lateinit var userInfoTemporal: UserModel
     private var userId: Int = -1
-    private var countryPosTemp: Int = 0
-    private var statePosTemp: Int = 0
+    private var loaderSetup = false
 
     private val presenter: MainMenuContract.Presenter by lazy {
-        UserInfoRegistry(this).provide(this)
+        UserInfoRegistry(this).provideUser(this)
+//        UserInfoRegistry(this).provideMainPresenter(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +46,7 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //        supportActionBar?.setHomeButtonEnabled(true)
         setupDrawer()
-        openFragment()
+        setupLoader()
         openConnection()
     }
 
@@ -71,16 +73,27 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
         myDrawerToggle.syncState()
     }
 
+    private fun setupLoader() {
+//        loaderView.swiperefresh.setColorSchemeColors(
+//            resources.getColor(R.color.blueVanish), resources.getColor(R.color.colorPrimary),
+//            resources.getColor(R.color.colorAccent), resources.getColor(R.color.green)
+//        )
+//
+//        loaderView.swiperefresh.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+//            override fun onRefresh() {
+//                Log.e(javaClass.simpleName, "refresh")
+//                Handler().postDelayed({
+//                    loaderView.swiperefresh.isRefreshing = false
+//                }, 300)
+//                presenter.getUserAccount(userId)
+//            }
+//        })
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (myDrawerToggle.onOptionsItemSelected(item))
             return true
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun openFragment() {
-        // fixme: 29/10/2020 remove it !!!!
-        //myPlacesFragment = CountryListFragment.newInstance()
-        //addFragmentView(myPlacesFragment)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -89,7 +102,7 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
     }
 
     private fun openConnection() {
-        val userIdFake = 1
+        val userIdFake = 1 // TODO: 05/11/2020 this value need come from preferences or loginActivity!
         presenter.getUserAccount(userIdFake)
     }
 
@@ -114,63 +127,32 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
             tvProfileNickname.text = nickname
             userId = id
         }
-
-        //userInfoTemporal = userInfo
-
         myPlacesFragment = CountryListFragment.newInstance(userId)
         addFragmentView(myPlacesFragment)
-
-//        val myFragment = supportFragmentManager.findFragmentByTag(myPlacesFragment.tag)
-//        myFragment?.let {
-//            (it as CountryListFragment).setupInfo(userInfo)
-//        }
     }
 
     override fun onMainInfoLoadedFail(message: String) {
         Log.e(TAG, "onMainInfoLoadedFail: $message")
         errorView.visibility = View.VISIBLE
+        if (!loaderSetup) {
+            //setUpLoader()
+            loaderSetup = true
+        }
     }
 
-    override fun onListChanged(moveTo: Int, onItem: Int) {
+    override fun onListChanged(moveTo: Int, idSelected: Int) {
         when (moveTo) {
             CountryListFragment.MOVE_TO_STATE -> {
-                countryPosTemp = onItem
-//                DataInfoUser.getInstance().countryPosAt = onItem
-//                addFragmentView(StateListFragment.newInstance())
+                addFragmentView(StateListFragment.newInstance(idSelected))
             }
             StateListFragment.MOVE_TO_PLACES -> {
-                statePosTemp = onItem
-//                DataInfoUser.getInstance().statePosAt = onItem
-//                addFragmentView(PlaceListFragment.newInstance())
+                addFragmentView(PlaceListFragment.newInstance(idSelected))
             }
             PlaceListFragment.MOVE_TO_DETAILS -> {
-                //DataInfoUser.getInstance().placePosAt = onItem
-//                val placeModel =
-//                    userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].places[onItem]
-//                val comeFrom =
-//                    "${userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].name}," +
-//                            " ${userInfoTemporal.generalPlaces[countryPosTemp].name}"
-                //DetailActivity.launchActivity(this, onItem, comeFrom)
+                DetailActivity.launchActivity(this, idSelected)
             }
-            else -> CountryListFragment.newInstance(userId)
+            else -> sendMessage("something was wrong!! \n :/ ")
         }
-        addNewList(moveTo)
     }
 
-    private fun addNewList(toList: Int) {
-        val myFragment = supportFragmentManager.fragments
-        myFragment.let {
-//            when (toList) {
-//                2 -> (it[1] as StateListFragment).setupInfo(
-//                    userInfoTemporal.generalPlaces[countryPosTemp].states
-//                )
-//                3 -> (it[2] as PlaceListFragment).setupInfo(
-//                    userInfoTemporal.generalPlaces[countryPosTemp].states[statePosTemp].places
-//                )
-//                else -> {
-//                    (it[0] as CountryListFragment).setupInfo(userInfoTemporal)
-//                }
-//            }
-        }
-    }
 }

@@ -20,8 +20,7 @@ fun AppCompatActivity.launchActivity(toActivity: Class<out AppCompatActivity>, r
 }
 
 fun ImageView.loadUrl(url: String) {
-    //.build().load(photos[position].url).into(holder.photo)
-    Picasso.Builder(context).build().load(url)
+    Picasso.Builder(this.context).build().load(url).into(this)
 }
 
 

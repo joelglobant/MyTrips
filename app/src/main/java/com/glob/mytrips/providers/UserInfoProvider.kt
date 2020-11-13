@@ -1,4 +1,4 @@
-package com.glob.mytrips.domain.providers
+package com.glob.mytrips.providers
 
 import com.glob.mytrips.domain.dtos.UserDto
 import com.glob.mytrips.domain.usecases.SingleUseCase

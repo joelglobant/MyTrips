@@ -7,4 +7,6 @@
     <color name="black">#000</color>
     <color name="vanishWhite">#B2FAFAFA</color>
     <color name="white">#FFFFFF</color>
+    <color name="green">#00E331</color>
+    <color name="blueVanish">#BF0FABFF</color>
 </resources>

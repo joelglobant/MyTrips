@@ -3,7 +3,6 @@ package com.glob.mytrips.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,9 +22,6 @@ class DetailActivity : BaseActivity(), DetailPlaceContract.View {
         UserInfoRegistry(this).provideDetail(this)
     }
 
-//    private val pres: DetailPlaceContract.Presenter by lazy {
-//        UserInfoRegistry(this).providePlaceList(this)
-//    }
     private lateinit var place: PlaceModel
     private var idPlace: Int = -1
     private val photoRecycler: RecyclerView by lazy {
@@ -84,7 +80,6 @@ class DetailActivity : BaseActivity(), DetailPlaceContract.View {
 
     override fun setPhotos(photos: List<PhotoModel>) {
         photoAdapter.updatePhotos(photos)
-        Log.i("TAG", "setPhotos: ${photos.toTypedArray()}")
     }
 
     override fun showLoader(action: Boolean) {

@@ -1,13 +1,13 @@
 package com.glob.mytrips.presenters
 
 import com.glob.mytrips.contracts.MainMenuContract
-import com.glob.mytrips.domain.providers.UserInfoProvider
+import com.glob.mytrips.data.providers.UserInfoDataProvider
 import com.glob.mytrips.domain.usecases.userinfo.GetUserInfoUseCase
 import com.glob.mytrips.models.mappers.UserMapperModel
 import io.reactivex.disposables.CompositeDisposable
 
 class MainMenuPresenter(
-    private val userInfoProvider: UserInfoProvider,
+    private val userInfoProvider: UserInfoDataProvider,
     private val view: MainMenuContract.View,
     private val userMapperModel: UserMapperModel
 ) : MainMenuContract.Presenter {
@@ -36,6 +36,7 @@ class MainMenuPresenter(
     private fun hideLoader() {
         view.showLoader(false)
     }
+
     override fun onDestroy() {
         disposable.dispose()
     }
