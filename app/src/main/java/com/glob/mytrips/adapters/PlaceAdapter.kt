@@ -14,7 +14,7 @@ class PlaceAdapter(
     private val listener: PlaceListener
 ) : RecyclerView.Adapter<PlaceAdapter.PlaceViewHolder>() {
 
-    fun updateMyPlaces(items : List<PlaceModel>) {
+    fun updateMyPlaces(items: List<PlaceModel>) {
         places = items
         notifyDataSetChanged()
     }
@@ -26,7 +26,11 @@ class PlaceAdapter(
     }
 
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
-            holder.placeName.text = places[position].name
+        val country = places[position]
+        holder.placeName.text = country.name
+        holder.cLayout.setOnClickListener {
+            listener.onItemClicked(country.id)
+        }
     }
 
     override fun getItemCount() = places.size
@@ -34,12 +38,5 @@ class PlaceAdapter(
     inner class PlaceViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val cLayout = item.findViewById<ConstraintLayout>(R.id.itemPlace)
         val placeName = item.findViewById<TextView>(R.id.placeId)
-
-        init {
-            cLayout.setOnClickListener {
-                listener.onItemClicked(  false, adapterPosition)
-            }
-        }
     }
-
 }

@@ -14,7 +14,7 @@ class StateAdapter(
     private val listener: PlaceListener
 ) : RecyclerView.Adapter<StateAdapter.StateViewHolder>() {
 
-    fun updateMyStates(items : List<StateModel>) {
+    fun updateMyStates(items: List<StateModel>) {
         states = items
         notifyDataSetChanged()
     }
@@ -26,7 +26,11 @@ class StateAdapter(
     }
 
     override fun onBindViewHolder(holder: StateViewHolder, position: Int) {
-            holder.placeName.text = states[position].name
+        val state = states[position]
+        holder.placeName.text = state.name
+        holder.cLayout.setOnClickListener {
+            listener.onItemClicked(state.id)
+        }
     }
 
     override fun getItemCount() = states.size
@@ -34,12 +38,6 @@ class StateAdapter(
     inner class StateViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val cLayout = item.findViewById<ConstraintLayout>(R.id.itemPlace)
         val placeName = item.findViewById<TextView>(R.id.placeId)
-
-        init {
-            cLayout.setOnClickListener {
-                listener.onItemClicked(false, adapterPosition)
-            }
-        }
     }
 
 }

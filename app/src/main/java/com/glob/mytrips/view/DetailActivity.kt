@@ -58,7 +58,7 @@ class DetailActivity : BaseActivity(), DetailPlaceContract.View {
     }
 
     private fun setupRecycler() {
-        photoAdapter = PhotoAdapter(arrayListOf(), this)
+        photoAdapter = PhotoAdapter(arrayListOf())
         photoRecycler.apply {
             adapter = photoAdapter
             layoutManager = GridLayoutManager(

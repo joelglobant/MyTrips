@@ -20,6 +20,7 @@ import com.glob.mytrips.view.placelist.StateListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.content_main.view.*
 import kotlinx.android.synthetic.main.layout_error.view.*
 import kotlinx.android.synthetic.main.nav_header.*
 
@@ -46,7 +47,7 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
 //        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 //        supportActionBar?.setHomeButtonEnabled(true)
         setupDrawer()
-        setupLoader()
+
         openConnection()
     }
 
@@ -74,20 +75,21 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
     }
 
     private fun setupLoader() {
-//        loaderView.swiperefresh.setColorSchemeColors(
-//            resources.getColor(R.color.blueVanish), resources.getColor(R.color.colorPrimary),
-//            resources.getColor(R.color.colorAccent), resources.getColor(R.color.green)
-//        )
-//
-//        loaderView.swiperefresh.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
-//            override fun onRefresh() {
-//                Log.e(javaClass.simpleName, "refresh")
-//                Handler().postDelayed({
-//                    loaderView.swiperefresh.isRefreshing = false
-//                }, 300)
-//                presenter.getUserAccount(userId)
-//            }
-//        })
+        val swiper = findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
+        swiper.setColorSchemeColors(
+            resources.getColor(R.color.blueVanish), resources.getColor(R.color.colorPrimary),
+            resources.getColor(R.color.colorAccent), resources.getColor(R.color.green)
+        )
+
+        swiper.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                Log.e(javaClass.simpleName, "refresh")
+                Handler().postDelayed({
+                    loaderView.swiperefresh.isRefreshing = false
+                }, 300)
+                presenter.getUserAccount(userId)
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -135,7 +137,7 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
         Log.e(TAG, "onMainInfoLoadedFail: $message")
         errorView.visibility = View.VISIBLE
         if (!loaderSetup) {
-            //setUpLoader()
+            setupLoader()
             loaderSetup = true
         }
     }

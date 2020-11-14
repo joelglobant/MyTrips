@@ -1,6 +1,5 @@
 package com.glob.mytrips.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +9,12 @@ import com.glob.mytrips.models.PhotoModel
 import com.glob.mytrips.utils.loadUrl
 import kotlinx.android.synthetic.main.photo_item.view.*
 
-class PhotoAdapter(private val photos: List<PhotoModel>, private val mContext: Context) :
+class PhotoAdapter(private val photos: ArrayList<PhotoModel>) :
     RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         return PhotoViewHolder(
-            LayoutInflater.from(mContext)
+            LayoutInflater.from(parent.context)
                 .inflate(R.layout.photo_item, parent, false)
         )
     }
@@ -26,9 +25,14 @@ class PhotoAdapter(private val photos: List<PhotoModel>, private val mContext: C
         holder.bind(photos[position])
     }
 
+    fun updatePhotos(photoList: List<PhotoModel>) {
+        photos.addAll(photoList)
+        notifyDataSetChanged()
+    }
+
     inner class PhotoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(photo: PhotoModel) = with(itemView) {
-            photoItemRes.loadUrl(photo.url)
+            this.photoItemRes.loadUrl(photo.url)
         }
     }
 
