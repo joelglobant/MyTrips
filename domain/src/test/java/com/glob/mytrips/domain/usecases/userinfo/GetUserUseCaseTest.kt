@@ -1,7 +1,7 @@
-package com.glob.mytrips.domain.usecases.places
+package com.glob.mytrips.domain.usecases.userinfo
 
 import com.glob.mytrips.domain.executors.PostExecutorThread
-import com.glob.mytrips.domain.repositories.PlacesRepository
+import com.glob.mytrips.domain.repositories.UserInfoRepository
 import com.glob.mytrips.domain.usecases.mocks.MyTripsMocks
 import com.glob.mytrips.domain.usecases.ImmediateExecutorThread
 import io.reactivex.Single
@@ -15,16 +15,16 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner.StrictStubs::class)
-class GetPlacesByUserUseCaseTest : TestCase() {
+class GetUserUseCaseTest : TestCase() {
 
     @Mock
-    lateinit var placesRepository: PlacesRepository
+    lateinit var userInfoRepository: UserInfoRepository
 
     @Mock
     lateinit var postExecutorThread: PostExecutorThread
 
-    private val placeByUserUseCase: GetPlacesByUserUseCase by lazy {
-        GetPlacesByUserUseCase(placesRepository,
+    private val userInfoUseCase: GetUserInfoUseCase by lazy {
+        GetUserInfoUseCase(userInfoRepository,
             ImmediateExecutorThread(), postExecutorThread)
     }
 
@@ -34,31 +34,34 @@ class GetPlacesByUserUseCaseTest : TestCase() {
     }
 
     @Test
-    fun `validate get Places by userId`() {
-        val params = GetPlacesByUserUseCase.Params(1)
-        Mockito.`when`(placesRepository.getPlacesByUser(1)).thenReturn(Single.just(listOf(MyTripsMocks().placeMock)))
-        placeByUserUseCase.execute(params)
+    fun `validate info from user registered`() {
+        val params = GetUserInfoUseCase.Params(1)
+        val trips = MyTripsMocks
+        Mockito.`when`(userInfoRepository.getUserInformation()).thenReturn(Single.just(trips.userMock))
+        userInfoUseCase.execute(params)
             .test()
             .assertComplete()
             .assertNoErrors()
-            .assertValue {
-                it.first().favorite == MyTripsMocks().placeMock.favorite
+            .assertValue { // TODO: 18/11/2020 What's better, using this way or by group? ><
+                it.id == trips.userMock.id
             }
             .assertValue {
-                it.first().id == MyTripsMocks().placeMock.id
+                it.name == trips.userMock.name
             }
             .assertValue {
-                it.first().description == MyTripsMocks().placeMock.description
+                it.bio == trips.userMock.bio
+            }
+            .assertValue {
+                it.nickname== trips.userMock.nickname
             }
     }
 
     @Test
-    fun `validate Place Not Found`() {
-        val params = GetPlacesByUserUseCase.Params(2)
+    fun `validate error when a user didn't exists`() {
+        val params = GetUserInfoUseCase.Params(10)
         val message = "Item not found"
-        Mockito.`when`(placesRepository.getPlacesByUser(2))
-            .thenReturn(Single.error(Throwable(message)))
-        placeByUserUseCase.execute(params)
+        Mockito.`when`(userInfoRepository.getUserInformation()).thenReturn(Single.error(Throwable(message)))
+        userInfoUseCase.execute(params)
             .test()
             .assertNotComplete()
             .assertError {
@@ -67,9 +70,9 @@ class GetPlacesByUserUseCaseTest : TestCase() {
     }
 
     @Test
-    fun `validate Error Message With null parameters`() {
+    fun `validate message error when params are null`() {
         val message = "Invalid Arguments"
-        placeByUserUseCase.execute(null)
+        userInfoUseCase.execute(null)
             .test()
             .assertNotComplete()
             .assertError {

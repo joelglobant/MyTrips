@@ -7,7 +7,6 @@ import androidx.room.Query
 import com.glob.mytrips.data.local.db.UserInfoConstants
 import com.glob.mytrips.data.local.entities.CountryEntity
 import io.reactivex.Completable
-import io.reactivex.Maybe
 
 @Dao
 interface CountryDao {
@@ -17,7 +16,6 @@ interface CountryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveNewCountry(countryEntity: CountryEntity): Completable
 
-    // TODO: 29/10/2020 it is ok?
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveNewCountries(countries: List<CountryEntity>): Completable
 }

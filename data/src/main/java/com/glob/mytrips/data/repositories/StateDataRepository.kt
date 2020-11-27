@@ -39,7 +39,6 @@ class StateDataRepository(
             .flatMap {
                 factory.retrieveDataSource(it).getStates(idCountry)
             }.flatMap { statesData ->
-                //fixme this is a temporal implementation!!
                 return@flatMap Single.just(statesData.map { stateDataToDto.transform(it) }.first())
             }
     }

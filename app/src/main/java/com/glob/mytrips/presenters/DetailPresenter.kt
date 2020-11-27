@@ -27,7 +27,7 @@ class DetailPresenter(
                 .subscribe({ success ->
                     view.setPlaceDetail(placeMapper.transform(success))
                 }, {
-                    TODO()
+                    //TODO() add an error message
                 })
         )
         val photoParams = GetPhotosUseCase.Params(idPlace)
@@ -37,10 +37,14 @@ class DetailPresenter(
                     view.setPhotos(success.map { photoMapper.transform(it) })
                     view.showLoader(false)
                 }, { throwable ->
-                    // TODO: 13/11/2020 add a message error to show
+                    // TODO: 13/11/2020 add an error message to show
                     view.showError()
                     view.showLoader(false)
                 })
         )
+    }
+
+    override fun onDestroy() {
+        disposable.dispose()
     }
 }

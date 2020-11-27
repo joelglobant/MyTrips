@@ -36,7 +36,7 @@ class MainActivityInstrumentationTest {
 
     @Test
     fun validate_User_Info_Is_Displayed_On_DraweLayout() {
-        Thread.sleep(3000)
+        //Thread.sleep(3000)//
         onView(withId(R.id.drawerLayout)).check(matches(isClosed(Gravity.LEFT)))
             .perform(DrawerActions.open())
         onView(withId(R.id.drawerLayout)).perform(click())

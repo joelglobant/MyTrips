@@ -23,7 +23,7 @@ import com.glob.mytrips.models.mappers.*
 import com.glob.mytrips.presenters.*
 import com.glob.mytrips.services.RetrofitFactory
 
-class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context her??
+class UserInfoRegistry(context: Context) {
 
     private val threadExecutor: ThreadExecutor by lazy {
         JobExecutor()
@@ -33,22 +33,21 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
         UIThread()
     }
 
-
     /** ------ Services -------- */
     private val getUserService: UserServices by lazy {
-        RetrofitFactory.instance().create(UserServices::class.java)
+        RetrofitFactory.instance.create(UserServices::class.java)
     }
     private val getCountryService: CountryServices by lazy {
-        RetrofitFactory.instance().create(CountryServices::class.java)
+        RetrofitFactory.instance.create(CountryServices::class.java)
     }
     private val getStateService: StateServices by lazy {
-        RetrofitFactory.instance().create(StateServices::class.java)
+        RetrofitFactory.instance.create(StateServices::class.java)
     }
     private val getPlaceService: PlaceServices by lazy {
-        RetrofitFactory.instance().create(PlaceServices::class.java)
+        RetrofitFactory.instance.create(PlaceServices::class.java)
     }
     private val getPhotoService: PhotoServices by lazy {
-        RetrofitFactory.instance().create(PhotoServices::class.java)
+        RetrofitFactory.instance.create(PhotoServices::class.java)
     }
 
     /**----- Data Base -------- */
@@ -70,7 +69,6 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
     private val stateModelMap = StateMapperModel()
     private val placeModelMap = PlaceMapperModel()
     private val photoModelMap = PhotoMapperModel()
-
 
     private val countryEntityToDataMap = CountryEntityToDataMapper()
     private val userEntityToDataMap = UserEntityToDataMapper()
@@ -107,7 +105,6 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
     private val userCache: UserCache by lazy {
         UserLocalImpl(dataBase, userPreferences)
     }
-    // TODO: 03/11/2020 add preferences!!!
     private val countryCache: CountryCache by lazy {
         CountryCacheImpl(dataBase)
     }
@@ -199,7 +196,6 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
     private val photoProvider =
         PhotoDataProvider(photoRepository, threadExecutor, postExecutorThread)
 
-
     fun provideLogin(view: LoginContract.View): LoginContract.Presenter {
         return LoginPresenter(view)
     }
@@ -224,37 +220,4 @@ class UserInfoRegistry(context: Context) { //todo <<-- is valid have an context 
         return PlaceListPresenter(placeProvider, view, placeModelMap)
     }
 
-//    fun providePhotoList(view: CountryListContract.View): CountryListContract.Presenter {
-//        return ListPresenter(view, cProvider, countryModelMap)
-//    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//class UserInfoRegistry(private val context: Context) {
-//
-//    /** ------ Mappers --------- */
-//    private val photoRespToDataMap = PhotoResponseToDataMapper()
-//    private val placeRespToDataMap = PlaceResponseToDataMapper(photoRespToDataMap)
-//    private val stateRespToDataMap = StateResponseToDataMapper(placeRespToDataMap)
-//    private val countryRespToDataMap = CountryResponseToDataMapper(stateRespToDataMap)
-//    private val userRespToEntity = UserResponseToDataMapper(countryRespToDataMap)
-//
-//    private val userMapModel = UserMapperModel()
-//
-//    fun provideMainPresenter(view: MainMenuContract.View): MainMenuContract.Presenter {
-//        RepositoryProvider.startLocalData(context)
-//        val userProvider = RepositoryProvider.userProvider()
-//        return MainMenuPresenter(userProvider, view, userMapModel)
-//    }
-//}

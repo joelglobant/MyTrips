@@ -12,6 +12,7 @@ import com.glob.mytrips.utils.afterTextChanged
 import com.glob.mytrips.contracts.LoginContract
 import com.glob.mytrips.registers.UserInfoRegistry
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class LoginActivity : BaseActivity(), LoginContract.View {
 
@@ -81,5 +82,14 @@ class LoginActivity : BaseActivity(), LoginContract.View {
             //Complete and destroy login activity once successful
             finish()
         }
+    }
+
+    override fun showLoader(action: Boolean) {
+        loaderView.visibility = if (action) View.VISIBLE else View.GONE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
     }
 }

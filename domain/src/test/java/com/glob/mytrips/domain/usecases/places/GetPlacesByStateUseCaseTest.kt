@@ -1,7 +1,7 @@
-package com.glob.mytrips.domain.usecases.userinfo
+package com.glob.mytrips.domain.usecases.places
 
 import com.glob.mytrips.domain.executors.PostExecutorThread
-import com.glob.mytrips.domain.repositories.UserInfoRepository
+import com.glob.mytrips.domain.repositories.PlaceRepository
 import com.glob.mytrips.domain.usecases.mocks.MyTripsMocks
 import com.glob.mytrips.domain.usecases.ImmediateExecutorThread
 import io.reactivex.Single
@@ -15,16 +15,16 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner.StrictStubs::class)
-class GetUserInfoUseCaseTest : TestCase() {
+class GetPlacesByStateUseCaseTest : TestCase() {
 
     @Mock
-    lateinit var userInfoRepository: UserInfoRepository
+    lateinit var placeRepository: PlaceRepository
 
     @Mock
     lateinit var postExecutorThread: PostExecutorThread
 
-    private val userInfoUseCase: GetUserInfoUseCase by lazy {
-        GetUserInfoUseCase(userInfoRepository,
+    private val placeByStateUseCase: GetPlacesByStateUseCase by lazy {
+        GetPlacesByStateUseCase(placeRepository,
             ImmediateExecutorThread(), postExecutorThread)
     }
 
@@ -34,33 +34,32 @@ class GetUserInfoUseCaseTest : TestCase() {
     }
 
     @Test
-    fun `validate info from user registered`() {
-        val params = GetUserInfoUseCase.Params(1)
-        Mockito.`when`(userInfoRepository.getUserInfoById(1)).thenReturn(Single.just(MyTripsMocks().userMock))
-        userInfoUseCase.execute(params)
+    fun `validate get Places by userId`() {
+        val params = GetPlacesByStateUseCase.Params(1)
+        val trypMock = MyTripsMocks
+        Mockito.`when`(placeRepository.getPlaces(1)).thenReturn(Single.just(listOf(trypMock.placeMock)))
+        placeByStateUseCase.execute(params)
             .test()
             .assertComplete()
             .assertNoErrors()
             .assertValue {
-                it.id == MyTripsMocks().userMock.id
+                it.first().favorite == trypMock.placeMock.favorite
             }
             .assertValue {
-                it.name == MyTripsMocks().userMock.name
+                it.first().id == trypMock.placeMock.id
             }
             .assertValue {
-                it.bio == MyTripsMocks().userMock.bio
-            }
-            .assertValue {
-                it.generalPlaces.first().name == MyTripsMocks().userMock.generalPlaces.first().name
+                it.first().description == trypMock.placeMock.description
             }
     }
 
     @Test
-    fun `validate error when a user didn't exists`() {
-        val params = GetUserInfoUseCase.Params(10)
-        val message = "Item not found"
-        Mockito.`when`(userInfoRepository.getUserInfoById(10)).thenReturn(Single.error(Throwable(message)))
-        userInfoUseCase.execute(params)
+    fun `validate Place Not Found`() {
+        val params = GetPlacesByStateUseCase.Params(2)
+        val message = "Invalid Arguments"
+        Mockito.`when`(placeRepository.getPlaces(2))
+            .thenReturn(Single.error(Throwable(message)))
+        placeByStateUseCase.execute(params)
             .test()
             .assertNotComplete()
             .assertError {
@@ -69,9 +68,9 @@ class GetUserInfoUseCaseTest : TestCase() {
     }
 
     @Test
-    fun `validate message error when params are null`() {
+    fun `validate Error Message With null parameters`() {
         val message = "Invalid Arguments"
-        userInfoUseCase.execute(null)
+        placeByStateUseCase.execute(null)
             .test()
             .assertNotComplete()
             .assertError {

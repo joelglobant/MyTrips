@@ -9,6 +9,5 @@ interface CountryCache {
     fun saveCountry(country: CountryEntity): Completable
     fun saveCountries(countries: List<CountryEntity>): Completable
     fun isCached(idUser: Int): Single<Boolean>
-    //fun setLastTime(lastCache: Long)
     fun isExpired(): Boolean
 }

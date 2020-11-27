@@ -52,19 +52,19 @@ object RepositoryProvider {
 
     /** ------ Services -------- */
     private val getUserService: UserServices by lazy {
-        RetrofitFactory.instance().create(UserServices::class.java)
+        RetrofitFactory.instance.create(UserServices::class.java)
     }
     private val getCountryService: CountryServices by lazy {
-        RetrofitFactory.instance().create(CountryServices::class.java)
+        RetrofitFactory.instance.create(CountryServices::class.java)
     }
     private val getStateService: StateServices by lazy {
-        RetrofitFactory.instance().create(StateServices::class.java)
+        RetrofitFactory.instance.create(StateServices::class.java)
     }
     private val getPlaceService: PlaceServices by lazy {
-        RetrofitFactory.instance().create(PlaceServices::class.java)
+        RetrofitFactory.instance.create(PlaceServices::class.java)
     }
     private val getPhotoService: PhotoServices by lazy {
-        RetrofitFactory.instance().create(PhotoServices::class.java)
+        RetrofitFactory.instance.create(PhotoServices::class.java)
     }
 
 
@@ -76,8 +76,6 @@ object RepositoryProvider {
     private val userRespToEntity = UserResponseToDataMapper(countryRespToDataMap)
 
     private val userEntityToDto = UserEntityToDataMapper()
-
-    private val userMapModel = UserMapperModel()
 
     private val countryEntityToDataMap = CountryEntityToDataMapper()
     private val userEntityToDataMap = UserEntityToDataMapper()
@@ -115,7 +113,6 @@ object RepositoryProvider {
         UserLocalImpl(dataBase!!, userPreferences!!)
     }
 
-    // TODO: 03/11/2020 add preferences!!!
     private val countryCache: CountryCache by lazy {
         CountryCacheImpl(dataBase!!)
     }
@@ -191,17 +188,8 @@ object RepositoryProvider {
         )
     }
 
-
-
-    //val providerCountryRepository: CountryRepository =
-        //CountryDataProvider(userRepository, threadExecutor, postExecutorThread)
-
     fun userProvider(): UserInfoDataProvider =
         UserInfoDataProvider(userRepository, threadExecutor, postExecutorThread)
-
-//    val m: UserInfoRepository by Lazy {
-//        UserInfoDataProvider(userRepository, threadExecutor, postExecutorThread)
-//    }
 
 }
 

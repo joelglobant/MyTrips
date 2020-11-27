@@ -1,41 +1,30 @@
 package com.glob.mytrips.data.mocks
 
-import com.glob.mytrips.data.remote.response.CountryResponse
-import com.glob.mytrips.data.remote.response.PlaceResponse
-import com.glob.mytrips.data.remote.response.StateResponse
-import com.glob.mytrips.data.remote.response.UserResponse
+import com.glob.mytrips.data.remote.response.*
 
-class MockPlacesHierarchy {
-    companion object {
-        val idPlace: Int
-            get() = 1
+object MockPlacesHierarchy {
+    val photosResp: PhotoResponse
+        get() = PhotoResponse(1, 1, "Test.con/imgTest")
 
-        val placeResponse: PlaceResponse
-            get() = PlaceResponse(idPlace, "Jerez", emptyList(), "amazing place", null, false)
+    val placeResp: PlaceResponse
+        get() = PlaceResponse(
+            1, 1, "Jerez", "amazing place",
+            null, false, listOf(photosResp)
+        )
 
-        val idState: Int
-            get() = 1
+    val stateResp: StateResponse
+        get() = StateResponse(1, 1, "Zacatecas", listOf(placeResp))
 
-        val state: StateResponse
-            get() = StateResponse(idState, "Zacatecas", listOf(placeResponse))
+    val countryResp: CountryResponse
+        get() = CountryResponse(1, 1, "Mexico", listOf(stateResp))
 
-        val idCountry: Int
-            get() = 1
-
-        val country: CountryResponse
-            get() = CountryResponse(idCountry, "Mexico", listOf(state))
-
-        val idUser: Int
-            get() = 1
-
-        val userResponse: UserResponse
-            get() = UserResponse(
-                idUser,
-                "joel",
-                "Leoboyean",
-                "Aparicio P",
-                "traveler",
-                listOf(country)
-            )
-    }
+    val userResponse: UserResponse
+        get() = UserResponse(
+            1,
+            "joel",
+            "Leoboyean",
+            "Aparicio P",
+            "traveler",
+            listOf(countryResp)
+        )
 }

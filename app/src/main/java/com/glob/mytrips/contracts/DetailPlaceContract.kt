@@ -14,5 +14,6 @@ interface DetailPlaceContract {
 
     interface Presenter {
         fun getCompletePlace(idPlace: Int)
+        fun onDestroy()
     }
 }

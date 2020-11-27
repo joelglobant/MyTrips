@@ -2,31 +2,39 @@ package com.glob.mytrips.domain.usecases.mocks
 
 import com.glob.mytrips.domain.dtos.*
 
-class MyTripsMocks {
+object MyTripsMocks {
 
-    val countryMock: CountryDto
-        get() = CountryDto(
+    val photoMock: PhotoDto
+        get() = PhotoDto(
             1,
-            "Mexico",
-            listOf(stateMock)
-        )
-
-    val stateMock: StateDto
-        get() = StateDto(
             1,
-            "Zacatecas",
-            listOf(placeMock)
+            "https://mms.businesswire.com/media/20200501005417/en/788880/5/IMGLOGO_Primary_CMYK_Blue_Rel_highres.jpg?download=1"
         )
 
     val placeMock: PlaceDto
         get() = PlaceDto(
             1,
+            1,
             "Jerez",
-            listOf(PhotoDto("www.photo.com")),
             "A magic twon",
             4.5,
             true
         )
+
+    val stateMock: StateDto
+        get() = StateDto(
+            1,
+            1,
+            "Zacatecas"
+        )
+
+    val countryMock: CountryDto
+        get() = CountryDto(
+            1,
+            1,
+            "Mexico"
+        )
+
 
     val userMock: UserDto
         get() = UserDto(
@@ -34,8 +42,7 @@ class MyTripsMocks {
             "joel",
             "Leoboyean",
             "Aparicio P",
-            "Engineer|traveler",
-            listOf(countryMock)
+            "Engineer|traveler"
         )
 
 }

@@ -37,7 +37,6 @@ class MainActivity : BaseActivity(), MainMenuContract.View,
 
     private val presenter: MainMenuContract.Presenter by lazy {
         UserInfoRegistry(this).provideUser(this)
-//        UserInfoRegistry(this).provideMainPresenter(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

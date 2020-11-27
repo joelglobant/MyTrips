@@ -5,10 +5,10 @@ import com.glob.mytrips.data.mocks.MockPlacesHierarchy
 import com.glob.mytrips.domain.dtos.CountryDto
 import com.glob.mytrips.domain.dtos.UserDto
 import com.glob.mytrips.domain.executors.PostExecutorThread
-import com.glob.mytrips.domain.providers.UserInfoProvider
+import com.glob.mytrips.providers.UserInfoProvider
 import com.glob.mytrips.domain.repositories.UserInfoRepository
 import com.glob.mytrips.domain.usecases.userinfo.GetUserInfoUseCase
-import com.glob.mytrips.models.mappers.CountryMapperModel
+import com.glob.mytrips.models.mappers.*
 import com.glob.mytrips.threadexecutor.ImmediateThreadExecutor
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -34,8 +34,23 @@ class MainMenuPresenterTest {
     @Mock
     private lateinit var postExecutorThread: PostExecutorThread
 
+//    private val mapperModel: CountryMapperModel by lazy {
+//        UserMapperModel(CountryMapperModel(StateMapperModel(PlaceMapperModel(PhotoMapperModel()))))
+//    }
+
     private val presenter: MainMenuPresenter by lazy {
-        MainMenuPresenter(provider, view)
+        MainMenuPresenter(
+            provider, view,
+            UserMapperModel(
+                CountryMapperModel(
+                    StateMapperModel(
+                        PlaceMapperModel(
+                            PhotoMapperModel()
+                        )
+                    )
+                )
+            )
+        )
     }
 
     @Before
@@ -49,7 +64,7 @@ class MainMenuPresenterTest {
         val countryList = arrayListOf<CountryDto>()
         val userInfo = with(userInfoResp) {
             generalPlaces.forEach {
-                countryList.add(CountryMapperModel().reverseTransform(it))
+                countryList.add(.reverseTransform(it))
             }
             UserDto(id, name, nickname, surname, bio, countryList)
         }

@@ -20,5 +20,5 @@ class CountryRemoteImpl(
                 }
             }
     }
-    // TODO: 28/10/2020 create a multi selector for fake selectors
+    // TODO: 28/10/2020 create a multi selector for fake services
 }

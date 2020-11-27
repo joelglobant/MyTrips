@@ -34,7 +34,7 @@ class DetailActivityTest {
             override fun getActivityIntent(): Intent {
                 val targetContext = InstrumentationRegistry.getInstrumentation().targetContext
                 return Intent(targetContext, DetailActivity::class.java).apply {
-                    putExtra(DetailActivity.POSITON, PLACE_POS)
+                    putExtra(DetailActivity.POSITION, PLACE_POS)
                     putExtra(DetailActivity.COME_FROM, comeFrom)
                 }
             }

@@ -28,7 +28,6 @@ class LocalDataStore(
         return userCache.saveUser(user)
             .doOnComplete {
                 userCache.setLastTime(System.currentTimeMillis())
-                // TODO: 28/10/2020 remove next line code!
                 println(System.currentTimeMillis().toString())
             }
     }

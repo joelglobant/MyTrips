@@ -1,8 +1,11 @@
 package com.glob.mytrips.data.repositories
 
+import com.glob.mytrips.data.data.PlaceDataStoreFactory
+import com.glob.mytrips.data.mappers.datatodto.PhotoDataToDtoMapper
+import com.glob.mytrips.data.mappers.datatodto.PlaceDataToDtoMapper
 import com.glob.mytrips.data.mocks.MockPlacesHierarchy
-import com.glob.mytrips.data.remote.response.PlaceResponse
 import com.glob.mytrips.data.remote.services.PlaceServices
+import com.glob.mytrips.domain.repositories.PhotoRepository
 import io.reactivex.Single
 import junit.framework.TestCase
 import org.junit.Test
@@ -18,30 +21,36 @@ class PlaceDataRepositoryTest : TestCase() {
     @Mock
     lateinit var placeServices: PlaceServices
 
+    @Mock
+    lateinit var factory: PlaceDataStoreFactory
+
+    @Mock
+    lateinit var photoRepository: PhotoRepository
+
+    private val placeDataToDto = PlaceDataToDtoMapper()
+    private val photoDataToDto = PhotoDataToDtoMapper()
+
     private val getPlacesCase: PlaceDataRepository by lazy {
-        PlaceDataRepository(placeServices)
+        PlaceDataRepository(factory, photoRepository, placeDataToDto, photoDataToDto)
     }
 
     @Test
     fun `validate get Place By Id success`() {
-        val idPlace = 1
-        val placeResponse = PlaceResponse(1, "Jerez", emptyList(), "es magic", null, false)
-        val response = Response.success(placeResponse)
-        Mockito.`when`(placeServices.getPlaceDetail(idPlace)).thenReturn(Single.just(response))
-
-        getPlacesCase.getPlaceById(idPlace)
+        val response = Response.success(MockPlacesHierarchy.placeResp)
+        Mockito.`when`(placeServices.getPlaceById()).thenReturn(Single.just(response))
+        getPlacesCase.getPlace(1)
             .test()
             .assertComplete()
             .assertValue {
-                it.id == placeResponse.id
+                it.id == MockPlacesHierarchy.placeResp.id
             }.assertValue {
-                it.name == placeResponse.name
+                it.name == MockPlacesHierarchy.placeResp.name
             }.assertValue {
-                it.description == placeResponse.description
+                it.description == MockPlacesHierarchy.placeResp.description
             }.assertValue {
-                it.rank == placeResponse.rank
+                it.rank == MockPlacesHierarchy.placeResp.rank
             }.assertValue {
-                it.favorite == placeResponse.favorite
+                it.favorite == MockPlacesHierarchy.placeResp.favorite
             }
     }
 
@@ -49,11 +58,9 @@ class PlaceDataRepositoryTest : TestCase() {
     fun `validate get Place By Id with error`() {
         val idPlace = 23
         val message = "An error has occurred in the server"
-
-        Mockito.`when`(placeServices.getPlaceDetail(idPlace))
+        Mockito.`when`(placeServices.getPlaceById())
             .thenReturn(Single.error(Throwable(message)))
-
-        getPlacesCase.getPlaceById(idPlace)
+        getPlacesCase.getPlace(idPlace)
             .test()
             .assertNotComplete()
             .assertError {
@@ -64,22 +71,22 @@ class PlaceDataRepositoryTest : TestCase() {
     @Test
     fun `validate get all places by user`() {
         //3, mis parametros
-        val response = Response.success(listOf(MockPlacesHierarchy.placeResponse))
+        val response = Response.success(listOf(MockPlacesHierarchy.placeResp))
         //2, que necesiro responder a mi operacion
-        Mockito.`when`(placeServices.getPlacesByUser(MockPlacesHierarchy.idUser))
+        Mockito.`when`(placeServices.getPlaceByState())
             .thenReturn(Single.just(response))
         //1, que operation voy a realizar
-        getPlacesCase.getPlacesByUser(MockPlacesHierarchy.idUser)
+        getPlacesCase.getPlaces(1)
             .test()
             .assertComplete()
             .assertValue {
-                it.first().id == MockPlacesHierarchy.placeResponse.id
+                it.first().id == MockPlacesHierarchy.placeResp.id
             }.assertValue {
-                it.first().name == MockPlacesHierarchy.placeResponse.name
+                it.first().name == MockPlacesHierarchy.placeResp.name
             }.assertValue {
-                it.first().favorite == MockPlacesHierarchy.placeResponse.favorite
+                it.first().favorite == MockPlacesHierarchy.placeResp.favorite
             }.assertValue {
-                it.first().description == MockPlacesHierarchy.placeResponse.description
+                it.first().description == MockPlacesHierarchy.placeResp.description
             }
     }
 
@@ -88,10 +95,10 @@ class PlaceDataRepositoryTest : TestCase() {
         //3. mis parametros
         val message = "something was wrong"
         //2. que necesito responder a mi operacion
-        Mockito.`when`(placeServices.getPlacesByUser(MockPlacesHierarchy.idUser))
+        Mockito.`when`(placeServices.getPlaceByState())
             .thenReturn(Single.error(Throwable(message)))
         //1. que operacion voy a realizar
-        getPlacesCase.getPlacesByUser(MockPlacesHierarchy.idUser)
+        getPlacesCase.getPlace(1)
             .test()
             .assertNotComplete()
             .assertError {

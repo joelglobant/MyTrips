@@ -1,7 +1,7 @@
 package com.glob.mytrips.domain.usecases.places
 
 import com.glob.mytrips.domain.executors.PostExecutorThread
-import com.glob.mytrips.domain.repositories.PlacesRepository
+import com.glob.mytrips.domain.repositories.PlaceRepository
 import com.glob.mytrips.domain.usecases.mocks.MyTripsMocks
 import com.glob.mytrips.domain.usecases.ImmediateExecutorThread
 import io.reactivex.Single
@@ -18,13 +18,13 @@ import org.mockito.junit.MockitoJUnitRunner
 class GetPlaceByIdUseCaseTest : TestCase() {
 
     @Mock
-    lateinit var placesRepository: PlacesRepository
+    lateinit var placeRepository: PlaceRepository
 
     @Mock
     lateinit var postExecutorThread: PostExecutorThread
 
     private val placeByIdUseCase: GetPlaceByIdUseCase by lazy {
-        GetPlaceByIdUseCase(placesRepository,
+        GetPlaceByIdUseCase(placeRepository,
             ImmediateExecutorThread(), postExecutorThread)
     }
 
@@ -36,19 +36,18 @@ class GetPlaceByIdUseCaseTest : TestCase() {
     @Test
     fun `validate get Place by ID`() {
         val params = GetPlaceByIdUseCase.Params(1)
-        Mockito.`when`(placesRepository.getPlaceById(1)).thenReturn(Single.just(MyTripsMocks().placeMock))
+        val trypMock = MyTripsMocks
+        Mockito.`when`(placeRepository.getPlace(1)).thenReturn(Single.just(trypMock.placeMock))
         placeByIdUseCase.execute(params)
             .test()
             .assertComplete()
             .assertNoErrors()
             .assertValue {
-                it.favorite == MyTripsMocks().placeMock.favorite
-            }
-            .assertValue {
-                it.id == MyTripsMocks().placeMock.id
-            }
-            .assertValue {
-                it.description == MyTripsMocks().placeMock.description
+                it.favorite == trypMock.placeMock.favorite
+            }.assertValue {
+                it.id == trypMock.placeMock.id
+            }.assertValue {
+                it.description == trypMock.placeMock.description
             }
     }
 
@@ -56,7 +55,7 @@ class GetPlaceByIdUseCaseTest : TestCase() {
     fun `validate Place Not Found`() {
     val params = GetPlaceByIdUseCase.Params(3)
         val message = "Place not found"
-        Mockito.`when`(placesRepository.getPlaceById(3))
+        Mockito.`when`(placeRepository.getPlace(3))
             .thenReturn(Single.error(Throwable(message)))
         placeByIdUseCase.execute(params)
             .test()

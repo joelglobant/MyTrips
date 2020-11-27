@@ -37,20 +37,21 @@ class GetStateByIdUseCaseTest : TestCase() {
     @Test
     fun `validate get State By IdUsecase`() {
         val params = GetStateByIdUseCase.Params(1)
+        val trypMock = MyTripsMocks
         Mockito.`when`(stateRepository.getStateByID(1))
-            .thenReturn(Single.just(MyTripsMocks().stateMock))
+            .thenReturn(Single.just(trypMock.stateMock))
         stateByIdUseCase.execute(params)
             .test()
             .assertComplete()
             .assertNoErrors()
             .assertValue {
-                it.id == MyTripsMocks().stateMock.id
+                it.id == trypMock.stateMock.id
             }
             .assertValue {
-                it.name == MyTripsMocks().stateMock.name
+                it.name == trypMock.stateMock.name
             }
             .assertValue {
-                it.places.first().id == MyTripsMocks().placeMock.id
+                it.id == trypMock.placeMock.id
             }
     }
 

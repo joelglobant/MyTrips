@@ -14,8 +14,6 @@ class CountryAdapter(
     private val listener: PlaceListener
 ) : RecyclerView.Adapter<CountryAdapter.CountryViewHolder>() {
 
-    private var countryPos: Int = -1
-
     fun updateMyCountries(items: List<CountryModel>) {
         countries = items
         notifyDataSetChanged()
@@ -28,8 +26,11 @@ class CountryAdapter(
     }
 
     override fun onBindViewHolder(holder: CountryViewHolder, position: Int) {
-        holder.placeName.text = countries[position].name
-        countryPos = position
+        val country = countries[position]
+        holder.placeName.text = country.name
+        holder.cLayout.setOnClickListener {
+            listener.onItemClicked(country.id)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -39,12 +40,6 @@ class CountryAdapter(
     inner class CountryViewHolder(item: View) : RecyclerView.ViewHolder(item) {
         val cLayout = item.findViewById<ConstraintLayout>(R.id.itemPlace)
         val placeName = item.findViewById<TextView>(R.id.placeId)
-
-        init {
-            cLayout.setOnClickListener {
-                listener.onItemClicked(false, adapterPosition)
-            }
-        }
     }
 
 }

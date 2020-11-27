@@ -7,7 +7,6 @@ import androidx.room.Query
 import com.glob.mytrips.data.local.db.UserInfoConstants
 import com.glob.mytrips.data.local.entities.PhotoEntity
 import io.reactivex.Completable
-import io.reactivex.Maybe
 
 @Dao
 interface PhotoDao {

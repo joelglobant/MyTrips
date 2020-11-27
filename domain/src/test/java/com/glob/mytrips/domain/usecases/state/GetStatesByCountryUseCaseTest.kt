@@ -1,11 +1,9 @@
 package com.glob.mytrips.domain.usecases.state
 
-import com.glob.mytrips.domain.dtos.PhotoDto
-import com.glob.mytrips.domain.dtos.PlaceDto
-import com.glob.mytrips.domain.dtos.StateDto
 import com.glob.mytrips.domain.executors.PostExecutorThread
 import com.glob.mytrips.domain.repositories.StateRepository
 import com.glob.mytrips.domain.usecases.ImmediateExecutorThread
+import com.glob.mytrips.domain.usecases.mocks.MyTripsMocks
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import junit.framework.TestCase
@@ -17,7 +15,7 @@ import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner.StrictStubs::class)
-class GetStatesByUserUseCaseTest : TestCase() {
+class GetStatesByCountryUseCaseTest : TestCase() {
 
     @Mock
     lateinit var stateRepository: StateRepository
@@ -25,8 +23,8 @@ class GetStatesByUserUseCaseTest : TestCase() {
     @Mock
     lateinit var postExecutorThread: PostExecutorThread
 
-    val statesUseCase: GetStatesByUserUseCase by lazy {
-        GetStatesByUserUseCase(stateRepository,
+    val statesUseCase: GetStatesByCountryUseCase by lazy {
+        GetStatesByCountryUseCase(stateRepository,
             ImmediateExecutorThread(), postExecutorThread)
     }
 
@@ -37,11 +35,10 @@ class GetStatesByUserUseCaseTest : TestCase() {
 
     @Test
     fun `validate get States By Usercase`() {
-        val params = GetStatesByUserUseCase.Params(1)
-        val placeMock = PlaceDto(1, "jerez", listOf(PhotoDto("www.photo.com")), "",3.5, true)
-        val stateMock = StateDto(1, "Zacatecas", listOf(placeMock))
+        val params = GetStatesByCountryUseCase.Params(1)
+        val trypMock = MyTripsMocks
         Mockito.`when`(stateRepository.getStatesByUser(1))
-            .thenReturn(Single.just(listOf(stateMock)))
+            .thenReturn(Single.just(listOf(trypMock.stateMock)))
         statesUseCase.execute(params).map {
             it[0]
         }
@@ -49,19 +46,17 @@ class GetStatesByUserUseCaseTest : TestCase() {
             .assertComplete()
             .assertNoErrors()
             .assertValue {
-                it.id == stateMock.id
-            }
-            .assertValue {
-                it.name == stateMock.name
-            }
-            .assertValue {
-                it.places[0] == placeMock
+                it.id == trypMock.stateMock.id
+            }.assertValue {
+                it.name == trypMock.stateMock.name
+            }.assertValue {
+                it == trypMock.stateMock
             }
     }
 
     @Test
     fun `validate error message when user didn't found`() {
-        val params = GetStatesByUserUseCase.Params(1)
+        val params = GetStatesByCountryUseCase.Params(1)
         val message = "Item not Found"
         Mockito.`when`(stateRepository.getStatesByUser(1))
             .thenReturn(Single.error(Throwable(message)))
